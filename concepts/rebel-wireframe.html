@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bash Squad — We ship AI that works. The rest is cosplay.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0B0F14; --text:#E8EDF2; --muted:#9AA7B4; --faint:#5C6B7A;
+    --line:rgba(255,255,255,.09);
+    --accent:#22D3EE; --accent-2:#FF2D9B; --accent-3:#C6FF00;
+    --display:'Space Grotesk',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--ink); color:var(--text); font-family:var(--body); -webkit-font-smoothing:antialiased; overflow:hidden; position:relative}
+  /* CSS fallback: synthwave horizon */
+  .bg-glow{position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(50% 40% at 50% 64%, rgba(255,45,155,.30), transparent 70%),
+      radial-gradient(70% 50% at 50% 58%, rgba(34,211,238,.18), transparent 75%),
+      linear-gradient(180deg,#05080c 0%, #0a0f16 55%, #0b0f14 100%);
+  }
+  #scene{position:fixed; inset:0; z-index:1; pointer-events:none}
+  /* readability scrim — darkens the terrain behind the left-hand copy */
+  .text-scrim{position:fixed; inset:0; z-index:3; pointer-events:none;
+    background:
+      linear-gradient(90deg, rgba(6,9,13,.95) 0%, rgba(6,9,13,.78) 34%, rgba(6,9,13,.32) 52%, transparent 66%),
+      linear-gradient(0deg, rgba(6,9,13,.55) 0%, transparent 24%);}
+  .scanlines{position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.5;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,0) 0px, rgba(0,0,0,0) 2px, rgba(0,0,0,.18) 3px, rgba(0,0,0,0) 4px);}
+  .grain{position:fixed; inset:-200%; z-index:3; pointer-events:none; opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 6s steps(5) infinite;}
+  @keyframes grain{0%{transform:translate(0,0)}25%{transform:translate(-5%,3%)}50%{transform:translate(3%,-4%)}75%{transform:translate(-3%,-3%)}100%{transform:translate(0,0)}}
+
+  .wrap{position:relative; z-index:4; height:100%; display:flex; flex-direction:column; padding:clamp(18px,3vw,34px) clamp(20px,5vw,64px)}
+  nav{display:flex; align-items:center; justify-content:space-between; gap:18px}
+  .brand{font-family:var(--mono); font-weight:700; font-size:15px; display:flex; align-items:center}
+  .brand .dollar{color:var(--accent)}
+  .brand .cursor{display:inline-block; width:9px; height:1.05em; background:var(--accent); margin-left:5px; transform:translateY(2px); animation:blink 1.15s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .navlinks{display:flex; gap:26px; font-family:var(--mono); font-size:13px; color:var(--muted)}
+  .navlinks a{color:inherit; text-decoration:none}.navlinks a:hover{color:var(--text)}
+  @media(max-width:720px){.navlinks{display:none}}
+  .cta-pill{font-family:var(--mono); font-size:13px; color:var(--ink); background:var(--accent); padding:9px 16px; border-radius:999px; text-decoration:none; box-shadow:0 6px 30px rgba(34,211,238,.35)}
+
+  .hero{flex:1; display:flex; align-items:center}
+  .col{max-width:660px}
+  .eyebrow{font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:.04em; display:inline-flex; align-items:center; gap:9px; padding:7px 13px; border:1px solid var(--line); border-radius:999px; background:rgba(5,8,12,.5); backdrop-filter:blur(6px); margin-bottom:26px}
+  .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--accent-3); box-shadow:0 0 10px var(--accent-3)}
+  h1{font-family:var(--display); font-weight:700; font-size:clamp(2.6rem,7vw,5.6rem); line-height:.95; letter-spacing:-.03em; margin-bottom:24px; text-shadow:0 0 60px rgba(0,0,0,.6)}
+  h1 .grad{background:linear-gradient(95deg,var(--accent), #7dd3fc 45%, var(--accent-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent}
+  .sub{font-size:clamp(1rem,1.5vw,1.18rem); line-height:1.6; color:var(--muted); max-width:520px; margin-bottom:34px; text-shadow:0 2px 20px rgba(0,0,0,.7)}
+  .actions{display:flex; align-items:center; gap:20px; flex-wrap:wrap}
+  .btn-primary{font-family:var(--body); font-weight:600; font-size:15px; color:var(--ink); text-decoration:none; background:var(--text); padding:15px 26px; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,.45); transition:transform .2s}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{font-family:var(--mono); font-size:14px; color:var(--text); text-decoration:none; opacity:.85}.btn-ghost:hover{opacity:1; color:var(--accent)}
+  .strip{display:flex; gap:34px; align-items:center; font-family:var(--mono); font-size:12px; color:var(--faint); flex-wrap:wrap}
+  .strip b{color:var(--muted); font-weight:500}.strip .sep{color:rgba(255,255,255,.12)}
+</style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <canvas id="scene"></canvas>
+  <div class="scanlines"></div>
+  <div class="text-scrim"></div>
+  <div class="grain"></div>
+
+  <div class="wrap">
+    <nav>
+      <div class="brand"><span class="dollar">$</span>&nbsp;bash_squad<span class="cursor"></span></div>
+      <div class="navlinks"><a href="#">what_we_do</a><a href="#">how_we_work</a><a href="#">the_crew</a><a href="#">contact</a></div>
+      <a class="cta-pill" href="#">Start a project</a>
+    </nav>
+
+    <section class="hero">
+      <div class="col">
+        <span class="eyebrow"><span class="dot"></span>$ bash-squad ~ we ship AI that works_</span>
+        <h1>We ship AI<br>that works.<br><span class="grad">The rest is cosplay.</span></h1>
+        <p class="sub">A small, senior crew. We integrate the AI that already works, build the custom pieces when it doesn't, and teach your team how we think — so you own the outcome, not rent it.</p>
+        <div class="actions">
+          <a class="btn-primary" href="#">Start a project</a>
+          <a class="btn-ghost" href="#">See if we're a fit&nbsp;→</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="strip">
+      <span><b>integrate</b> what already works</span><span class="sep">/</span>
+      <span><b>build</b> what doesn't exist</span><span class="sep">/</span>
+      <span><b>educate</b> so you own it</span>
+    </div>
+  </div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+  const canvas = document.getElementById('scene');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0x0a0e14, 22, 95);
+  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 200);
+  camera.position.set(0, 2.4, 16);
+  camera.lookAt(0, 0.5, -30);
+
+  // --- terrain grid ---
+  const SX=120, SY=180, W=80, H=170;
+  const geo = new THREE.PlaneGeometry(W, H, SX, SY);
+  const base = Float32Array.from(geo.attributes.position.array);
+  // vertex colors: cyan near -> magenta far (along local y / depth)
+  const colors = new Float32Array(geo.attributes.position.count*3);
+  const cNear = new THREE.Color(0x22d3ee), cFar = new THREE.Color(0xff2d9b);
+  for(let i=0;i<geo.attributes.position.count;i++){
+    const y = base[i*3+1];                 // -H/2..H/2
+    const tcol = (y + H/2) / H;            // 0 far edge .. 1 near edge (before rotation)
+    const col = cFar.clone().lerp(cNear, 1 - Math.min(1,Math.max(0,tcol)));
+    colors[i*3]=col.r; colors[i*3+1]=col.g; colors[i*3+2]=col.b;
+  }
+  geo.setAttribute('color', new THREE.BufferAttribute(colors,3));
+  const mat = new THREE.MeshBasicMaterial({ wireframe:true, vertexColors:true, transparent:true, opacity:.85, fog:true });
+  const grid = new THREE.Mesh(geo, mat);
+  grid.rotation.x = -Math.PI/2;
+  grid.position.set(0, -3.6, -38);
+  scene.add(grid);
+
+  // --- synthwave sun ---
+  function sunTex(){
+    const c=document.createElement('canvas'); c.width=256; c.height=256; const x=c.getContext('2d');
+    const g=x.createLinearGradient(0,0,0,256); g.addColorStop(0,'#ffd6f0'); g.addColorStop(.45,'#ff2d9b'); g.addColorStop(1,'#22d3ee');
+    x.fillStyle=g; x.beginPath(); x.arc(128,128,120,0,Math.PI*2); x.fill();
+    // horizontal cutout bands (classic synth sun)
+    x.globalCompositeOperation='destination-out';
+    for(let i=0;i<7;i++){ const yy=150+i*14; x.fillRect(0,yy,256,6 + i*1.5); }
+    const tex=new THREE.CanvasTexture(c); return tex;
+  }
+  const sun = new THREE.Mesh(new THREE.PlaneGeometry(34,34), new THREE.MeshBasicMaterial({ map:sunTex(), transparent:true, fog:false }));
+  sun.position.set(0, 7, -88); scene.add(sun);
+
+  // --- bloom ---
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), 0.9, 0.7, 0.0);
+  composer.addPass(bloom);
+
+  let mx=0;
+  window.addEventListener('pointermove', e=>{ mx=(e.clientX/window.innerWidth-.5); });
+
+  function resize(){ const w=window.innerWidth,h=window.innerHeight; renderer.setSize(w,h); composer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+  window.addEventListener('resize', resize); resize();
+
+  const clock=new THREE.Clock();
+  const pos=geo.attributes.position;
+  function animate(){
+    requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+    for(let i=0;i<pos.count;i++){
+      const ix=i*3, x=base[ix], y=base[ix+1];
+      // y is depth; subtract t*speed so waves roll toward camera
+      const d = y - t*7.0;
+      const hgt = Math.sin(x*0.22)*0.65 + Math.sin(d*0.16)*1.05 + Math.sin((x*0.5 + d)*0.09)*0.75 + Math.cos(x*0.09 + d*0.05)*0.5;
+      pos.setZ(i, hgt);            // local z -> world height after rotation
+    }
+    pos.needsUpdate=true;
+    camera.position.x = mx*2.4;
+    camera.lookAt(0,0.5,-30);
+    composer.render();
+  }
+  animate();
+</script>
+</body>
+</html>

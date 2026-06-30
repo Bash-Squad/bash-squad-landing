@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bash Squad | AI that earns its keep</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500&amp;family=Public+Sans:wght@500;600;700&amp;family=Space+Grotesk:wght@500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#0B0F14',
+                        surface: '#11161D',
+                        accent: '#22D3EE',
+                        'text-primary': '#E8EDF2',
+                        'text-muted': '#9AA7B4',
+                        'text-faint': '#5C6B7A',
+                    },
+                    fontFamily: {
+                        headline: ["Space Grotesk", "sans-serif"],
+                        display: ["Space Grotesk", "sans-serif"],
+                        body: ["Inter", "sans-serif"],
+                        label: ["Public Sans", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"],
+                    },
+                    backgroundImage: {
+                        'grain': "url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.05%22/%3E%3C/svg%3E')",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0B0F14;
+            color: #E8EDF2;
+        }
+        
+        .bg-grain {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.04"/%3E%3C/svg%3E');
+            z-index: 10;
+        }
+
+        .text-mask-image {
+            background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLuLyYH9O-MCeZwtJxo6869SYI3PpgoWIlb88uniX4-V1oES5m9I5XRMJ7Ljs8xDddBvkpq1bkiNcUEsZGOkRnel15B8ZD6s6kh-G8T4RVCYj5FbA1btXfM-bFHs6coflsMpjCQHAD3DkS-QaB3WMlkm4u_a5q36uie6O6KJp534pyYqEkYvJ5uSDZz4tX6dC3IW_3USlv5S9qPBGSdrePIGJV2sk7DoNHEM0bWvSI-TD7Xah8RCUjl8sTM');
+            background-size: cover;
+            background-position: center;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+    </style>
+</head>
+<body class="font-body antialiased min-h-screen relative overflow-x-hidden selection:bg-accent/30 selection:text-text-primary">
+<div class="bg-grain"></div>
+<!-- TopNavBar component generated from JSON with style mappings -->
+<nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-3 mt-4 mx-auto max-w-5xl rounded-full border border-[#5C6B7A]/20 shadow-[0_0_20px_rgba(34,211,238,0.15)] bg-[#0B0F14]/80 backdrop-blur-md hidden md:flex">
+<a class="font-headline font-bold text-[#E8EDF2] text-xl tracking-tighter flex items-center gap-1 group" href="#">
+            Bash Squad <span class="font-mono text-accent">$_</span><span class="w-2 h-5 bg-accent inline-block cursor-blink ml-1 group-hover:opacity-100 opacity-0 transition-opacity"></span>
+</a>
+<div class="flex gap-8 items-center">
+<a class="font-body text-[#22D3EE] font-bold uppercase tracking-widest text-xs scale-95 active:scale-90 hover:bg-[#22D3EE]/10 transition-all duration-300 px-3 py-2 rounded" href="#">Expertise</a>
+<a class="font-body text-[#9AA7B4] hover:text-[#E8EDF2] transition-colors uppercase tracking-widest text-xs scale-95 active:scale-90 hover:bg-[#22D3EE]/10 transition-all duration-300 px-3 py-2 rounded" href="#">Intelligence</a>
+<a class="font-body text-[#9AA7B4] hover:text-[#E8EDF2] transition-colors uppercase tracking-widest text-xs scale-95 active:scale-90 hover:bg-[#22D3EE]/10 transition-all duration-300 px-3 py-2 rounded" href="#">Ventures</a>
+<a class="font-body text-[#9AA7B4] hover:text-[#E8EDF2] transition-colors uppercase tracking-widest text-xs scale-95 active:scale-90 hover:bg-[#22D3EE]/10 transition-all duration-300 px-3 py-2 rounded" href="#">Crew</a>
+</div>
+<a class="text-[#22D3EE] border border-[#22D3EE]/30 px-4 py-2 rounded-full font-body text-xs uppercase tracking-widest hover:bg-[#22D3EE]/10 transition-all duration-300 scale-95 active:scale-90" href="#">Hire the Squad</a>
+</nav>
+<!-- Main Content Canvas -->
+<main class="h-screen flex flex-col justify-center items-center px-4 md:px-8 relative z-20">
+<!-- Eyebrow -->
+<div class="font-mono text-accent text-sm md:text-base mb-8 tracking-widest uppercase opacity-90">
+            $ bash-squad ~ we ship AI that works<span class="cursor-blink">_</span>
+</div>
+<!-- Headline with Critical Effect Masking -->
+<h1 class="font-headline font-black text-6xl md:text-8xl lg:text-[8rem] leading-[0.9] tracking-tighter text-center max-w-7xl mx-auto mb-8 text-mask-image">
+            AI that earns its keep
+        </h1>
+<!-- Subhead -->
+<p class="font-body text-text-muted text-lg md:text-xl max-w-2xl mx-auto text-center mb-12 leading-relaxed">
+            A small, senior crew delivering production-grade machine learning and autonomous systems for enterprises tired of hype.
+        </p>
+<!-- CTAs -->
+<div class="flex flex-col sm:flex-row items-center gap-6 mt-4">
+<a class="bg-accent text-background font-headline font-bold text-lg px-8 py-4 rounded hover:bg-white hover:text-background transition-all duration-300 shadow-[0_0_30px_rgba(34,211,238,0.3)] hover:shadow-[0_0_40px_rgba(255,255,255,0.5)]" href="#">
+                Start a project
+            </a>
+<a class="font-body text-text-primary text-sm hover:text-accent transition-colors flex items-center gap-2 group" href="#">
+                or see how we work 
+                <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</main>
+<!-- Footer component generated from JSON -->
+<footer class="w-full py-12 px-8 flex flex-col md:flex-row justify-between items-center gap-6 bg-[#0B0F14] border-t border-[#11161D] relative z-20">
+<div class="font-headline font-black text-[#E8EDF2] text-xl opacity-80 hover:opacity-100 transition-opacity">
+            BASH SQUAD <span class="font-mono text-[#22D3EE] text-sm">$_</span>
+</div>
+<div class="flex gap-6 items-center">
+<a class="font-label text-[10px] tracking-[0.2em] uppercase text-[#5C6B7A] hover:text-[#22D3EE] transition-colors opacity-80 hover:opacity-100" href="#">Terminal</a>
+<a class="font-label text-[10px] tracking-[0.2em] uppercase text-[#5C6B7A] hover:text-[#22D3EE] transition-colors opacity-80 hover:opacity-100" href="#">Privacy</a>
+<a class="font-label text-[10px] tracking-[0.2em] uppercase text-[#5C6B7A] hover:text-[#22D3EE] transition-colors opacity-80 hover:opacity-100" href="#">Contact</a>
+</div>
+<div class="font-label text-[10px] tracking-[0.2em] uppercase text-[#5C6B7A]">
+            © 2024 BASH SQUAD. ALL SYSTEMS OPERATIONAL.
+        </div>
+</footer>
+</body></html>

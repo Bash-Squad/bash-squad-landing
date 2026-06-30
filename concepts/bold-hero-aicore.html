@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bash Squad - AI Consultancy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Space+Grotesk:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-container": "#5f9bfb",
+                        "surface-variant": "#002a35",
+                        "on-background": "#bfedff",
+                        "primary": "#3adffa",
+                        "on-tertiary-fixed": "#001737",
+                        "error": "#ff716c",
+                        "secondary-container": "#00677f",
+                        "on-primary": "#004b56",
+                        "tertiary-dim": "#629efd",
+                        "surface-bright": "#00313e",
+                        "on-tertiary-fixed-variant": "#003875",
+                        "on-tertiary-container": "#001d41",
+                        "secondary-fixed": "#7fdeff",
+                        "surface-container-high": "#00232d",
+                        "surface-container-highest": "#002a35",
+                        "inverse-surface": "#f2fbff",
+                        "inverse-primary": "#006977",
+                        "surface-dim": "#001017",
+                        "secondary-dim": "#00c3ed",
+                        "tertiary": "#76a9ff",
+                        "on-error": "#490006",
+                        "on-primary-container": "#003d46",
+                        "outline-variant": "#164e5f",
+                        "background": "#001017",
+                        "on-surface-variant": "#80b2c6",
+                        "primary-container": "#00cbe6",
+                        "on-primary-fixed-variant": "#005561",
+                        "secondary-fixed-dim": "#33d4ff",
+                        "primary-fixed": "#3adffa",
+                        "tertiary-fixed": "#85b1ff",
+                        "primary-dim": "#1ad0eb",
+                        "surface-container-lowest": "#000000",
+                        "secondary": "#0ed2ff",
+                        "on-secondary-fixed": "#003a48",
+                        "on-primary-fixed": "#00363e",
+                        "primary-fixed-dim": "#1ad0eb",
+                        "on-surface": "#bfedff",
+                        "error-container": "#9f0519",
+                        "tertiary-fixed-dim": "#6ba3ff",
+                        "error-dim": "#d7383b",
+                        "on-secondary": "#004253",
+                        "on-secondary-fixed-variant": "#00586d",
+                        "inverse-on-surface": "#275b6c",
+                        "surface": "#001017",
+                        "on-tertiary": "#002959",
+                        "on-secondary-container": "#eefaff",
+                        "on-error-container": "#ffa8a3",
+                        "surface-container": "#001d25",
+                        "surface-tint": "#3adffa",
+                        "surface-container-low": "#00161d",
+                        "outline": "#4a7c8e"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "container-padding": "24px",
+                        "base": "8px",
+                        "section-gap": "64px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "headline-xl": ["Space Grotesk"],
+                        "headline-lg": ["Space Grotesk"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["14px", { "lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "500" }],
+                        "headline-xl": ["64px", { "lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar Component -->
+<header class="bg-background/80 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/30 text-primary flat no shadows">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-container-padding h-20">
+<!-- Brand Logo -->
+<a class="font-headline-lg text-headline-lg font-bold text-primary tracking-tighter cursor-pointer active:opacity-80 transition-all duration-200" href="#">
+                Bash Squad
+            </a>
+<!-- Navigation Links (Desktop) -->
+<nav class="hidden md:flex items-center gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 cursor-pointer active:opacity-80" href="#">About</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 cursor-pointer active:opacity-80" href="#">How we work</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant font-medium hover:text-primary transition-colors duration-300 cursor-pointer active:opacity-80" href="#">Services</a>
+</nav>
+<!-- Trailing Action -->
+<div class="hidden md:flex items-center">
+<a class="font-label-sm text-label-sm bg-primary text-on-primary px-6 py-3 rounded-full hover:bg-primary-dim transition-colors duration-300 cursor-pointer active:opacity-80 font-bold tracking-wide shadow-[0_0_15px_rgba(58,223,250,0.3)]" href="#">
+                    Contact
+                </a>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-primary p-2">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+</header>
+<!-- Hero Section -->
+<main class="relative h-screen w-full flex items-center bg-[#0B0F14] overflow-hidden pt-20">
+<!-- Right Background Image Container -->
+<div class="absolute inset-y-0 right-0 w-[60%] lg:w-[65%] z-0 translate-x-[10%] lg:translate-x-0">
+<img class="w-full h-full object-cover object-left lg:object-center opacity-80 mix-blend-screen" src="https://lh3.googleusercontent.com/aida/AP1WRLvZT0-SGCD6njxOrbt-XwkRnKjLmdtQulaOUPt8dSlI1tY7e4MClHoqlnIhF__HoMD4XWXT4t3Y2_E8vOiBxESrqpWtIAFS8fOfj_x1jBNY5Ed4EGXOR4x2eD6RT92We9uRo0d_KkaxQhpbnFmdk7VxezkhZ7BZ-XnpHT38xjplnx7JApdz6AnueHJ_jexE6dpecyxMegwltNVI57bO65CjiaNcrKg5UOJqnFHRfg-iscUZaQe_uGRdhA"/>
+<!-- Gradient Overlay to blend edge -->
+<div class="absolute inset-0 bg-gradient-to-r from-[#0B0F14] via-[#0B0F14]/50 to-transparent"></div>
+</div>
+<!-- Left Content Area -->
+<div class="relative z-10 w-full max-w-7xl mx-auto px-container-padding flex items-center h-full">
+<div class="w-full md:w-[60%] lg:w-[50%] max-w-2xl pt-12 md:pt-0">
+<!-- Eyebrow -->
+<p class="font-label-sm text-label-sm text-[#22D3EE] uppercase tracking-widest mb-6 font-semibold">
+                    For businesses ready to use AI well
+                </p>
+<!-- Headline -->
+<h1 class="font-headline-xl text-[40px] md:text-headline-xl text-[#E8EDF2] font-bold leading-tight mb-8">
+                    Put AI to work for your business.
+                </h1>
+<!-- Subhead -->
+<p class="font-body-md text-[#9AA7B4] text-lg leading-relaxed mb-10 max-w-xl">
+                    A small, senior crew that integrates the tools that already deliver, builds the custom pieces when they don't, and makes sure your team actually understands it.
+                </p>
+<!-- CTA Buttons -->
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="inline-flex justify-center items-center font-label-sm text-label-sm bg-[#22D3EE] text-black px-8 py-4 rounded-lg font-bold transition-all duration-300 hover:bg-[#1ac7e3] hover:shadow-[0_0_20px_rgba(34,211,238,0.4)]" href="#">
+                        Start a project
+                    </a>
+<a class="inline-flex justify-center items-center font-label-sm text-label-sm bg-transparent text-white border border-[#22D3EE] px-8 py-4 rounded-lg font-medium transition-all duration-300 hover:bg-[#22D3EE]/10" href="#">
+                        See how we work
+                    </a>
+</div>
+</div>
+</div>
+<!-- Subtle Atmospheric Gradient -->
+<div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-[#0B0F14] to-transparent z-10 pointer-events-none"></div>
+</main>
+</body></html>

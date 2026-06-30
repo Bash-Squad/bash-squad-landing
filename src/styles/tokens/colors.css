@@ -1,0 +1,90 @@
+/* ============================================================
+   COLOR — Bash Squad
+   Dark by default. A deep terminal base, one acid-green signal
+   accent, a hot ember-orange secondary, high-contrast neutrals.
+   ============================================================ */
+
+:root {
+  /* ---- Base palette: ink (near-black slate ramp) ---- */
+  --ink-1000: #060708;  /* deepest — page void */
+  --ink-900:  #0A0C0E;  /* page background */
+  --ink-800:  #101316;  /* base surface */
+  --ink-700:  #15191D;  /* card surface */
+  --ink-600:  #1C2126;  /* raised surface */
+  --ink-500:  #262C32;  /* strong border / hover fill */
+  --ink-400:  #333A41;  /* divider on raised */
+
+  /* ---- Neutral foreground ramp ---- */
+  --fg-1: #F4F6F7;  /* primary text / display */
+  --fg-2: #B5BdC3;  /* secondary text */
+  --fg-3: #7C868D;  /* muted / captions */
+  --fg-4: #525A60;  /* faint / disabled */
+
+  /* ---- Hairlines ---- */
+  --line-1: #20262B;  /* default hairline border */
+  --line-2: #2C343A;  /* stronger border */
+  --line-3: #3A434A;  /* emphasis / focus ring base */
+
+  /* ---- Signal: acid green (primary accent / the prompt) ---- */
+  --acid-500: #B6FF2E;  /* core signal green */
+  --acid-400: #C8FF5E;  /* lighter */
+  --acid-600: #97E000;  /* deeper, for text-on-light */
+  --acid-700: #6FA300;  /* deepest */
+  --acid-tint: rgba(182, 255, 46, 0.12);  /* wash */
+  --acid-glow: rgba(182, 255, 46, 0.35);  /* glow / shadow */
+
+  /* ---- Ember: signal orange (secondary accent) ---- */
+  --ember-500: #FF5A1F;
+  --ember-400: #FF7A47;
+  --ember-600: #E2440C;
+  --ember-tint: rgba(255, 90, 31, 0.12);
+
+  /* ---- Support hues (sparse — data viz, links, states) ---- */
+  --cyan-500: #38E1FF;   /* data-flow / info */
+  --red-500:  #FF4D4D;   /* error / danger */
+  --amber-500: #FFC53D;  /* warning */
+
+  /* ============================================================
+     SEMANTIC ALIASES — reference these in components
+     ============================================================ */
+
+  /* Surfaces */
+  --surface-page:    var(--ink-900);
+  --surface-base:    var(--ink-800);
+  --surface-card:    var(--ink-700);
+  --surface-raised:  var(--ink-600);
+  --surface-hover:   var(--ink-500);
+  --surface-inset:   var(--ink-1000);
+
+  /* Text */
+  --text-strong:  var(--fg-1);
+  --text-body:    var(--fg-2);
+  --text-muted:   var(--fg-3);
+  --text-faint:   var(--fg-4);
+  --text-on-acid: var(--ink-1000);   /* dark text on acid fills */
+
+  /* Borders */
+  --border-hairline: var(--line-1);
+  --border-strong:   var(--line-2);
+  --border-emphasis: var(--line-3);
+
+  /* Accents */
+  --accent:        var(--acid-500);
+  --accent-hover:  var(--acid-400);
+  --accent-press:  var(--acid-600);
+  --accent-tint:   var(--acid-tint);
+  --accent-glow:   var(--acid-glow);
+
+  --accent-2:      var(--ember-500);
+  --accent-2-hover:var(--ember-400);
+  --accent-2-tint: var(--ember-tint);
+
+  /* States */
+  --success: var(--acid-500);
+  --warning: var(--amber-500);
+  --danger:  var(--red-500);
+  --info:    var(--cyan-500);
+
+  /* Focus ring */
+  --focus-ring: var(--acid-500);
+}

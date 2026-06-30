@@ -1,0 +1,11 @@
+/* ============================================================
+   FONTS — Bash Squad
+   No brand fonts were provided. These are Google Fonts chosen to
+   match the developer-native / brutalist brief:
+     - Bricolage Grotesque  → display (oversized, opinionated headlines)
+     - Space Grotesk        → UI / body (technical grotesque)
+     - JetBrains Mono       → command UI, labels, captions, code
+   SUBSTITUTION FLAGGED to user — swap if real brand fonts arrive.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap');

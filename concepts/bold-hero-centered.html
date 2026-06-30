@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bash Squad - Premium AI Consultancy</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Space+Grotesk:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-dim": "#629efd",
+                        "surface-dim": "#001017",
+                        "on-tertiary-container": "#001d41",
+                        "on-surface": "#bfedff",
+                        "primary-fixed-dim": "#1ad0eb",
+                        "surface-container-low": "#00161d",
+                        "secondary-fixed-dim": "#33d4ff",
+                        "on-secondary-fixed": "#003a48",
+                        "error-dim": "#d7383b",
+                        "surface-variant": "#002a35",
+                        "tertiary-fixed-dim": "#6ba3ff",
+                        "secondary": "#0ed2ff",
+                        "on-surface-variant": "#80b2c6",
+                        "secondary-container": "#00677f",
+                        "on-tertiary-fixed": "#001737",
+                        "on-secondary-fixed-variant": "#00586d",
+                        "on-primary-fixed": "#00363e",
+                        "tertiary-fixed": "#85b1ff",
+                        "on-background": "#bfedff",
+                        "inverse-surface": "#f2fbff",
+                        "tertiary-container": "#5f9bfb",
+                        "inverse-primary": "#006977",
+                        "surface-tint": "#3adffa",
+                        "primary-dim": "#1ad0eb",
+                        "error": "#ff716c",
+                        "outline-variant": "#164e5f",
+                        "on-secondary": "#004253",
+                        "on-primary-fixed-variant": "#005561",
+                        "surface-bright": "#00313e",
+                        "primary": "#3adffa",
+                        "tertiary": "#76a9ff",
+                        "on-error": "#490006",
+                        "on-secondary-container": "#eefaff",
+                        "surface-container-highest": "#002a35",
+                        "background": "#001017",
+                        "on-tertiary-fixed-variant": "#003875",
+                        "on-error-container": "#ffa8a3",
+                        "outline": "#4a7c8e",
+                        "secondary-fixed": "#7fdeff",
+                        "on-primary-container": "#003d46",
+                        "primary-container": "#00cbe6",
+                        "surface-container": "#001d25",
+                        "on-tertiary": "#002959",
+                        "on-primary": "#004b56",
+                        "surface-container-high": "#00232d",
+                        "inverse-on-surface": "#275b6c",
+                        "error-container": "#9f0519",
+                        "surface-container-lowest": "#000000",
+                        "surface": "#001017",
+                        "primary-fixed": "#3adffa",
+                        "secondary-dim": "#00c3ed"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "8px",
+                        "section-gap": "64px",
+                        "gutter": "16px",
+                        "container-padding": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": [
+                            "Inter"
+                        ],
+                        "body-md": [
+                            "Inter"
+                        ],
+                        "headline-xl": [
+                            "Space Grotesk"
+                        ],
+                        "headline-lg": [
+                            "Space Grotesk"
+                        ]
+                    },
+                    "fontSize": {
+                        "label-sm": [
+                            "14px",
+                            {
+                                "lineHeight": "1.4",
+                                "letterSpacing": "0.05em",
+                                "fontWeight": "500"
+                            }
+                        ],
+                        "body-md": [
+                            "16px",
+                            {
+                                "lineHeight": "1.6",
+                                "fontWeight": "400"
+                            }
+                        ],
+                        "headline-xl": [
+                            "64px",
+                            {
+                                "lineHeight": "1.1",
+                                "letterSpacing": "-0.02em",
+                                "fontWeight": "700"
+                            }
+                        ],
+                        "headline-lg": [
+                            "48px",
+                            {
+                                "lineHeight": "1.2",
+                                "fontWeight": "700"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background antialiased selection:bg-primary/30 selection:text-primary">
+<!-- Top Navigation -->
+<nav class="fixed top-0 w-full z-50 bg-surface-dim/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-container-padding py-base max-w-7xl mx-auto w-full">
+<a class="flex items-center gap-2 group scale-95 active:scale-90 transition-transform" href="#">
+<img alt="Bash Squad Logo" class="h-8 w-auto" src="https://lh3.googleusercontent.com/aida/AP1WRLtb2PevtDIqyBejhIpQZBr7vHeZhSwyNoTbwU2qB7uOCUsyrXplkjlC6BRrvIrq-313x5-CZ3isuzs3xywLycr6xmIqtN4-7ALkA6a6fbqSCGvuiokAzn_IfuA3NlzVMDM0EviIYWdwnTG3XQgTs90_NIIB3mw_GLT4-ziG6Wsw4C0_ktUyENqh2pShmD9GZ9YddlM2rURXwuD9fme4N0zkO3BO2u3NrXBdR--IdG92Vmzoyrl8BGtu5n4"/>
+</a>
+<!-- Desktop Nav -->
+<div class="hidden md:flex items-center gap-8">
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">About</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">How we work</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Services</a>
+<a class="font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors duration-300" href="#">Contact</a>
+<a class="font-label-sm text-label-sm text-surface bg-primary px-6 py-2 rounded-full hover:bg-primary-dim transition-colors duration-300 font-bold ml-4" href="#">Let's Talk</a>
+</div>
+<!-- Mobile Menu Toggle -->
+<button class="md:hidden text-on-surface hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+<!-- Background Image with Overlay -->
+<div class="absolute inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida/AP1WRLuLyYH9O-MCeZwtJxo6869SYI3PpgoWIlb88uniX4-V1oES5m9I5XRMJ7Ljs8xDddBvkpq1bkiNcUEsZGOkRnel15B8ZD6s6kh-G8T4RVCYj5FbA1btXfM-bFHs6coflsMpjCQHAD3DkS-QaB3WMlkm4u_a5q36uie6O6KJp534pyYqEkYvJ5uSDZz4tX6dC3IW_3USlv5S9qPBGSdrePIGJV2sk7DoNHEM0bWvSI-TD7Xah8RCUjl8sTM');"></div>
+<div class="absolute inset-0 bg-background/80 bg-gradient-to-t from-background via-background/60 to-background/30"></div>
+<div class="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,16,23,0.8)_100%)]"></div>
+</div>
+<!-- Content -->
+<div class="relative z-10 max-w-4xl mx-auto px-container-padding text-center flex flex-col items-center gap-8">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest bg-primary/10 px-4 py-1.5 rounded-full border border-primary/20 shadow-[0_0_15px_rgba(58,223,250,0.15)]">
+                AI consultancy &amp; build studio
+            </span>
+<h1 class="font-headline-xl text-headline-xl text-on-surface leading-tight text-balance">
+                AI that earns its keep.
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl text-balance text-lg">
+                We help your business put AI to work — integrating what already delivers, building what doesn't exist, and making sure your team truly understands it.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4 mt-4 w-full sm:w-auto">
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-surface font-label-sm text-label-sm font-bold rounded-lg hover:bg-primary-dim hover:shadow-[0_0_20px_rgba(58,223,250,0.4)] transition-all duration-300" href="#">
+                    Start a project
+                    <span class="material-symbols-outlined text-xl">arrow_forward</span>
+</a>
+<a class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent text-primary border-2 border-primary/30 font-label-sm text-label-sm font-bold rounded-lg hover:bg-primary/10 hover:border-primary transition-all duration-300" href="#">
+                    See how we work
+                </a>
+</div>
+</div>
+</section>
+</body></html>

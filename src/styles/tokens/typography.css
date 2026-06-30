@@ -1,0 +1,50 @@
+/* ============================================================
+   TYPOGRAPHY — Bash Squad
+   Display = Bricolage Grotesque · UI/body = Space Grotesk ·
+   Mono = JetBrains Mono (the command UI, labels, captions).
+   ============================================================ */
+
+:root {
+  /* ---- Families ---- */
+  --font-display: 'Bricolage Grotesque', 'Space Grotesk', system-ui, sans-serif;
+  --font-sans:    'Space Grotesk', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---- Weights ---- */
+  --w-regular: 400;
+  --w-medium:  500;
+  --w-semi:    600;
+  --w-bold:    700;
+  --w-black:   800;
+
+  /* ---- Type scale (fluid where it matters) ---- */
+  --t-hero:    clamp(3.5rem, 9vw, 8.5rem);
+  --t-display: clamp(2.75rem, 6vw, 5rem);
+  --t-h1:      clamp(2.25rem, 4vw, 3.25rem);
+  --t-h2:      clamp(1.75rem, 2.6vw, 2.25rem);
+  --t-h3:      1.5rem;
+  --t-h4:      1.25rem;
+  --t-lg:      1.125rem;
+  --t-body:    1rem;
+  --t-sm:      0.875rem;
+  --t-xs:      0.75rem;
+  --t-2xs:     0.6875rem;
+
+  /* ---- Line heights ---- */
+  --lh-tight:   0.95;
+  --lh-snug:    1.1;
+  --lh-normal:  1.45;
+  --lh-relaxed: 1.65;
+
+  /* ---- Letter spacing ---- */
+  --ls-tight:   -0.03em;
+  --ls-snug:    -0.01em;
+  --ls-normal:  0;
+  --ls-wide:    0.04em;
+  --ls-label:   0.14em;
+
+  /* ---- Semantic roles ---- */
+  --text-display-font: var(--font-display);
+  --text-label-font:   var(--font-mono);   /* eyebrows / tags / captions */
+  --text-body-font:    var(--font-sans);
+}

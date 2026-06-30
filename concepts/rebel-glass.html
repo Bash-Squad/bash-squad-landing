@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bash Squad — We're not for everyone. Good.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0B0F14; --surface:#11161D; --text:#E8EDF2; --muted:#9AA7B4; --faint:#5C6B7A;
+    --line:rgba(255,255,255,.09);
+    --accent:#22D3EE; --accent-2:#FF2D9B; --accent-3:#C6FF00;
+    --display:'Space Grotesk',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--ink); color:var(--text); font-family:var(--body); -webkit-font-smoothing:antialiased; overflow:hidden; position:relative}
+  .bg-glow{position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(45% 55% at 78% 35%, rgba(34,211,238,.16), transparent 62%),
+      radial-gradient(45% 55% at 70% 80%, rgba(255,45,155,.14), transparent 66%),
+      radial-gradient(90% 90% at 40% 45%, #0c1219 0%, #07090e 100%);}
+  #scene{position:fixed; inset:0; z-index:1; pointer-events:none}
+  .grain{position:fixed; inset:-200%; z-index:2; pointer-events:none; opacity:.045;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 7s steps(6) infinite;}
+  @keyframes grain{0%{transform:translate(0,0)}30%{transform:translate(-3%,4%)}60%{transform:translate(4%,-3%)}100%{transform:translate(0,0)}}
+
+  .wrap{position:relative; z-index:3; height:100%; display:flex; flex-direction:column; padding:clamp(18px,3vw,34px) clamp(20px,5vw,64px)}
+  nav{display:flex; align-items:center; justify-content:space-between; gap:18px}
+  .brand{font-family:var(--mono); font-weight:700; font-size:15px; display:flex; align-items:center}
+  .brand .dollar{color:var(--accent)}
+  .brand .cursor{display:inline-block; width:9px; height:1.05em; background:var(--accent); margin-left:5px; transform:translateY(2px); animation:blink 1.15s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .navlinks{display:flex; gap:26px; font-family:var(--mono); font-size:13px; color:var(--muted)}
+  .navlinks a{color:inherit; text-decoration:none}.navlinks a:hover{color:var(--text)}
+  @media(max-width:860px){.navlinks{display:none}}
+  .cta-pill{font-family:var(--mono); font-size:13px; color:var(--ink); background:var(--accent); padding:9px 16px; border-radius:999px; text-decoration:none; box-shadow:0 6px 30px rgba(34,211,238,.35)}
+
+  .hero{flex:1; display:grid; grid-template-columns:1.05fr .95fr; gap:40px; align-items:center}
+  @media(max-width:980px){.hero{grid-template-columns:1fr; gap:24px; align-content:center}}
+  .col{max-width:600px}
+  .eyebrow{font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:.04em; display:inline-flex; align-items:center; gap:9px; padding:7px 13px; border:1px solid var(--line); border-radius:999px; background:rgba(255,255,255,.02); margin-bottom:24px}
+  .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--accent-3); box-shadow:0 0 10px var(--accent-3)}
+  h1{font-family:var(--display); font-weight:700; font-size:clamp(2.7rem,6.4vw,5.2rem); line-height:.96; letter-spacing:-.03em; margin-bottom:22px}
+  h1 .grad{background:linear-gradient(95deg,var(--accent), #7dd3fc 45%, var(--accent-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent}
+  .sub{font-size:clamp(1rem,1.5vw,1.16rem); line-height:1.6; color:var(--muted); max-width:500px; margin-bottom:32px}
+  .actions{display:flex; align-items:center; gap:20px; flex-wrap:wrap}
+  .btn-primary{font-family:var(--body); font-weight:600; font-size:15px; color:var(--ink); text-decoration:none; background:var(--text); padding:15px 26px; border-radius:12px; box-shadow:0 10px 40px rgba(0,0,0,.45); transition:transform .2s}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{font-family:var(--mono); font-size:14px; color:var(--text); text-decoration:none; opacity:.85}.btn-ghost:hover{opacity:1; color:var(--accent)}
+
+  /* glass deck */
+  .stage{perspective:1300px; display:flex; justify-content:center; align-items:center}
+  .deck{display:flex; flex-direction:column; gap:18px; transform-style:preserve-3d; transform:rotateY(-13deg) rotateX(7deg); transition:transform .18s ease-out; will-change:transform}
+  .card{
+    position:relative; width:min(430px,80vw); padding:22px 24px; border-radius:20px;
+    background:linear-gradient(135deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.14); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    box-shadow:0 24px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.18);
+    transform-style:preserve-3d;
+  }
+  .card::after{content:""; position:absolute; inset:0; border-radius:20px; pointer-events:none;
+    background:linear-gradient(135deg, rgba(34,211,238,.10), transparent 40%);}
+  .card .klabel{font-family:var(--mono); font-size:12px; letter-spacing:.06em; text-transform:lowercase; display:flex; align-items:center; gap:8px; margin-bottom:9px}
+  .card .num{color:var(--faint)}
+  .card.i .klabel .tag{color:var(--accent)} .card.b .klabel .tag{color:var(--accent-2)} .card.e .klabel .tag{color:var(--accent-3)}
+  .card h3{font-family:var(--display); font-weight:600; font-size:1.45rem; letter-spacing:-.01em; margin-bottom:7px}
+  .card p{font-size:.96rem; line-height:1.55; color:var(--muted)}
+  .card .dot{width:8px;height:8px;border-radius:50%}
+  .card.i .dot{background:var(--accent); box-shadow:0 0 10px var(--accent)}
+  .card.b .dot{background:var(--accent-2); box-shadow:0 0 10px var(--accent-2)}
+  .card.e .dot{background:var(--accent-3); box-shadow:0 0 10px var(--accent-3)}
+</style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <canvas id="scene"></canvas>
+  <div class="grain"></div>
+
+  <div class="wrap">
+    <nav>
+      <div class="brand"><span class="dollar">$</span>&nbsp;bash_squad<span class="cursor"></span></div>
+      <div class="navlinks"><a href="#">what_we_do</a><a href="#">how_we_work</a><a href="#">the_crew</a><a href="#">contact</a></div>
+      <a class="cta-pill" href="#">Start a project</a>
+    </nav>
+
+    <section class="hero">
+      <div class="col">
+        <span class="eyebrow"><span class="dot" style="width:7px;height:7px;border-radius:50%;background:var(--accent-3);box-shadow:0 0 10px var(--accent-3)"></span>$ bash-squad ~ we ship AI that works_</span>
+        <h1>We're not for<br>everyone. <span class="grad">Good.</span></h1>
+        <p class="sub">If you want a buzzword deck and a six-month retainer for nothing, we're the wrong call. If you want it shipped — integrated, built, and handed over so you own it — let's talk.</p>
+        <div class="actions">
+          <a class="btn-primary" href="#">Start a project</a>
+          <a class="btn-ghost" href="#">See if we're a fit&nbsp;→</a>
+        </div>
+      </div>
+
+      <div class="stage">
+        <div class="deck" id="deck">
+          <div class="card i" data-depth="60">
+            <div class="klabel"><span class="dot"></span><span class="tag">integrate</span><span class="num">/ 01</span></div>
+            <h3>Use what already wins.</h3>
+            <p>We don't reinvent solved problems. We wire up the AI services that already do the job — fast.</p>
+          </div>
+          <div class="card b" data-depth="30">
+            <div class="klabel"><span class="dot"></span><span class="tag">build</span><span class="num">/ 02</span></div>
+            <h3>Build the rest. Properly.</h3>
+            <p>When nothing off-the-shelf fits, we build the custom pieces. No duct tape, no demo-ware.</p>
+          </div>
+          <div class="card e" data-depth="0">
+            <div class="klabel"><span class="dot"></span><span class="tag">educate</span><span class="num">/ 03</span></div>
+            <h3>Own it, don't rent it.</h3>
+            <p>We teach your team how we think — so when we leave, the capability stays. That's the point.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script type="importmap">
+{
+  "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" }
+}
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  const canvas=document.getElementById('scene');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  const camera=new THREE.PerspectiveCamera(60,1,0.1,100); camera.position.z=14;
+
+  // iridescent particle field
+  const N=1400;
+  const g=new THREE.BufferGeometry();
+  const pos=new Float32Array(N*3), col=new Float32Array(N*3);
+  const cA=new THREE.Color(0x22d3ee), cB=new THREE.Color(0xff2d9b);
+  for(let i=0;i<N;i++){
+    pos[i*3]=(Math.random()-.5)*34; pos[i*3+1]=(Math.random()-.5)*22; pos[i*3+2]=(Math.random()-.5)*20;
+    const c=cA.clone().lerp(cB, Math.random());
+    col[i*3]=c.r; col[i*3+1]=c.g; col[i*3+2]=c.b;
+  }
+  g.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  g.setAttribute('color', new THREE.BufferAttribute(col,3));
+  const m=new THREE.PointsMaterial({ size:0.075, vertexColors:true, transparent:true, opacity:.9, blending:THREE.AdditiveBlending, depthWrite:false });
+  const pts=new THREE.Points(g,m); scene.add(pts);
+
+  let mx=0,my=0;
+  function resize(){ const w=window.innerWidth,h=window.innerHeight; renderer.setSize(w,h); camera.aspect=w/h; camera.updateProjectionMatrix(); }
+  window.addEventListener('resize',resize); resize();
+
+  // mouse parallax for both particles and glass deck
+  const deck=document.getElementById('deck');
+  window.addEventListener('pointermove', e=>{
+    mx=(e.clientX/window.innerWidth-.5); my=(e.clientY/window.innerHeight-.5);
+    deck.style.transform=`rotateY(${-13 + mx*18}deg) rotateX(${7 - my*12}deg)`;
+  });
+
+  const clock=new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t=clock.getElapsedTime();
+    pts.rotation.y=t*0.04 + mx*0.4;
+    pts.rotation.x=Math.sin(t*0.1)*0.05 + my*0.25;
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  // per-card depth so the stack has real parallax separation
+  document.querySelectorAll('.card').forEach(c=>{
+    c.style.transform=`translateZ(${c.dataset.depth}px)`;
+  });
+</script>
+</body>
+</html>

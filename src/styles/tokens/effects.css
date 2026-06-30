@@ -1,0 +1,41 @@
+/* ============================================================
+   EFFECTS — Bash Squad
+   Shadows are restrained; depth comes from borders + acid glow.
+   Motion is snappy and precise (speed is part of the brand).
+   ============================================================ */
+
+:root {
+  /* ---- Shadows (subtle on dark) ---- */
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-2: 0 4px 16px rgba(0,0,0,0.45);
+  --shadow-3: 0 18px 48px rgba(0,0,0,0.55);
+
+  /* ---- Signal glows (the one expressive shadow) ---- */
+  --glow-acid:  0 0 0 1px var(--acid-500), 0 0 24px var(--acid-glow);
+  --glow-soft:  0 0 32px var(--acid-glow);
+  --glow-ember: 0 0 24px var(--ember-tint);
+
+  /* ---- Focus ring ---- */
+  --ring: 0 0 0 2px var(--surface-page), 0 0 0 4px var(--focus-ring);
+
+  /* ---- Exposed grid texture (decorative bg) ---- */
+  --grid-line: rgba(255,255,255,0.035);
+  --grid-bg:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  --grid-size: 48px 48px;
+
+  /* ---- Scanline / terminal wash (use sparingly) ---- */
+  --scanline: repeating-linear-gradient(
+    0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
+    transparent 1px, transparent 3px);
+
+  /* ---- Motion — snappy, precise ---- */
+  --ease-out:  cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --dur-3: 400ms;
+  --dur-type: 60ms;
+}

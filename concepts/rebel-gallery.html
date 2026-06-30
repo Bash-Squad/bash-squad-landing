@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bash Squad — Rebel Concepts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0B0F14; --surface:#11161D; --text:#E8EDF2; --muted:#9AA7B4; --faint:#5C6B7A;
+    --line:rgba(255,255,255,.09);
+    --accent:#22D3EE; --accent-2:#FF2D9B; --accent-3:#C6FF00;
+    --display:'Space Grotesk',system-ui,sans-serif; --body:'Inter',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:
+      radial-gradient(60% 50% at 50% 0%, rgba(34,211,238,.08), transparent 60%),
+      radial-gradient(50% 40% at 80% 30%, rgba(255,45,155,.06), transparent 60%),
+      #07090d;
+    color:var(--text); font-family:var(--body); -webkit-font-smoothing:antialiased; min-height:100%; padding:clamp(28px,5vw,64px)}
+  header{max-width:1200px; margin:0 auto 38px}
+  .brand{font-family:var(--mono); font-weight:700; font-size:15px; display:flex; align-items:center; margin-bottom:20px}
+  .brand .dollar{color:var(--accent)}
+  .brand .cursor{display:inline-block; width:9px; height:1.05em; background:var(--accent); margin-left:5px; transform:translateY(2px); animation:blink 1.15s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  h1{font-family:var(--display); font-weight:700; font-size:clamp(2rem,5vw,3.4rem); line-height:1.0; letter-spacing:-.03em; margin-bottom:14px}
+  h1 .grad{background:linear-gradient(95deg,var(--accent), #7dd3fc 45%, var(--accent-2)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent}
+  .lede{color:var(--muted); max-width:640px; line-height:1.6; font-size:1.05rem}
+  .hint{font-family:var(--mono); font-size:12px; color:var(--faint); margin-top:14px}
+
+  .grid{max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:30px}
+  @media(max-width:1040px){.grid{grid-template-columns:1fr}}
+  .card{background:rgba(255,255,255,.02); border:1px solid var(--line); border-radius:20px; overflow:hidden; transition:transform .2s, border-color .2s, box-shadow .2s}
+  .card:hover{transform:translateY(-3px); border-color:rgba(34,211,238,.4); box-shadow:0 24px 60px rgba(0,0,0,.5)}
+  .frame{position:relative; width:100%; aspect-ratio:16/10; overflow:hidden; background:#06090d; border-bottom:1px solid var(--line)}
+  .frame iframe{position:absolute; top:0; left:0; width:1440px; height:900px; border:0; transform-origin:top left}
+  .frame .cover{position:absolute; inset:0; z-index:2}  /* click-through to open full, keeps thumbs from stealing scroll */
+  .meta{padding:18px 22px 22px; display:flex; justify-content:space-between; align-items:flex-start; gap:16px}
+  .meta h2{font-family:var(--display); font-weight:600; font-size:1.3rem; letter-spacing:-.01em; margin-bottom:6px}
+  .meta .num{font-family:var(--mono); font-size:12px; color:var(--accent); margin-bottom:8px; display:block}
+  .meta p{color:var(--muted); font-size:.95rem; line-height:1.5; max-width:46ch}
+  .open{flex:0 0 auto; font-family:var(--mono); font-size:13px; color:var(--ink); background:var(--accent); padding:9px 15px; border-radius:999px; text-decoration:none; white-space:nowrap; box-shadow:0 6px 24px rgba(34,211,238,.3); transition:transform .2s}
+  .open:hover{transform:translateY(-1px)}
+  footer{max-width:1200px; margin:34px auto 0; font-family:var(--mono); font-size:13px; color:var(--faint); display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+  footer a{color:var(--muted); text-decoration:none; border-bottom:1px solid rgba(255,255,255,.15)}
+  footer a:hover{color:var(--accent)}
+</style>
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="dollar">$</span>&nbsp;bash_squad<span class="cursor"></span></div>
+    <h1>Rebel concepts. <span class="grad">Pick a lane.</span></h1>
+    <p class="lede">Four bold, 3D-forward directions for the Bash Squad hero — full Passive-Rebel voice, cyan + magenta palette, real WebGL (no remote images, nothing to rot). Live, interactive previews below.</p>
+    <p class="hint">// previews are live &amp; interactive — move your mouse over one, or hit “open full” to view it solo.</p>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <span>4 concepts</span><span style="color:rgba(255,255,255,.15)">·</span>
+    <span>Three.js + CSS, static HTML</span><span style="color:rgba(255,255,255,.15)">·</span>
+    <a href="../index.html" target="_blank">compare with the current site →</a>
+  </footer>
+
+<script>
+  const concepts=[
+    {file:'rebel-chrome.html',    n:'01', t:'Chrome / liquid-metal',  d:'A molten iridescent blob floats beside an oversized headline. Most “Emergent-like” — premium, foreground-heavy, glowing.'},
+    {file:'rebel-wireframe.html', n:'02', t:'Wireframe world',         d:'Synthwave terrain scrolling toward you under a magenta sun. Literal clean lines — technical, authentic, unmistakably engineers.'},
+    {file:'rebel-extruded.html',  n:'03', t:'3D extruded type',        d:'A giant chrome “bash” tumbles in space with a real cast shadow and a blinking cyan cursor. Owns the dev identity, loudly.'},
+    {file:'rebel-glass.html',     n:'04', t:'Floating glass stack',    d:'Integrate / Build / Educate as tilting glass panels over a drifting iridescent particle field. Bold, but clean and product-y.'},
+  ];
+  const SCALE=0.46;  // thumbnail scale of a 1440px-wide render
+  const grid=document.getElementById('grid');
+  concepts.forEach(c=>{
+    const card=document.createElement('div'); card.className='card';
+    card.innerHTML=`
+      <div class="frame">
+        <iframe src="${c.file}" loading="lazy" title="${c.t}" scrolling="no"></iframe>
+        <a class="cover" href="${c.file}" target="_blank" aria-label="Open ${c.t} full screen"></a>
+      </div>
+      <div class="meta">
+        <div>
+          <span class="num">concept ${c.n}</span>
+          <h2>${c.t}</h2>
+          <p>${c.d}</p>
+        </div>
+        <a class="open" href="${c.file}" target="_blank">open full ↗</a>
+      </div>`;
+    grid.appendChild(card);
+    // scale the live iframe to fit its frame
+    const frame=card.querySelector('.frame');
+    const iframe=card.querySelector('iframe');
+    const fit=()=>{ const s=frame.clientWidth/1440; iframe.style.transform=`scale(${s})`; iframe.style.height=(frame.clientHeight/s)+'px'; };
+    requestAnimationFrame(fit); window.addEventListener('resize', fit);
+  });
+</script>
+</body>
+</html>

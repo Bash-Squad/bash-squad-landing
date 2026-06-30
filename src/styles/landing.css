@@ -1,0 +1,26 @@
+/* ============================================================
+   LANDING — page-level helpers + responsive collapse rules.
+   These class hooks are referenced inline by the section
+   components (Header nav, WhyUs / CTA / Footer grids).
+   ============================================================ */
+
+html { scroll-behavior: smooth; }
+body { background: var(--surface-page); }
+
+.bg-mobile-nav { display: none; }
+
+@media (max-width: 860px) {
+  .bg-desktop-nav { display: none !important; }
+  .bg-mobile-nav { display: flex !important; }
+  .bg-why-grid, .bg-cta-grid { grid-template-columns: 1fr !important; }
+  .bg-footer-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+@media (max-width: 520px) {
+  .bg-footer-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  html { scroll-behavior: auto; }
+}

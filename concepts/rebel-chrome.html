@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bash Squad — Most AI is theater. We don't do theater.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#0B0F14; --surface:#11161D; --text:#E8EDF2; --muted:#9AA7B4; --faint:#5C6B7A;
+    --line:rgba(255,255,255,.09);
+    --accent:#22D3EE;        /* cyan — the signal */
+    --accent-2:#FF2D9B;      /* hot magenta — rebel secondary */
+    --accent-3:#C6FF00;      /* acid lime — rare punch */
+    --display:'Space Grotesk',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:var(--ink); color:var(--text); font-family:var(--body);
+    -webkit-font-smoothing:antialiased; overflow:hidden; position:relative;
+  }
+  /* CSS fallback glow — shows even if WebGL fails */
+  .bg-glow{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(60% 70% at 72% 42%, rgba(34,211,238,.18), transparent 60%),
+      radial-gradient(45% 55% at 82% 70%, rgba(255,45,155,.16), transparent 65%),
+      radial-gradient(80% 80% at 50% 50%, #0c1219 0%, #070a0e 100%);
+  }
+  #scene{position:fixed; inset:0; z-index:1; pointer-events:none}
+  /* film grain */
+  .grain{
+    position:fixed; inset:-200%; z-index:2; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 7s steps(6) infinite;
+  }
+  @keyframes grain{
+    0%{transform:translate(0,0)}10%{transform:translate(-4%,-6%)}30%{transform:translate(3%,-3%)}
+    50%{transform:translate(-3%,4%)}70%{transform:translate(4%,3%)}90%{transform:translate(-2%,-4%)}100%{transform:translate(0,0)}
+  }
+
+  .wrap{position:relative; z-index:3; height:100%; display:flex; flex-direction:column; padding:clamp(18px,3vw,34px) clamp(20px,5vw,64px)}
+
+  /* nav */
+  nav{display:flex; align-items:center; justify-content:space-between; gap:18px}
+  .brand{font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:.02em; display:flex; align-items:center; gap:2px}
+  .brand .dollar{color:var(--accent)}
+  .brand .cursor{display:inline-block; width:9px; height:1.05em; background:var(--accent); margin-left:5px; transform:translateY(2px); animation:blink 1.15s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  .navlinks{display:flex; gap:26px; font-family:var(--mono); font-size:13px; color:var(--muted)}
+  .navlinks a{color:inherit; text-decoration:none; transition:color .2s}
+  .navlinks a:hover{color:var(--text)}
+  @media(max-width:720px){.navlinks{display:none}}
+  .cta-pill{
+    font-family:var(--mono); font-size:13px; font-weight:500; color:var(--ink);
+    background:var(--accent); padding:9px 16px; border-radius:999px; text-decoration:none;
+    box-shadow:0 0 0 1px rgba(34,211,238,.5), 0 6px 30px rgba(34,211,238,.35); transition:transform .2s, box-shadow .2s;
+  }
+  .cta-pill:hover{transform:translateY(-1px); box-shadow:0 0 0 1px rgba(34,211,238,.7), 0 10px 38px rgba(34,211,238,.5)}
+
+  /* hero */
+  .hero{flex:1; display:flex; align-items:center}
+  .col{max-width:640px}
+  .eyebrow{
+    font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:.04em;
+    display:inline-flex; align-items:center; gap:9px; padding:7px 13px; border:1px solid var(--line);
+    border-radius:999px; background:rgba(255,255,255,.02); backdrop-filter:blur(6px); margin-bottom:26px;
+  }
+  .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--accent-3); box-shadow:0 0 10px var(--accent-3)}
+  h1{
+    font-family:var(--display); font-weight:700; font-size:clamp(2.7rem,6.6vw,5.4rem); line-height:.96;
+    letter-spacing:-.03em; margin-bottom:24px;
+  }
+  h1 .strike{
+    background:linear-gradient(100deg,var(--accent) 0%, #7dd3fc 30%, var(--accent-2) 70%, #c084fc 100%);
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .sub{font-size:clamp(1rem,1.5vw,1.18rem); line-height:1.6; color:var(--muted); max-width:540px; margin-bottom:34px}
+  .actions{display:flex; align-items:center; gap:20px; flex-wrap:wrap}
+  .btn-primary{
+    font-family:var(--body); font-weight:600; font-size:15px; color:var(--ink); text-decoration:none;
+    background:var(--text); padding:15px 26px; border-radius:12px; transition:transform .2s, box-shadow .2s;
+    box-shadow:0 10px 40px rgba(0,0,0,.4);
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 16px 50px rgba(0,0,0,.55)}
+  .btn-ghost{font-family:var(--mono); font-size:14px; color:var(--text); text-decoration:none; opacity:.85; transition:opacity .2s}
+  .btn-ghost:hover{opacity:1; color:var(--accent)}
+
+  /* footer strip */
+  .strip{display:flex; gap:34px; align-items:center; font-family:var(--mono); font-size:12px; color:var(--faint); padding-top:8px; flex-wrap:wrap}
+  .strip b{color:var(--muted); font-weight:500}
+  .strip .sep{color:rgba(255,255,255,.12)}
+</style>
+</head>
+<body>
+  <div class="bg-glow"></div>
+  <canvas id="scene"></canvas>
+  <div class="grain"></div>
+
+  <div class="wrap">
+    <nav>
+      <div class="brand"><span class="dollar">$</span>&nbsp;bash_squad<span class="cursor"></span></div>
+      <div class="navlinks">
+        <a href="#">what_we_do</a><a href="#">how_we_work</a><a href="#">the_crew</a><a href="#">contact</a>
+      </div>
+      <a class="cta-pill" href="#">Start a project</a>
+    </nav>
+
+    <section class="hero">
+      <div class="col">
+        <span class="eyebrow"><span class="dot"></span>$ bash-squad ~ we ship AI that works_</span>
+        <h1>Most AI is<br><span class="strike">theater.</span><br>We don't do theater.</h1>
+        <p class="sub">A small, senior crew. We integrate the AI that already works, build the custom pieces when it doesn't, and teach your team how we think — so you own the outcome, not rent it.</p>
+        <div class="actions">
+          <a class="btn-primary" href="#">Start a project</a>
+          <a class="btn-ghost" href="#">See if we're a fit&nbsp;→</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="strip">
+      <span><b>integrate</b> what already works</span><span class="sep">/</span>
+      <span><b>build</b> what doesn't exist</span><span class="sep">/</span>
+      <span><b>educate</b> so you own it</span>
+    </div>
+  </div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+  import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+  const canvas = document.getElementById('scene');
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100);
+  camera.position.set(0, 0, 5.4);
+
+  // --- iridescent environment (cyan -> dark -> magenta gradient) ---
+  function makeEnv(){
+    const c = document.createElement('canvas'); c.width=512; c.height=256;
+    const x = c.getContext('2d');
+    const g = x.createLinearGradient(0,0,0,256);
+    g.addColorStop(0.0,'#2ee6ff'); g.addColorStop(0.38,'#0a1a24');
+    g.addColorStop(0.55,'#0a0c14'); g.addColorStop(0.78,'#3a0f2a'); g.addColorStop(1.0,'#ff2d9b');
+    x.fillStyle=g; x.fillRect(0,0,512,256);
+    // bright bloom spots for hot highlights
+    x.globalCompositeOperation='lighter';
+    const spot=(cx,cy,r,col)=>{const rg=x.createRadialGradient(cx,cy,0,cx,cy,r);rg.addColorStop(0,col);rg.addColorStop(1,'transparent');x.fillStyle=rg;x.fillRect(0,0,512,256);};
+    spot(140,70,120,'rgba(120,240,255,.9)'); spot(400,200,150,'rgba(255,60,170,.85)'); spot(300,40,90,'rgba(255,255,255,.5)');
+    const tex = new THREE.CanvasTexture(c);
+    tex.mapping = THREE.EquirectangularReflectionMapping;
+    const pmrem = new THREE.PMREMGenerator(renderer);
+    const env = pmrem.fromEquirectangular(tex).texture;
+    tex.dispose(); pmrem.dispose();
+    return env;
+  }
+  scene.environment = makeEnv();
+
+  // --- liquid-metal blob ---
+  const geo = new THREE.IcosahedronGeometry(1.32, 24);
+  const base = Float32Array.from(geo.attributes.position.array);
+  const mat = new THREE.MeshStandardMaterial({ color:0xeaf2f8, metalness:1.0, roughness:0.09, envMapIntensity:1.6 });
+  const blob = new THREE.Mesh(geo, mat);
+  blob.position.x = 1.55;
+  scene.add(blob);
+
+  // thin cyan rim light orb for extra bloom
+  const rim = new THREE.PointLight(0x22d3ee, 8, 12); rim.position.set(3.5,2,2); scene.add(rim);
+  const rim2 = new THREE.PointLight(0xff2d9b, 6, 12); rim2.position.set(2,-2.5,1.5); scene.add(rim2);
+
+  // --- bloom ---
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1,1), 0.55, 0.5, 0.62);
+  composer.addPass(bloom);
+
+  // --- interaction: gentle parallax toward pointer ---
+  let mx=0, my=0;
+  window.addEventListener('pointermove', e=>{ mx=(e.clientX/window.innerWidth-.5); my=(e.clientY/window.innerHeight-.5); });
+
+  function resize(){
+    const w=window.innerWidth, h=window.innerHeight;
+    renderer.setSize(w,h); composer.setSize(w,h);
+    camera.aspect=w/h; camera.updateProjectionMatrix();
+    // push blob further right on wide screens, center on narrow
+    blob.position.x = w<820 ? 0 : 1.55;
+  }
+  window.addEventListener('resize', resize); resize();
+
+  const clock = new THREE.Clock();
+  function animate(){
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+    const pos = geo.attributes.position;
+    for(let i=0;i<pos.count;i++){
+      const ix=i*3, x=base[ix], y=base[ix+1], z=base[ix+2];
+      const n = Math.sin(x*2.2+t)*0.07 + Math.sin(y*3.1+t*1.25)*0.055 + Math.sin(z*2.7+t*0.8)*0.05;
+      const f = 1 + n;
+      pos.setXYZ(i, x*f, y*f, z*f);
+    }
+    pos.needsUpdate = true;
+    geo.computeVertexNormals();
+    blob.rotation.y = t*0.18 + mx*0.5;
+    blob.rotation.x = my*0.35;
+    composer.render();
+  }
+  animate();
+</script>
+</body>
+</html>
