@@ -6,7 +6,7 @@ import React from 'react';
  * cycles suggested commands. Doubles as the ⌘K trigger.
  */
 export function CommandPrompt({
-  suggestions = ['services', 'work', 'team', 'book'],
+  suggestions = ['services', 'how we work', 'team', 'book'],
   onSubmit,
   onOpenPalette,
   prefix = '>',

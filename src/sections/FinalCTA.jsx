@@ -4,12 +4,12 @@ import { Input, Select, Textarea, TerminalInput, Button, Checkbox, Badge } from 
 import { Section, SectionHead } from './Section.jsx';
 
 export function FinalCTA() {
-  const [form, setForm] = React.useState({ name: '', company: '', broken: '', budget: '', email: '', recap: true });
+  const [form, setForm] = React.useState({ name: '', company: '', broken: '', detail: '', budget: '', email: '', recap: true });
   const [sent, setSent] = React.useState(false);
   const set = (k) => (v) => setForm(f => ({ ...f, [k]: v && v.target ? v.target.value : v }));
 
   return (
-    <Section id="book" tone="base" style={{ borderBottom: 'none' }}>
+    <Section id="book" style={{ borderBottom: 'none' }}>
       <SectionHead index="07" label="book" title="Tell us what's broken." intro="Two minutes. A real engineer reads every one of these — no bots, no SDR cadence. If we're not the right fit, we'll say so." align="center" />
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,0.85fr)', gap: 16, alignItems: 'start' }} className="bg-cta-grid">
         {/* terminal form */}
@@ -36,10 +36,10 @@ export function FinalCTA() {
                   <Input label="Company" value={form.company} onChange={set('company')} placeholder="acme co" />
                 </div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-                  <Input label="Work email" prefix="$" value={form.email} onChange={set('email')} placeholder="you@company.com" />
+                  <Input label="Work email" value={form.email} onChange={set('email')} placeholder="you@company.com" />
                   <Select label="Budget band" options={['select…', '< $10k', '$10–25k', '$25–75k', '$75k+', 'not sure yet']} value={form.budget} onChange={set('budget')} />
                 </div>
-                <Textarea label="What's broken?" rows={3} value={form.broken} onChange={set('broken')} placeholder="The manual, glued-together process that's costing you hours" />
+                <Textarea label="What's broken?" rows={3} value={form.detail} onChange={set('detail')} placeholder="The manual, glued-together process that's costing you hours" />
                 <Checkbox checked={form.recap} onChange={set('recap')} label="Email me a short recap + next steps" />
                 <Button variant="primary" prompt size="lg" full onClick={() => setSent(true)}>Send it over</Button>
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--t-sm)', color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>No spam, no sales reps — one engineer, one reply.</p>
@@ -63,7 +63,7 @@ export function FinalCTA() {
             <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 12 }}>not ready yet?</div>
             <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-body)', lineHeight: 1.5, margin: '0 0 14px' }}>One useful email a month — real automation teardowns, no fluff.</p>
             <div style={{ display: 'flex', gap: 8 }}>
-              <Input prefix="$" placeholder="you@company.com" wrapStyle={{ flex: 1 }} />
+              <Input placeholder="you@company.com" wrapStyle={{ flex: 1 }} />
               <Button variant="secondary">Subscribe</Button>
             </div>
           </div>
