@@ -63,6 +63,14 @@ a { color: inherit; text-decoration: none; }
   box-shadow: var(--ring);
 }
 
+/* Composed fields (Input/Select/TerminalInput) show focus on their frame —
+   suppress the global ring on the inner control so it doesn't double up. */
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  box-shadow: none;
+}
+
 /* Blinking terminal cursor utility */
 @keyframes bg-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 .bg-cursor {

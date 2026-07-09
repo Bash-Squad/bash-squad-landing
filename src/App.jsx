@@ -3,10 +3,10 @@ import React from 'react';
 import { CommandPalette } from './components';
 import { Header } from './sections/Header.jsx';
 import { Hero } from './sections/Hero.jsx';
+import { Symptoms } from './sections/Symptoms.jsx';
 import { Problem } from './sections/Problem.jsx';
 import { Services } from './sections/Services.jsx';
 import { WhyUs } from './sections/WhyUs.jsx';
-import { Proof } from './sections/Proof.jsx';
 import { FitFilter } from './sections/FitFilter.jsx';
 import { Squad } from './sections/Squad.jsx';
 import { FinalCTA } from './sections/FinalCTA.jsx';
@@ -22,9 +22,9 @@ function scrollToId(id) {
 }
 
 const COMMANDS = [
+  { id: 'symptoms', label: 'sound familiar?', group: 'navigate', icon: '#', hint: '/symptoms', keywords: 'problems broken workflow manual sync spreadsheet' },
   { id: 'services', label: 'services', group: 'navigate', icon: '#', hint: '/services', keywords: 'ai automation integration software' },
-  { id: 'work', label: 'work / proof', group: 'navigate', icon: '#', hint: '/work', keywords: 'case studies results wrangle' },
-  { id: 'why', label: 'how we work', group: 'navigate', icon: '#', hint: '/why' },
+  { id: 'why', label: 'how we work', group: 'navigate', icon: '#', hint: '/why', keywords: 'process approach background' },
   { id: 'fit', label: 'who this is for', group: 'navigate', icon: '#', hint: '/fit' },
   { id: 'team', label: 'meet the squad', group: 'navigate', icon: '#', hint: '/team', keywords: 'people engineers about' },
   { id: 'book', label: 'book a discovery call', group: 'actions', icon: '$', hint: 'enter', keywords: 'contact start project hire' },
@@ -45,7 +45,7 @@ export default function App() {
   const onNav = (id) => scrollToId(id);
   const onCommand = (cmd) => {
     const c = cmd.toLowerCase().replace(/^[>\s/]+/, '').trim();
-    const map = { services: 'services', work: 'work', proof: 'work', why: 'why', fit: 'fit', team: 'team', book: 'book', 'book a call': 'book', contact: 'book' };
+    const map = { services: 'services', work: 'why', proof: 'why', why: 'why', 'how we work': 'why', fit: 'fit', team: 'team', book: 'book', 'book a call': 'book', contact: 'book', symptoms: 'symptoms', problems: 'symptoms' };
     scrollToId(map[c] || 'book');
   };
   const onSelect = (command) => { if (command.id === 'email') { window.location.href = 'mailto:hello@bashsquad.dev'; return; } scrollToId(command.id); };
@@ -55,10 +55,10 @@ export default function App() {
       <Header onOpenPalette={() => setOpen(true)} onNav={onNav} />
       <main>
         <Hero onOpenPalette={() => setOpen(true)} onNav={onNav} onCommand={onCommand} />
+        <Symptoms onNav={onNav} />
         <Problem />
         <Services onNav={onNav} />
         <WhyUs />
-        <Proof />
         <FitFilter />
         <Squad />
         <FinalCTA />

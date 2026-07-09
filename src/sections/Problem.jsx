@@ -11,7 +11,7 @@ export function Problem() {
   return (
     <Section id="problem" tone="base">
       <SectionHead
-        index="01" label="the enemy"
+        index="02" label="the enemy"
         title="You've been burned before."
         intro="You're technical enough to know the difference between real engineers and no-code button-pushers. So you already know what the alternatives feel like:"
       />

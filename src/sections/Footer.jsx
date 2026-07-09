@@ -3,9 +3,9 @@ import { Divider } from '../components';
 
 export function Footer({ onNav }) {
   const cols = [
-    { h: 'navigate', items: [['services', 'services'], ['work', 'work'], ['team', 'team'], ['book', 'book a call']] },
+    { h: 'navigate', items: [['services', 'services'], ['why', 'how we work'], ['team', 'team'], ['book', 'book a call']] },
     { h: 'services', items: [['services', 'ai consulting'], ['services', 'automation'], ['services', 'integration'], ['services', 'custom software']] },
-    { h: 'family', items: [[null, 'squinty eyes holdings'], [null, 'blue ghost lab'], [null, 'wrangle (oss)']] },
+    { h: 'family', items: [[null, 'squinty eyes holdings'], [null, 'blue ghost lab']] },
   ];
   return (
     <footer style={{ background: 'var(--surface-inset)', borderTop: '1px solid var(--border-strong)' }}>

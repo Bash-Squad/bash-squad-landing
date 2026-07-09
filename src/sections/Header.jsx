@@ -12,7 +12,7 @@ export function Header({ onOpenPalette, onNav }) {
   }, []);
   const links = [
     { id: 'services', label: 'services' },
-    { id: 'work', label: 'work' },
+    { id: 'why', label: 'how we work' },
     { id: 'team', label: 'team' },
   ];
   return (

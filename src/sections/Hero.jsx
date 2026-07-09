@@ -20,14 +20,14 @@ export function Hero({ onOpenPalette, onNav, onCommand }) {
           We automate the<br />work you hate doing.
         </h1>
         <p style={{ maxWidth: 600, margin: '24px auto 0', fontSize: 'var(--t-lg)', color: 'var(--text-body)', lineHeight: 1.5 }}>
-          Three senior engineers. Real AI, automation, and integrations that move a business metric — not a deck full of buzzwords. <span style={{ color: 'var(--text-strong)' }}>No duct tape. No offshore churn.</span>
+          A small team of senior engineers who build with AI — automation, integrations, and AI systems that move a business metric, not a deck full of buzzwords. <span style={{ color: 'var(--text-strong)' }}>No duct tape. No offshore churn.</span>
         </p>
         {/* command prompt nav */}
         <div style={{ maxWidth: 560, margin: '38px auto 0' }}>
-          <CommandPrompt suggestions={['services', 'work', 'team', 'book a call']} onOpenPalette={onOpenPalette} onSubmit={onCommand} />
+          <CommandPrompt suggestions={['services', 'how we work', 'team', 'book a call']} onOpenPalette={onOpenPalette} onSubmit={onCommand} />
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 16, flexWrap: 'wrap' }}>
             <Button variant="primary" prompt size="lg" onClick={() => onNav('book')}>Book a discovery call</Button>
-            <Button variant="secondary" size="lg" onClick={() => onNav('work')}>See the work</Button>
+            <Button variant="secondary" size="lg" onClick={() => onNav('why')}>See how we work</Button>
           </div>
           <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--t-sm)', color: 'var(--text-muted)', marginTop: 14 }}>
             Type what you need, press ⌘K, or just click — whatever's easiest.
@@ -36,7 +36,7 @@ export function Hero({ onOpenPalette, onNav, onCommand }) {
       </div>
       <StatusBar
         left={[{ label: 'main', dot: true, tone: 'ok' }, { label: 'squinty-eyes/bash-squad', icon: '⎇' }, { label: 'v1.0.4' }]}
-        right={[{ label: '3 engineers · 0 account managers', tone: 'accent' }]}
+        right={[{ label: 'all senior · 0 account managers', tone: 'accent' }]}
       />
     </section>
   );

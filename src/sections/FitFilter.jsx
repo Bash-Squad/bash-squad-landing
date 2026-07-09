@@ -33,7 +33,7 @@ export function FitFilter() {
     </div>
   );
   return (
-    <Section id="fit" tone="base">
+    <Section id="fit">
       <SectionHead index="05" label="fit check" title="Who this is for. And who it isn't." intro="We'd rather lose a bad-fit project in the first scroll than three months in. If the right column is you, no hard feelings — we'll point you somewhere better." align="center" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
         <Col title="this is for you if" glyph="&gt; fit --good" items={fit} tone="yes" />

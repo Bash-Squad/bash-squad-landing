@@ -4,3 +4,5 @@ export { CommandPrompt } from './CommandPrompt.jsx';
 export { Terminal } from './Terminal.jsx';
 export { StatusBar } from './StatusBar.jsx';
 export { MarqueeStrip } from './MarqueeStrip.jsx';
+export { WorkflowScene } from './WorkflowScene.jsx';
+export { Pictogram, PICTOGRAMS } from './pictograms.jsx';
