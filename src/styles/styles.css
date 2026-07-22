@@ -3,7 +3,8 @@
    Consumers link THIS file. Keep it @import lines only.
    ============================================================ */
 
-@import url('./tokens/fonts.css');
+/* Fonts are self-hosted via next/font in src/app/layout.tsx (no
+   render-blocking import). typography.css maps the injected variables. */
 @import url('./tokens/colors.css');
 @import url('./tokens/typography.css');
 @import url('./tokens/spacing.css');
