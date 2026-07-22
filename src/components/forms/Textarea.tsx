@@ -80,9 +80,13 @@ export function Textarea({ label, hint, error, rows = 3, mono = false, style, wr
             position: 'relative',
           }}
         >
-          <span style={{ color: 'var(--accent)', fontWeight: 'var(--w-bold)', userSelect: 'none', flexShrink: 0, marginTop: 0, marginRight: '-4px' }}>{prompt}</span>
+          <span style={{ color: 'var(--accent)', fontWeight: 'var(--w-bold)', userSelect: 'none', flexShrink: 0, marginRight: '-4px', fontSize: 'var(--t-sm)', lineHeight: 'var(--lh-normal)' }}>{prompt}</span>
           {textareaEl}
-          {!focus && !value && <span className="bg-cursor" style={{ width: '0.5em', height: '1.1em', position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />}
+          {!focus && !value && (
+            <span style={{ position: 'absolute', right: 16, top: 13, height: 'calc(var(--t-sm) * var(--lh-normal))', fontSize: 'var(--t-sm)', display: 'flex', alignItems: 'center', pointerEvents: 'none' }}>
+              <span className="bg-cursor" />
+            </span>
+          )}
         </div>
       ) : (
         textareaEl
