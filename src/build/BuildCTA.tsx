@@ -2,7 +2,7 @@
 // build page shares the same qualifying form (budget band, recap opt-in),
 // wired to the submitLead server action (email now, HQ forward once BS-OS is live).
 import React from 'react';
-import { Input, Select, TerminalInput, Button, Checkbox, Badge, CopyEmail } from '../components';
+import { Input, Select, Textarea, Button, Checkbox, Badge, CopyEmail } from '../components';
 import { Section, SectionHead } from '../sections/Section';
 import { submitLead } from '../lib/leadAction';
 import { isValidEmail } from '../lib/lead';
@@ -29,7 +29,7 @@ export function BuildCTA({ index = '06' }: { index?: string } = {}) {
 
   const submit = async () => {
     if (!isValidEmail(form.email)) { setError('[err] need a valid work email so we can reply.'); return; }
-    if (!form.broken.trim()) { setError('[err] tell us what you need, in one line.'); return; }
+    if (!form.broken.trim()) { setError('[err] tell us what you need.'); return; }
     setStatus('sending');
     setError('');
     try {
@@ -73,7 +73,7 @@ export function BuildCTA({ index = '06' }: { index?: string } = {}) {
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <TerminalInput value={form.broken} onChange={set('broken')} placeholder="what you need built or fixed, in one line…" />
+                <Textarea value={form.broken} onChange={set('broken')} placeholder="what you need built or fixed…" mono rows={3} autoGrow wrapStyle={{ marginTop: 0 }} />
                 <div className="bg-field-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
                   <Input label="Name" value={form.name} onChange={set('name')} placeholder="you" />
                   <Input label="Company" value={form.company} onChange={set('company')} placeholder="acme co" />
