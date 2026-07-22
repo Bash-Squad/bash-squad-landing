@@ -28,7 +28,7 @@ export function BuildHeader({ onNav }: BuildHeaderProps) {
         transition: 'all var(--dur-2) var(--ease-out)',
       }}>
         <div style={{ maxWidth: 'var(--container-wide)', margin: '0 auto', padding: '0 var(--gutter)', height: 68, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-          <a href="#top" onClick={(e) => { e.preventDefault(); onNav('top'); }} style={{ display: 'flex', alignItems: 'center', gap: 9, fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 20, letterSpacing: '-0.02em', color: 'var(--text-strong)' }}>
+          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 9, fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 20, letterSpacing: '-0.02em', color: 'var(--text-strong)', textDecoration: 'none' }}>
             <span style={{ color: 'var(--accent)' }}>&gt;</span>bash squad
           </a>
           <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="bg-desktop-nav">
