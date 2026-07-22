@@ -21,13 +21,18 @@ export async function submitLead(lead: Lead): Promise<LeadResult> {
   }
 
   const hq = process.env.HQ_LEAD_ENDPOINT;
-  if (hq) {
+  const hqToken = process.env.HQ_LEAD_TOKEN;
+  if (hq && hqToken) {
     // Best-effort mirror into HQ; email is the system of record until BS-OS
     // owns lead storage, so a mirror failure must not fail the submission.
+    // x-bs-token is the shared secret HQ's /leads/inbound route checks.
     try {
       await fetch(hq, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'x-bs-token': hqToken,
+        },
         body: JSON.stringify({ ...lead, submittedAt: new Date().toISOString() }),
       });
     } catch (err) {
