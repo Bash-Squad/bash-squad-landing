@@ -31,7 +31,7 @@ export function Select({ label, hint, error, options = [], style, wrapStyle, id,
             appearance: 'none', WebkitAppearance: 'none', width: '100%',
             background: 'transparent', border: 'none', outline: 'none',
             color: 'var(--text-strong)', padding: '11px 36px 11px 14px',
-            fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', cursor: 'pointer', ...style,
+            fontFamily: 'var(--font-sans)', fontSize: 'var(--t-sm)', cursor: 'pointer', ...style,
           }}
           {...rest}
         >
