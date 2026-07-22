@@ -5,6 +5,8 @@ import { Divider } from '../components';
 
 interface FooterCol {
   h: string;
+  /** Items: [target, label]. Targets starting with '/' render as real links
+   *  (crawlable hrefs); anything else is a same-page section id via onNav. */
   items: [string | null, string][];
 }
 
@@ -46,10 +48,14 @@ export function Footer({ onNav, cols = DEFAULT_COLS }: FooterProps) {
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 11 }}>
                 {c.items.map(([id, label], i) => (
                   <li key={i}>
-                    <a href={id ? '#' + id : undefined} onClick={(e) => { if (id) { e.preventDefault(); onNav(id); } }}
-                       style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)', cursor: id ? 'pointer' : 'default' }}>
-                      {label}
-                    </a>
+                    {id?.startsWith('/') ? (
+                      <a href={id} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)' }}>{label}</a>
+                    ) : (
+                      <a href={id ? '#' + id : undefined} onClick={(e) => { if (id) { e.preventDefault(); onNav(id); } }}
+                         style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)', cursor: id ? 'pointer' : 'default' }}>
+                        {label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>

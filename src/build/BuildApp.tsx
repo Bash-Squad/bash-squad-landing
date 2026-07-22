@@ -90,7 +90,7 @@ export default function BuildApp() {
       </main>
       <Footer onNav={onNav} cols={[
         { h: 'navigate', items: [['services', 'what we do'], ['work', 'our work'], ['help', 'who we help'], ['how', 'how it works'], ['book', 'tell us what you need']] },
-        { h: 'services', items: [['services', 'custom software'], ['services', 'integrations & syncs'], ['services', 'ai & automation'], ['services', 'legacy modernization'], ['services', 'vibe-code rescue']] },
+        { h: 'services', items: [['/services/custom-software', 'custom software'], ['/services/integrations', 'integrations & syncs'], ['/services/ai-automation', 'ai & automation'], ['/services/legacy-modernization', 'legacy modernization'], ['/services/vibe-code-rescue', 'vibe-code rescue'], ['/services/fractional-engineering-team', 'your engineering team']] },
         { h: 'family', items: [[null, 'squinty eyes holdings'], [null, 'blue ghost lab']] },
       ]} />
       <CommandPalette open={open} onClose={() => setOpen(false)} commands={COMMANDS} onSelect={onSelect} />
