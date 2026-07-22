@@ -6,7 +6,7 @@ import { Section, SectionHead } from '../sections/Section';
 const STACK = [
   { label: 'Build with', items: ['React', 'Next.js', 'TypeScript', 'React Native', 'Swift', 'Node.js', 'Python', 'Rust'] },
   { label: 'Data & infra', items: ['Postgres', 'AWS', 'Cloudflare', 'Convex', 'Neo4j'] },
-  { label: 'Automation', items: ['n8n', 'Zapier'] },
+  { label: 'Automation', items: ['n8n', 'Zapier', 'Mailchimp', 'Zendesk', 'Kajabi'] },
 ];
 
 function Chip({ children }: { children: React.ReactNode }) {
