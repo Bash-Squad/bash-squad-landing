@@ -1,12 +1,12 @@
 /* ============================================================
-   COLOR — Bash Squad
+   COLOR: Bash Squad
    Dark by default. A deep terminal base, one acid-green signal
    accent, a hot ember-orange secondary, high-contrast neutrals.
    ============================================================ */
 
 :root {
   /* ---- Base palette: ink (near-black slate ramp) ---- */
-  --ink-1000: #060708;  /* deepest — page void */
+  --ink-1000: #060708;  /* deepest, page void */
   --ink-900:  #0A0C0E;  /* page background */
   --ink-800:  #101316;  /* base surface */
   --ink-700:  #15191D;  /* card surface */
@@ -39,13 +39,13 @@
   --ember-600: #E2440C;
   --ember-tint: rgba(255, 90, 31, 0.12);
 
-  /* ---- Support hues (sparse — data viz, links, states) ---- */
+  /* ---- Support hues (sparse: data viz, links, states) ---- */
   --cyan-500: #38E1FF;   /* data-flow / info */
   --red-500:  #FF4D4D;   /* error / danger */
   --amber-500: #FFC53D;  /* warning */
 
   /* ============================================================
-     SEMANTIC ALIASES — reference these in components
+     SEMANTIC ALIASES: reference these in components
      ============================================================ */
 
   /* Surfaces */

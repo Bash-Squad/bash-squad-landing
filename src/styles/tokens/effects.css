@@ -1,5 +1,5 @@
 /* ============================================================
-   EFFECTS — Bash Squad
+   EFFECTS: Bash Squad
    Shadows are restrained; depth comes from borders + acid glow.
    Motion is snappy and precise (speed is part of the brand).
    ============================================================ */
@@ -30,7 +30,7 @@
     0deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px,
     transparent 1px, transparent 3px);
 
-  /* ---- Motion — snappy, precise ---- */
+  /* ---- Motion: snappy, precise ---- */
   --ease-out:  cubic-bezier(0.2, 0.8, 0.2, 1);
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
   --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
