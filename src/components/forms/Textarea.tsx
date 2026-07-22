@@ -74,13 +74,12 @@ export function Textarea({ label, hint, error, rows = 3, mono = false, style, wr
             borderRadius: 'var(--r-1)', padding: '13px 16px',
             fontFamily: 'var(--font-mono)', cursor: 'text',
             transition: 'border-color var(--dur-1) var(--ease-out), box-shadow var(--dur-2) var(--ease-out)',
+            position: 'relative',
           }}
         >
-          <span style={{ color: 'var(--accent)', fontWeight: 'var(--w-bold)', userSelect: 'none', flexShrink: 0, marginTop: 0 }}>{prompt}</span>
-          <div style={{ flex: 1 }}>
-            {textareaEl}
-          </div>
-          {!focus && !value && <span className="bg-cursor" style={{ width: '0.5em', height: '1.1em', alignSelf: 'center' }} />}
+          <span style={{ color: 'var(--accent)', fontWeight: 'var(--w-bold)', userSelect: 'none', flexShrink: 0, marginTop: 0, marginRight: '-4px' }}>{prompt}</span>
+          {textareaEl}
+          {!focus && !value && <span className="bg-cursor" style={{ width: '0.5em', height: '1.1em', position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />}
         </div>
       ) : (
         textareaEl
