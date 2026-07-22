@@ -190,7 +190,7 @@ export function WhoWeHelp({ onNav }: WhoWeHelpProps) {
         title="Find the one that sounds like you."
         intro="Most people who call us fall into one of these four. Pick your situation. The fix is the same either way: real engineers who&rsquo;ve done it before."
       />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 760, margin: '0 auto' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, maxWidth: 760 }}>
         {SEGMENTS.map((s, i) => {
           const on = i === active;
           return (

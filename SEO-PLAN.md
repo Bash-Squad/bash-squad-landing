@@ -31,20 +31,21 @@ Three battles, different difficulty:
 2. **Shared commercial queries** ("custom software development", "AI development agency", "fix my vibe-coded app", "senior engineering team for hire", local variants). This is the real fight and it is winnable because both sites are young. Whoever ships the deeper, better-structured pages wins. We do this on our own merits, never by referencing them.
 3. **AI answers.** Most winnable. AI engines cite well-structured, extractable content even from low-authority domains and lean on third-party sources. The competitor is not optimizing here, so it is open ground.
 
-## 3. Phase 0: Technical foundation — DONE (this PR)
+## 3. Phase 0: Technical foundation (DONE)
 
 Implemented in the Next.js migration:
 
-- Static-exported Next.js App Router site: every page prerenders to plain HTML in `out/`, so crawlers and AI bots get full content with no JS execution. (Replaces the old client-only Vite SPA that served an empty `<div>` to crawlers.)
+- Static-prerendered Next.js App Router site: every page renders to plain HTML at build, so crawlers and AI bots get full content with no JS execution. (Replaces the old client-only Vite SPA that served an empty `<div>` to crawlers.)
 - `robots.txt` allowing all crawlers, deliberately including AI bots (GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, Google-Extended, Bingbot), with a sitemap reference.
-- `sitemap.xml` generated at build (extend it as routes ship).
+- `sitemap.xml` generated at build from the service registry, so new service pages are picked up automatically.
 - Per-page metadata: title template, description, self-referencing canonical, Open Graph + Twitter tags, and a real 1200x630 OG image.
-- `Organization` JSON-LD sitewide (entity disambiguation; extend `sameAs` as profiles go live).
+- `Organization` + `WebSite` JSON-LD sitewide as an `@graph` with stable `@id`s; `Service` schema on each service page references the org node. Extend `sameAs` as profiles go live.
+- `llms.txt` generated from the service registry (llmstxt.org convention): a compact markdown site map for AI assistants.
 - Fonts self-hosted via `next/font` (no render-blocking request, minimal layout shift), so Core Web Vitals start healthy.
 
 **Still to do by the owner (accounts, not code):**
 - Create Google Search Console + Bing Webmaster Tools properties, submit the sitemap, request indexing. Bing feeds Copilot and part of ChatGPT search.
-- Set `NEXT_PUBLIC_WEB3FORMS_KEY` in the deploy env so the lead forms deliver.
+- Set the lead-delivery env vars in the Vercel deploy (`RESEND_API_KEY`, `LEAD_TO`, `LEAD_FROM`; see `.env.example`) so the contact form delivers.
 - Run PageSpeed Insights after first deploy to confirm LCP < 2.5s and CLS < 0.1 on the live host.
 
 ## 4. Phase 1: Entity and brand SERP (own "bash squad")
@@ -60,12 +61,14 @@ Mostly off-site; low effort, high speed.
 
 One page per query intent, each deeper and better structured than anything ranking now. All framed around what we do and for whom — never referencing another company.
 
-- **Service pages** (each: one primary query, answer-first opening paragraph, FAQ block, `Service` + `FAQPage` schema):
-  - AI integration / AI adoption consulting
-  - Custom software development (web + internal tools)
-  - Automation and systems integration
-  - Legacy modernization
-  - **Vibe-code rescue — highest priority.** Growing search volume, thin competition, and we already have `src/guide/VibeCoded.tsx` content to build from. Target real phrasings: "vibe coded app broken", "make vibe-coded app production ready", "hire a developer to fix AI-generated code".
+- **Service pages: DONE.** Live at `/services` plus six deep pages, each with one primary query, an answer-first opening paragraph (40-60 words, AI-extractable), signals/deliverables/process sections, a 6-question FAQ block, and `Service` + `FAQPage` + `BreadcrumbList` schema:
+  - `/services/custom-software` (custom software development)
+  - `/services/integrations` (systems integration, API work, syncs)
+  - `/services/ai-automation` (AI integration and automation)
+  - `/services/legacy-modernization` (legacy software modernization)
+  - `/services/vibe-code-rescue` (the priority wedge page)
+  - `/services/fractional-engineering-team` (embedded senior team)
+  - Internal linking shipped with them: homepage cards, footer columns, breadcrumbs, and related-services links all point at the new pages with crawlable hrefs. No `AggregateRating`/`Review` schema anywhere until there are real reviews: fabricated ratings are a penalty and a lie.
 - **Case-study pages** for Banter and Wrangle (assets in `public/work/`): problem, what we built, stack, outcome. Real specifics only; if we lack a metric, describe what shipped rather than inventing a number.
 - **Buyer-intent guides** (the content type AI engines cite most): "How to choose a custom software agency", "Freelancer vs agency vs AI-augmented team", "What an AI integration project actually costs". These intercept buyers early and get cited, with no need to name anyone.
 - **Local lever (owner decision):** if Bash Squad has any physical presence or serves a specific region, a Google Business Profile plus a location-relevant page is the fastest way into the local map pack. If fully remote, skip it — do not fake a location.
@@ -103,8 +106,8 @@ Layered on the above, not separate work:
 
 ## 10. Execution order
 
-1. Phase 0 technical foundation — DONE in this PR (owner still to create Search Console/Bing + set the form key).
-2. Phase 1 profiles (parallel, low effort).
-3. Vibe-code-rescue service page (first money page).
-4. Remaining service pages + case studies.
+1. Phase 0 technical foundation: DONE (owner still to create Search Console/Bing + set the Resend env vars).
+2. Phase 1 profiles (parallel, low effort): NEXT, owner-driven.
+3. Service pages: DONE (all six + `/services` hub).
+4. Case-study pages for Banter and Wrangle.
 5. Blog cadence + monthly AI visibility log.

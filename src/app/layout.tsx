@@ -54,19 +54,32 @@ export const viewport: Viewport = {
   themeColor: '#0B0F14',
 };
 
-// Organization entity: tells Google and AI engines which "bash squad" this
-// is (disambiguates from unrelated "Squad" dev tools). Extend sameAs as
-// profiles go live (LinkedIn, Crunchbase, Clutch).
-const orgJsonLd = {
+// Organization + WebSite entities: tells Google and AI engines which
+// "bash squad" this is (disambiguates from unrelated "Squad" dev tools).
+// The Organization @id is referenced by Service JSON-LD on service pages.
+// Extend sameAs as profiles go live (LinkedIn, Crunchbase, Clutch, GoodFirms).
+const siteJsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Bash Squad',
-  url: SITE_URL,
-  logo: `${SITE_URL}/logo-mark.svg`,
-  email: 'hello@bashsquad.com',
-  description:
-    'A small, senior crew of engineers who build with AI: custom software, integrations & syncs, AI & automation, legacy modernization, and vibe-code rescue.',
-  sameAs: ['https://github.com/Bash-Squad'],
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE_URL}/#org`,
+      name: 'Bash Squad',
+      url: SITE_URL,
+      logo: `${SITE_URL}/logo-mark.svg`,
+      email: 'hello@bashsquad.com',
+      description:
+        'A small, senior crew of engineers who build with AI: custom software, integrations & syncs, AI & automation, legacy modernization, and vibe-code rescue.',
+      sameAs: ['https://github.com/Bash-Squad'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: 'bash squad',
+      publisher: { '@id': `${SITE_URL}/#org` },
+    },
+  ],
 } as const;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -79,7 +92,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {children}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
         />
       </body>
     </html>
