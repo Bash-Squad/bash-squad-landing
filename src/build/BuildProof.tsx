@@ -39,7 +39,7 @@ export function BuildProof() {
         title="We meet you where you are."
         intro="No two projects start the same. A single integration and a hospital-wide modernization need very different amounts of planning, so the process matches the work: lightweight when it can be, thorough when it has to be. What never changes: you know what it costs, where it stands, and who&rsquo;s building it."
       />
-      <div style={{ maxWidth: 760, margin: '0 auto' }}>
+      <div style={{ maxWidth: 760 }}>
         {STEPS.map((s, i) => {
           const on = i === shown;
           return (
