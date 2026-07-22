@@ -53,6 +53,9 @@ export function Textarea({ label, hint, error, rows = 3, mono = false, style, wr
         fontSize: 'var(--t-sm)', lineHeight: 'var(--lh-normal)',
         transition: 'border-color var(--dur-1) var(--ease-out), box-shadow var(--dur-2) var(--ease-out)',
         overflow: 'hidden',
+        flex: prompt ? 1 : undefined,
+        width: prompt ? undefined : '100%',
+        minWidth: 0,
         ...style,
       }}
       value={value}
