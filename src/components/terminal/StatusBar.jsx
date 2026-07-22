@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * StatusBar — thin mono system bar (left/right segments). Exposed-system
+ * StatusBar: thin mono system bar (left/right segments). Exposed-system
  * detail for headers/footers: branch, status dot, version, latency.
  */
 export function StatusBar({ left = [], right = [], style, ...rest }) {

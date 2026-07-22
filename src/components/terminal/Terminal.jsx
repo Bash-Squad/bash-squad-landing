@@ -1,10 +1,10 @@
 import React from 'react';
 
 /**
- * Terminal — window chrome panel (traffic lights + title bar) wrapping mono
+ * Terminal: window chrome panel (traffic lights + title bar) wrapping mono
  * content. Pass `lines` (typed/static output) or arbitrary children.
  */
-export function Terminal({ title = 'bash — bash-squad', lines, children, scanline = true, style, ...rest }) {
+export function Terminal({ title = 'bash: bash-squad', lines, children, scanline = true, style, ...rest }) {
   const toneColor = { ok: 'var(--acid-500)', fail: 'var(--red-500)', warn: 'var(--amber-500)', muted: 'var(--text-faint)', accent: 'var(--cyan-500)' };
   return (
     <div style={{

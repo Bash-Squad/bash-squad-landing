@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * CommandPalette — the signature ⌘K navigation overlay. Searchable command
+ * CommandPalette: the signature ⌘K navigation overlay. Searchable command
  * list, keyboard nav (↑/↓/Enter/Esc), acid active row, mono throughout.
  * Controlled via `open`; provide `commands` and `onSelect`.
  */

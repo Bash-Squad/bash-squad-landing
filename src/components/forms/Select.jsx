@@ -1,6 +1,6 @@
 import React from 'react';
 
-/** Select — native select styled to match the form frame, mono chevron. */
+/** Select: native select styled to match the form frame, mono chevron. */
 export function Select({ label, hint, error, options = [], style, wrapStyle, id, ...rest }) {
   const [focus, setFocus] = React.useState(false);
   const fid = id || React.useId();

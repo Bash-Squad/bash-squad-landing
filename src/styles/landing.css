@@ -1,5 +1,5 @@
 /* ============================================================
-   LANDING — page-level helpers + responsive collapse rules.
+   LANDING: page-level helpers + responsive collapse rules.
    These class hooks are referenced inline by the section
    components (Header nav, WhyUs / CTA / Footer grids).
    ============================================================ */
@@ -23,6 +23,43 @@ body { background: var(--surface-page); }
   to { opacity: 1; transform: none; }
 }
 .bg-scene-in { animation: bg-scene-in 320ms var(--ease-out); }
+
+/* Who-we-help emoji storyboards: problem -> squad -> fixed */
+@keyframes bg-story-pop {
+  0% { opacity: 0; transform: scale(0.4); }
+  70% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.bg-story-pop { animation: bg-story-pop 480ms var(--ease-out); }
+
+@keyframes bg-story-rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.bg-story-rise { animation: bg-story-rise 420ms var(--ease-out); }
+
+/* the "problem" emoji idles with a gentle teeter after it lands */
+@keyframes bg-story-teeter {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+.bg-story-teeter {
+  animation: bg-story-teeter 2.4s ease-in-out 1.2s infinite;
+  transform-origin: 50% 85%;
+}
+
+@keyframes bg-story-arrow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.bg-story-arrow { animation: bg-story-arrow 360ms var(--ease-out); }
+
+/* soft acid pulse behind the "fixed" beat */
+@keyframes bg-story-glow {
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.75; transform: scale(1.12); }
+}
+.bg-story-glow { animation: bg-story-glow 2.8s ease-in-out infinite; }
 
 @media (max-width: 520px) {
   .bg-footer-grid { grid-template-columns: 1fr !important; }

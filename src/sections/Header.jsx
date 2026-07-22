@@ -1,4 +1,4 @@
-// Header — sticky terminal-style top bar. Clickable nav fallback
+// Header: sticky terminal-style top bar. Clickable nav fallback
 // alongside the ⌘K command palette.
 import React from 'react';
 import { Button, IconButton } from '../components';
@@ -42,7 +42,7 @@ export function Header({ onOpenPalette, onNav }) {
               style={{ display: 'inline-flex', alignItems: 'center', gap: 7, marginLeft: 8, background: 'var(--surface-card)', border: '1px solid var(--border-strong)', borderRadius: 'var(--r-1)', padding: '7px 11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', cursor: 'pointer' }}>
               <span style={{ color: 'var(--accent)' }}>&gt;</span> search <kbd style={{ borderLeft: '1px solid var(--border-strong)', paddingLeft: 7, color: 'var(--text-faint)' }}>⌘K</kbd>
             </button>
-            <Button variant="primary" prompt size="sm" style={{ marginLeft: 4 }} onClick={() => onNav('book')}>Book a call</Button>
+            <Button variant="primary" prompt size="sm" style={{ marginLeft: 4 }} onClick={() => onNav('book')}>Tell us what&rsquo;s broken</Button>
           </nav>
           {/* mobile */}
           <div className="bg-mobile-nav" style={{ display: 'none', gap: 8 }}>
@@ -52,7 +52,7 @@ export function Header({ onOpenPalette, onNav }) {
         </div>
         {menu && (
           <div className="bg-mobile-nav" style={{ flexDirection: 'column', padding: '8px var(--gutter) 18px', borderTop: '1px solid var(--border-hairline)', background: 'var(--surface-base)' }}>
-            {[...links, { id: 'book', label: 'book a call' }].map(l => (
+            {[...links, { id: 'book', label: "tell us what's broken" }].map(l => (
               <a key={l.id} href={'#' + l.id} onClick={(e) => { e.preventDefault(); setMenu(false); onNav(l.id); }}
                  style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-body)', padding: '14px 0', borderBottom: '1px solid var(--border-hairline)' }}>
                 <span style={{ color: 'var(--accent)' }}>&gt;</span> {l.label}

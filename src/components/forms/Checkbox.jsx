@@ -1,6 +1,6 @@
 import React from 'react';
 
-/** Checkbox — square, acid check, mono label. Brutalist hard edges. */
+/** Checkbox: square, acid check, mono label. Brutalist hard edges. */
 export function Checkbox({ checked, onChange, label, disabled = false, style, ...rest }) {
   return (
     <label style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, ...style }}>

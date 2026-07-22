@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Button — the primary action element. Acid-green primary, ghost,
+ * Button: the primary action element. Acid-green primary, ghost,
  * and outline variants with a terminal-press feel.
  */
 export function Button({

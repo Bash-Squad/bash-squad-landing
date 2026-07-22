@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * TerminalInput — the signature on-brand input. A `>` prompt, mono text,
+ * TerminalInput: the signature on-brand input. A `>` prompt, mono text,
  * blinking cursor, dark inset. Use for "> tell us what's broken".
  */
 export function TerminalInput({ value, onChange, placeholder = 'type a command…', prompt = '>', onSubmit, style, autoFocus, ...rest }) {

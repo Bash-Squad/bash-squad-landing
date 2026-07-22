@@ -1,4 +1,4 @@
-// Problem / the enemy — name the pain, plant the flag against agency sludge.
+// Problem / the enemy: name the pain, plant the flag against agency sludge.
 import { Section, SectionHead } from './Section.jsx';
 
 export function Problem() {
@@ -6,7 +6,7 @@ export function Problem() {
     { k: 'the agency', v: '"We leverage cutting-edge synergies." Six-week discovery. A junior you never met doing the work.' },
     { k: 'the no-code duct tape', v: 'A pile of Zapier zaps and a spreadsheet that breaks the moment one tool changes a field.' },
     { k: 'the offshore churn shop', v: 'Cheap by the hour, expensive by the rebuild. Code nobody can read, including them.' },
-    { k: 'the bloated SaaS', v: 'You pay for 40 features to use 3 — and they still don\'t talk to your other tools.' },
+    { k: 'the bloated SaaS', v: 'You pay for 40 features to use 3, and they still don\'t talk to your other tools.' },
   ];
   return (
     <Section id="problem" tone="base">
@@ -29,7 +29,7 @@ export function Problem() {
       <div style={{ marginTop: 40, padding: 'var(--space-8)', border: '2px solid var(--accent)', borderRadius: 'var(--r-2)', background: 'var(--accent-tint)' }}>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: 12 }}>// our flag in the ground</div>
         <p style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(22px,3vw,32px)', lineHeight: 1.15, letterSpacing: '-0.02em', color: 'var(--text-strong)', margin: 0, maxWidth: 820 }}>
-          Software should make work disappear, not add a dashboard to it. We build systems that run themselves — and we'll tell you, out loud, what we won't build.
+          Software should make work disappear, not add a dashboard to it. We build systems that run themselves, and we'll tell you, out loud, what we won't build.
         </p>
       </div>
     </Section>

@@ -1,4 +1,4 @@
-// Shared section scaffolding — consistent rhythm, mono eyebrow + display head.
+// Shared section scaffolding: consistent rhythm, mono eyebrow + display head.
 import { SectionLabel } from '../components';
 
 export function Section({ id, children, tone = 'page', style, ...rest }) {

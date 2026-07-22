@@ -47,10 +47,14 @@ concepts/               earlier brand explorations (static HTML)
 
 ## Notes / placeholders
 
-These are realistic in-voice placeholders carried over from the design — swap before launch:
-
-- **Email** `hello@bashsquad.dev`, the Calendly embed (drop-in slot in `FinalCTA`),
-  and the form submission (no backend yet — shows a success state only).
+- **Form delivery** is wired: all three CTA forms post through `src/lib/submitLead.js`
+  to Web3Forms (email to `hello@bashsquad.com`, Reply-To set to the lead).
+  Requires `VITE_WEB3FORMS_KEY` in `.env.local` — see `.env.example`.
+- **Bash Squad OS (HQ)**: `submitLead` mirrors each lead as JSON to
+  `VITE_HQ_LEAD_ENDPOINT` when set (fire-and-forget). Point it at a Convex HTTP
+  action once HQ has a lead-ingest endpoint; the payload shape is documented in
+  `src/lib/submitLead.js`.
+- Calendly and the newsletter capture were removed deliberately (call times are
+  offered in the reply email instead; newsletter is on hold).
 - **Result figures and team names** (Dee / Mara / Theo) are placeholder copy.
 - **Fonts** are a substitution flagged in the original design — swap if real brand fonts arrive.
-- The form is the funnel endpoint; wire it to a real handler / Calendly when ready.

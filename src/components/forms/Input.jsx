@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Input — text field with hairline frame, mono label, acid focus.
+ * Input: text field with hairline frame, mono label, acid focus.
  */
 export function Input({ label, hint, error, prefix, suffix, mono = false, style, wrapStyle, id, ...rest }) {
   const [focus, setFocus] = React.useState(false);

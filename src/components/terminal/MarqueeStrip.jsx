@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * MarqueeStrip — brutalist scrolling text rail. Items separated by a glyph;
+ * MarqueeStrip: brutalist scrolling text rail. Items separated by a glyph;
  * loops seamlessly. Use for service lists / credibility strips.
  */
 export function MarqueeStrip({

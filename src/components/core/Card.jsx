@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Card — surface container with hairline frame. Optional interactive hover
+ * Card: surface container with hairline frame. Optional interactive hover
  * (brighter border + acid top edge). No shadow at rest, no left-stripe.
  */
 export function Card({

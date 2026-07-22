@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * NodeGraph — the hero centerpiece. An interactive mesh of nodes (tools /
+ * NodeGraph: the hero centerpiece. An interactive mesh of nodes (tools /
  * systems) with data pulses flowing along the edges. Nodes drift, react to
  * the cursor, and the whole thing animates to life. Pure canvas, no deps.
  * Honors prefers-reduced-motion (renders a static graph).

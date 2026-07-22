@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * IconButton — square/compact button for a single icon (lucide glyph or char).
+ * IconButton: square/compact button for a single icon (lucide glyph or char).
  */
 export function IconButton({
   children,

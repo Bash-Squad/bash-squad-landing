@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * SectionLabel — the mono eyebrow used above every section heading.
+ * SectionLabel: the mono eyebrow used above every section heading.
  * `> services` style. Index + label, acid prompt.
  */
 export function SectionLabel({ children, index, prompt = true, tone = 'muted', style, ...rest }) {

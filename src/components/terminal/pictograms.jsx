@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Pictograms — hand-authored SVG line glyphs for the flow diagrams.
+ * Pictograms: hand-authored SVG line glyphs for the flow diagrams.
  * 24×24 viewBox, stroke-only, ~2px inner padding, color via currentColor.
  * Deliberately no icon library: these stay on the site's 1.5px hairline weight.
  */

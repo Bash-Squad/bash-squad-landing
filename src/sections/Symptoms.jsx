@@ -1,4 +1,4 @@
-// Symptoms — recognizable broken workflows as an interactive node canvas.
+// Symptoms: recognizable broken workflows as an interactive node canvas.
 // Pick a scenario on the left, see it diagrammed n8n-style on the right.
 import React from 'react';
 import { Button, WorkflowScene } from '../components';
@@ -7,7 +7,7 @@ import { Section, SectionHead } from './Section.jsx';
 const SCENES = [
   {
     k: 'the order relay',
-    body: 'Orders come in fine. The spreadsheet just never hears about it — so someone re-types every one of them. Every single day.',
+    body: 'Orders come in fine. The spreadsheet just never hears about it, so someone re-types every one of them. Every single day.',
     aria: 'An order arrives by email, the direct link to the spreadsheet is broken, and a person re-types it as the manual workaround',
     nodes: [
       { id: 'mail', icon: 'mail', x: 120, y: 150, label: 'order in' },

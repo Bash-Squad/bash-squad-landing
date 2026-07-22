@@ -1,4 +1,4 @@
-// Design-system barrel — the single import surface for every section.
+// Design-system barrel: the single import surface for every section.
 // Replaces the in-browser `window.BashSquadDesignSystem` global from the
 // original Claude Design export.
 export * from './core/index.js';

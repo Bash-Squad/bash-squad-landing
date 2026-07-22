@@ -1,4 +1,4 @@
-// Hero — node-graph centerpiece + command-prompt nav + oversized headline.
+// Hero: node-graph centerpiece + command-prompt nav + oversized headline.
 import { NodeGraph, CommandPrompt, Button, Badge, StatusBar } from '../components';
 
 export function Hero({ onOpenPalette, onNav, onCommand }) {
@@ -20,17 +20,17 @@ export function Hero({ onOpenPalette, onNav, onCommand }) {
           We automate the<br />work you hate doing.
         </h1>
         <p style={{ maxWidth: 600, margin: '24px auto 0', fontSize: 'var(--t-lg)', color: 'var(--text-body)', lineHeight: 1.5 }}>
-          A small team of senior engineers who build with AI — automation, integrations, and AI systems that move a business metric, not a deck full of buzzwords. <span style={{ color: 'var(--text-strong)' }}>No duct tape. No offshore churn.</span>
+          A small team of senior engineers who build with AI: automation, integrations, and AI systems that move a business metric, not a deck full of buzzwords. <span style={{ color: 'var(--text-strong)' }}>No duct tape. No offshore churn.</span>
         </p>
         {/* command prompt nav */}
         <div style={{ maxWidth: 560, margin: '38px auto 0' }}>
-          <CommandPrompt suggestions={['services', 'how we work', 'team', 'book a call']} onOpenPalette={onOpenPalette} onSubmit={onCommand} />
+          <CommandPrompt suggestions={['services', 'how we work', 'team', 'contact']} onOpenPalette={onOpenPalette} onSubmit={onCommand} />
           <div style={{ display: 'flex', gap: 10, justifyContent: 'center', marginTop: 16, flexWrap: 'wrap' }}>
-            <Button variant="primary" prompt size="lg" onClick={() => onNav('book')}>Book a discovery call</Button>
+            <Button variant="primary" prompt size="lg" onClick={() => onNav('book')}>Tell us what&rsquo;s broken</Button>
             <Button variant="secondary" size="lg" onClick={() => onNav('why')}>See how we work</Button>
           </div>
           <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--t-sm)', color: 'var(--text-muted)', marginTop: 14 }}>
-            Type what you need, press ⌘K, or just click — whatever's easiest.
+            Type what you need, press ⌘K, or just click, whatever's easiest.
           </p>
         </div>
       </div>

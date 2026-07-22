@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * CommandPrompt — inline terminal nav bar for the hero. Type a command
+ * CommandPrompt: inline terminal nav bar for the hero. Type a command
  * (`services`, `work`, `book`) and submit; an animated typed placeholder
  * cycles suggested commands. Doubles as the ⌘K trigger.
  */

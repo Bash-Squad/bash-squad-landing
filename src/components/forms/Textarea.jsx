@@ -1,6 +1,6 @@
 import React from 'react';
 
-/** Textarea — multi-line field matching Input's frame. */
+/** Textarea: multi-line field matching Input's frame. */
 export function Textarea({ label, hint, error, rows = 4, mono = false, style, wrapStyle, id, ...rest }) {
   const [focus, setFocus] = React.useState(false);
   const fid = id || React.useId();

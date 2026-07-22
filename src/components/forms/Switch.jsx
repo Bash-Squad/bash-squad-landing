@@ -1,6 +1,6 @@
 import React from 'react';
 
-/** Switch — toggle. Acid track when on, mono ON/OFF micro-label optional. */
+/** Switch: toggle. Acid track when on, mono ON/OFF micro-label optional. */
 export function Switch({ checked, onChange, label, disabled = false, style, ...rest }) {
   return (
     <label style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', cursor: disabled ? 'not-allowed' : 'pointer', opacity: disabled ? 0.45 : 1, ...style }}>

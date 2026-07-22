@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Divider — hairline rule. Optional mono label centered on the line,
+ * Divider: hairline rule. Optional mono label centered on the line,
  * or a dashed/grid variant for exposed-structure sections.
  */
 export function Divider({ label, variant = 'solid', vertical = false, style, ...rest }) {

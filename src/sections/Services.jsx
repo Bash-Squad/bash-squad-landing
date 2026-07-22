@@ -1,4 +1,4 @@
-// Services — the stack. Four services as layers that stand on each other:
+// Services: the stack. Four services as layers that stand on each other:
 // custom software at the foundation, AI at the top where it can pay off.
 // Click a layer to see its detail + mini node-scene.
 import React from 'react';
@@ -10,7 +10,7 @@ const LAYERS = [
   {
     n: '04', cmd: 'ai consulting', icon: 'bot', width: '50%', tagline: 'the payoff',
     out: 'Stop guessing where AI actually helps.',
-    body: 'Practical AI integration, agents, and automation tied to a metric you already track — not a science project. We tell you where it pays off and where it doesn\'t.',
+    body: 'Practical AI integration, agents, and automation tied to a metric you already track, not a science project. We tell you where it pays off and where it doesn\'t.',
     tags: ['agents', 'rag', 'eval'],
     viz: {
       nodes: [
@@ -25,7 +25,7 @@ const LAYERS = [
   {
     n: '03', cmd: 'workflow automation', icon: 'bolt', width: '66%', tagline: 'runs itself',
     out: 'Stop paying people to copy data between tabs.',
-    body: 'We replace the manual, glued-together processes with systems that run themselves — and keep running when a tool changes underneath them.',
+    body: 'We replace the manual, glued-together processes with systems that run themselves, and keep running when a tool changes underneath them.',
     tags: ['pipelines', 'jobs', 'alerts'],
     viz: {
       nodes: [
@@ -34,7 +34,7 @@ const LAYERS = [
         { id: 'sheet', icon: 'sheet', x: 236, y: 48 },
       ],
       edges: [{ from: 'mail', to: 'bot' }, { from: 'bot', to: 'sheet' }],
-      aria: 'The order relay, automated end to end — no human re-typing',
+      aria: 'The order relay, automated end to end, no human re-typing',
     },
   },
   {
@@ -59,7 +59,7 @@ const LAYERS = [
   },
   {
     n: '01', cmd: 'custom software', icon: 'code', width: '100%', tagline: 'the foundation',
-    out: 'When off-the-shelf can\'t do it, we build it right.',
+    out: 'When off-the-shelf can\'t do it, we build the thing that can.',
     body: 'Full-stack web, native mobile, embedded, hardware. Built by the people who\'ll still be reachable when you need a change.',
     tags: ['web', 'mobile', 'embedded'],
     viz: {
@@ -82,7 +82,7 @@ export function Services({ onNav }) {
       <SectionHead
         index="03" label="services"
         title="Four services. One stack."
-        intro="AI that pays off sits on top of systems that work — automation on top of integration, integration on top of solid software. We build every layer, and you can start at whichever one hurts most."
+        intro="AI that pays off sits on top of systems that work: automation on top of integration, integration on top of solid software. We build every layer, and you can start at whichever one hurts most."
       />
       <div className="bg-services-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1.1fr) minmax(0, 0.9fr)', gap: 24, alignItems: 'center' }}>
         {/* the stack */}

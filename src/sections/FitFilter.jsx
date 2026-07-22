@@ -1,18 +1,18 @@
-// FitFilter — the polarizing "who this is / isn't for" qualifier.
+// FitFilter: the polarizing "who this is / isn't for" qualifier.
 import { Section, SectionHead } from './Section.jsx';
 
 export function FitFilter() {
   const fit = [
     'You\'re drowning in manual work and you know it\'s costing real hours.',
     'You want a partner with a point of view, not an order-taker.',
-    'You can tell real engineers from no-code button-pushers — and want the former.',
+    'You can tell real engineers from no-code button-pushers, and want the former.',
     'You\'d rather ship something solid in weeks than perfect in a year.',
     'You\'ll give us a metric to move and the access to move it.',
   ];
   const notFit = [
     'You want the cheapest hourly rate, full stop.',
     'You need 40 yes-men and a 60-page discovery doc first.',
-    '"Can you just build me Facebook" — for $500.',
+    '"Can you just build me Facebook." For $500.',
     'You want someone to rubber-stamp a plan you\'ve already decided.',
     'You\'d rather not know what we think.',
   ];
@@ -34,7 +34,7 @@ export function FitFilter() {
   );
   return (
     <Section id="fit">
-      <SectionHead index="05" label="fit check" title="Who this is for. And who it isn't." intro="We'd rather lose a bad-fit project in the first scroll than three months in. If the right column is you, no hard feelings — we'll point you somewhere better." align="center" />
+      <SectionHead index="05" label="fit check" title="Who this is for. And who it isn't." intro="We'd rather lose a bad-fit project in the first scroll than three months in. If the right column is you, no hard feelings. We'll point you somewhere better." align="center" />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 16 }}>
         <Col title="this is for you if" glyph="&gt; fit --good" items={fit} tone="yes" />
         <Col title="probably not, if" glyph="&gt; fit --nope" items={notFit} tone="no" />

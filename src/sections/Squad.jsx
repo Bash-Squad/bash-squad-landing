@@ -1,4 +1,4 @@
-// Squad — the humans behind the work. Counters the "is this a real team?" doubt
+// Squad: the humans behind the work. Counters the "is this a real team?" doubt
 // and carries the team-background story (capability marquee at the bottom).
 import { Card, Avatar, Badge, MarqueeStrip, Divider } from '../components';
 import { Section, SectionHead } from './Section.jsx';
@@ -12,7 +12,7 @@ export function Squad() {
   ];
   return (
     <Section id="team" tone="base">
-      <SectionHead index="06" label="meet the squad" title="A small squad. You'll know everyone on it." intro="Not a logo and a stock photo — the engineers who build your thing answer your messages, with backgrounds across aerospace, embedded firmware, and production AI." />
+      <SectionHead index="06" label="meet the squad" title="A small squad. You'll know everyone on it." intro="Not a logo and a stock photo. The engineers who build your thing answer your messages, with backgrounds across aerospace, embedded firmware, and production AI." />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
         {people.map((p) => (
           <Card key={p.handle} pad="lg" interactive style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -37,7 +37,7 @@ export function Squad() {
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', color: 'var(--text-muted)', letterSpacing: '0.06em' }}>specialists · on demand</div>
             </div>
           </div>
-          <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-body)', lineHeight: 1.55, margin: 0, flex: 1 }}>Design, data, whatever the job actually needs — we pull in trusted specialists. Same standards, same accountability, one point of contact.</p>
+          <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-body)', lineHeight: 1.55, margin: 0, flex: 1 }}>Design, data, whatever the job actually needs. We pull in trusted specialists. Same standards, same accountability, one point of contact.</p>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {['design', 'data', 'ops'].map(s => <Badge key={s} tone="neutral" variant="outline">{s}</Badge>)}
           </div>

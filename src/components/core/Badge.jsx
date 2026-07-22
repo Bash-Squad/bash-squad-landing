@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Badge — small mono status pill. Signals state/category in UPPERCASE mono.
+ * Badge: small mono status pill. Signals state/category in UPPERCASE mono.
  */
 export function Badge({
   children,

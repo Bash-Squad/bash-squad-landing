@@ -1,4 +1,4 @@
-// WhyUs — how we work. A visual engagement timeline (weeks, not quarters)
+// WhyUs: how we work. A visual engagement timeline (weeks, not quarters)
 // on the node canvas, with the working principles as a compact strip below.
 import { WorkflowScene } from '../components';
 import { Section, SectionHead } from './Section.jsx';
@@ -19,7 +19,7 @@ const TIMELINE = {
     { x: 190, y: 45, text: '// discovery quarters: 0' },
     { x: 500, y: 262, text: '// still reachable after launch: true' },
   ],
-  aria: 'A four-step engagement: scope in week one, build in week two, ship in week three, then docs and handoff — you own it',
+  aria: 'A four-step engagement: scope in week one, build in week two, ship in week three, then docs and handoff, you own it',
 };
 
 export function WhyUs() {
@@ -28,7 +28,7 @@ export function WhyUs() {
     { k: 'you talk to the builders', v: 'No account managers, no telephone game. The people writing the code are in the room.' },
     { k: 'we own the outcome', v: 'We pick a metric with you up front and build toward it. If it doesn\'t move, we\'re not done.' },
     { k: 'built to be handed off', v: 'Readable code, real docs, no lock-in. You could fire us and keep running. (Most don\'t.)' },
-    { k: 'ai leverage, senior judgment', v: 'We build with AI every day — for clients and for ourselves. It\'s how a small team ships like a big one, with a senior engineer behind everything that goes out.' },
+    { k: 'ai leverage, senior judgment', v: 'We build with AI every day, for clients and for ourselves. It\'s how a small team ships like a big one, with a senior engineer behind everything that goes out.' },
   ];
   return (
     <Section id="why" tone="base">

@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Tag — interactive filter chip (mono). Selectable/toggle state in acid.
+ * Tag: interactive filter chip (mono). Selectable/toggle state in acid.
  */
 export function Tag({ children, selected = false, onClick, prefix, style, ...rest }) {
   const clickable = !!onClick;

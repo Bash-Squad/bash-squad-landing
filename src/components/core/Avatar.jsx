@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * Avatar — mono monogram tile (no stock photos). Square with hairline,
+ * Avatar: mono monogram tile (no stock photos). Square with hairline,
  * optional acid ring + status dot. Falls back to initials.
  */
 export function Avatar({ name = '', src, size = 'md', ring = false, status, style, ...rest }) {

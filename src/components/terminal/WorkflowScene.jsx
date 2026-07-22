@@ -2,14 +2,14 @@ import React from 'react';
 import { PICTOGRAMS } from './pictograms.jsx';
 
 /**
- * WorkflowScene — an n8n-style node canvas rendered as one scalable SVG.
+ * WorkflowScene: an n8n-style node canvas rendered as one scalable SVG.
  * Nodes are rounded tiles with a pictogram, side ports, and mono labels;
  * edges are bezier connectors typed by health:
- *   'auto'   — acid, solid, arrowhead (the automated/fixed path)
- *   'manual' — faint, dashed, slow march (a human doing machine work)
- *   'broken' — ember, dashed, fast march, ✕ badge at the midpoint
+ *   'auto'   : acid, solid, arrowhead (the automated/fixed path)
+ *   'manual' : faint, dashed, slow march (a human doing machine work)
+ *   'broken' : ember, dashed, fast march, ✕ badge at the midpoint
  * Everything scales with the viewBox, so it stays fluid at any width.
- * Dash marches are CSS animations — the global reduced-motion rule stops them.
+ * Dash marches are CSS animations. The global reduced-motion rule stops them.
  *
  * nodes: [{ id, icon, x, y, label?, sub?, ring? }]   (x/y = tile center)
  * edges: [{ from, to, type?, label? }]
