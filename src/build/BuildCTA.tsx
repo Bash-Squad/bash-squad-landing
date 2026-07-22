@@ -73,7 +73,7 @@ export function BuildCTA({ index = '06' }: { index?: string } = {}) {
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                <Textarea value={form.broken} onChange={set('broken')} placeholder="what you need built or fixed…" mono rows={3} autoGrow prompt=">" wrapStyle={{ marginTop: 0 }} />
+                <Textarea value={form.broken} onChange={set('broken')} placeholder="what you need built or fixed…" rows={3} autoGrow prompt=">" wrapStyle={{ marginTop: 0 }} />
                 <div className="bg-field-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
                   <Input label="Name" value={form.name} onChange={set('name')} placeholder="you" />
                   <Input label="Company" value={form.company} onChange={set('company')} placeholder="acme co" />
