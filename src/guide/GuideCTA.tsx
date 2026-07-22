@@ -1,21 +1,17 @@
 // GuideCTA: variant B endpoint. One question, low friction: bring us the
-// decision you've been putting off. Wired to submitLead (email now, HQ
-// mirror when BS-OS is live).
+// decision you've been putting off. Wired to the submitLead server action
+// (email now, HQ forward once BS-OS is live).
 import React from 'react';
-import { Input, Textarea, TerminalInput, Button, Badge } from '../components';
+import { Input, Textarea, TerminalInput, Button, Badge, CopyEmail } from '../components';
 import { Section, SectionHead } from '../sections/Section';
-import { submitLead, isValidEmail } from '../lib/submitLead';
+import { submitLead } from '../lib/leadAction';
+import { isValidEmail } from '../lib/lead';
 
 const EMPTY_FORM = { name: '', email: '', question: '', context: '', botcheck: '' };
 
 type FormKey = keyof typeof EMPTY_FORM;
 type Status = 'idle' | 'sending' | 'sent';
 
-const NEXT_STEPS = [
-  'a guide reads your question — a person, not a pipeline',
-  'you get one straight answer within 1 business day',
-  "if talking it through would help, we offer times for a 25-minute session",
-];
 
 export function GuideCTA() {
   const [form, setForm] = React.useState(EMPTY_FORM);
@@ -30,16 +26,16 @@ export function GuideCTA() {
     setStatus('sending');
     setError('');
     try {
-      await submitLead({
+      const res = await submitLead({
         source: 'guide page — ask a guide',
         name: form.name,
         email: form.email,
-        message: form.question,
-        detail: form.context,
+        message: form.question.trim() || form.context,
+        detail: form.question.trim() ? form.context : undefined,
         botcheck: form.botcheck,
       });
-      setStatus('sent');
-      setForm(EMPTY_FORM);
+      if (res.ok) { setStatus('sent'); setForm(EMPTY_FORM); }
+      else { setStatus('idle'); setError('[err] delivery failed. email us directly: hello@bashsquad.com'); }
     } catch {
       setStatus('idle');
       setError('[err] delivery failed. email us directly: hello@bashsquad.com');
@@ -67,13 +63,13 @@ export function GuideCTA() {
                 <div><span style={{ color: 'var(--accent)' }}>$</span> ./ask</div>
                 <div style={{ color: 'var(--text-faint)' }}>routing to a human…</div>
                 <div style={{ color: 'var(--success)' }}>[ok] question received.</div>
-                <div style={{ color: 'var(--success)' }}>[ok] a guide replies within 1 business day.</div>
+                <div style={{ color: 'var(--success)' }}>[ok] a guide replies fast, usually within 1 business day.</div>
                 <div style={{ marginTop: 16 }}><Button variant="secondary" size="sm" onClick={() => setStatus('idle')}>&larr; ask another</Button></div>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <TerminalInput value={form.question} onChange={set('question')} placeholder="the decision you keep putting off…" />
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+                <div className="bg-field-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
                   <Input label="Name" value={form.name} onChange={set('name')} placeholder="you" />
                   <Input label="Work email" value={form.email} onChange={set('email')} placeholder="you@company.com" />
                 </div>
@@ -91,18 +87,11 @@ export function GuideCTA() {
           <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-strong)', borderRadius: 'var(--r-2)', padding: 'var(--space-6)' }}>
             <Badge tone="acid" dot variant="outline">what happens next</Badge>
             <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--t-h4)', color: 'var(--text-strong)', margin: '14px 0 12px' }}>No funnels. Just this:</h3>
-            <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {NEXT_STEPS.map((step, i) => (
-                <li key={step} style={{ display: 'flex', gap: 12, fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)', lineHeight: 1.5 }}>
-                  <span style={{ color: 'var(--accent)', flexShrink: 0 }}>0{i + 1}</span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ol>
+            <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-body)', lineHeight: 1.6, margin: 0 }}>A guide reads your question (a person, not a pipeline) and you get one straight answer, usually within 1 business day. If talking it through would help, we offer times for a 25-minute session.</p>
           </div>
           <div style={{ background: 'var(--surface-card)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--r-2)', padding: 'var(--space-5)', fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)' }}>
             <span style={{ color: 'var(--text-faint)' }}>// or the old-fashioned way</span>
-            <div style={{ marginTop: 8 }}><a href="mailto:hello@bashsquad.com" style={{ color: 'var(--accent)', textDecoration: 'none' }}>hello@bashsquad.com</a></div>
+            <div style={{ marginTop: 8 }}><CopyEmail email="hello@bashsquad.com" style={{ display: 'inline-block', width: 'auto', border: 'none', padding: 0, background: 'transparent', textAlign: 'left' }} /></div>
           </div>
         </div>
       </div>

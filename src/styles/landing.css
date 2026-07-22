@@ -17,6 +17,12 @@ body { background: var(--surface-page); }
   .bg-footer-grid { grid-template-columns: 1fr 1fr !important; }
 }
 
+/* CTA form: stack the paired field rows (name/company, email/budget) on
+   phones so the second column can't clip against the card's rounded edge. */
+@media (max-width: 560px) {
+  .bg-field-row { grid-template-columns: 1fr !important; }
+}
+
 /* Scene switch in the symptoms canvas */
 @keyframes bg-scene-in {
   from { opacity: 0; transform: translateY(10px); }

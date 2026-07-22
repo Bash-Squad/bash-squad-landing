@@ -6,3 +6,4 @@ export { Card } from './Card';
 export { Avatar } from './Avatar';
 export { SectionLabel } from './SectionLabel';
 export { Divider } from './Divider';
+export { CopyEmail } from './CopyEmail';
