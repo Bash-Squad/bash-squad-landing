@@ -47,10 +47,19 @@ concepts/               earlier brand explorations (static HTML)
 
 ## Notes / placeholders
 
-These are realistic in-voice placeholders carried over from the design — swap before launch:
-
-- **Email** `hello@bashsquad.dev`, the Calendly embed (drop-in slot in `FinalCTA`),
-  and the form submission (no backend yet — shows a success state only).
+- **Form delivery**: all three CTA forms call the `submitLead` server action
+  (`src/lib/leadAction.ts`), which runs on the server (Vercel), emails the lead
+  to `hello@bashsquad.com` via Resend (`src/lib/mailer.ts`, Reply-To = the lead),
+  and forwards to HQ when configured. No client-side form service, no public key.
+- **Env** (server-only, in `.env.local`; see `.env.example`): `RESEND_API_KEY`
+  (Vercel's Resend integration injects this), `LEAD_TO`, `LEAD_FROM`,
+  `HQ_LEAD_ENDPOINT`. With no key in dev, leads are logged to the server console.
+- **Bash Squad OS (HQ)**: set `HQ_LEAD_ENDPOINT` to a Convex HTTP action and the
+  server action also forwards each lead server-to-server (no CORS). Payload shape
+  is documented in `src/lib/leadAction.ts`.
+- Pages are statically prerendered (`next build` → `○ Static`), so search/AI
+  crawlers get full HTML. No `output: 'export'` needed for that.
+- Calendly and the newsletter capture were removed deliberately (call times are
+  offered in the reply email instead; newsletter is on hold).
 - **Result figures and team names** (Dee / Mara / Theo) are placeholder copy.
 - **Fonts** are a substitution flagged in the original design — swap if real brand fonts arrive.
-- The form is the funnel endpoint; wire it to a real handler / Calendly when ready.

@@ -1,14 +1,17 @@
 /* ============================================================
-   TYPOGRAPHY — Bash Squad
+   TYPOGRAPHY: Bash Squad
    Display = Bricolage Grotesque · UI/body = Space Grotesk ·
    Mono = JetBrains Mono (the command UI, labels, captions).
+   Families are self-hosted via next/font (src/app/layout.tsx),
+   which injects --font-bricolage / --font-space-grotesk /
+   --font-jetbrains-mono with built-in size-adjusted fallbacks.
    ============================================================ */
 
 :root {
   /* ---- Families ---- */
-  --font-display: 'Bricolage Grotesque', 'Space Grotesk', system-ui, sans-serif;
-  --font-sans:    'Space Grotesk', system-ui, -apple-system, sans-serif;
-  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --font-display: var(--font-bricolage), 'Space Grotesk', system-ui, sans-serif;
+  --font-sans:    var(--font-space-grotesk), system-ui, -apple-system, sans-serif;
+  --font-mono:    var(--font-jetbrains-mono), ui-monospace, 'SF Mono', Menlo, monospace;
 
   /* ---- Weights ---- */
   --w-regular: 400;

@@ -1,5 +1,5 @@
 /* ============================================================
-   SPACING & LAYOUT — Bash Squad
+   SPACING & LAYOUT: Bash Squad
    4px base grid. Generous, exposed, grid-aligned.
    ============================================================ */
 
@@ -26,9 +26,9 @@
   --gutter:       clamp(20px, 5vw, 64px);
   --section-y:    clamp(64px, 10vw, 144px);
 
-  /* ---- Radii — brutalist, mostly sharp ---- */
+  /* ---- Radii: brutalist, mostly sharp ---- */
   --r-0:   0px;
-  --r-1:   3px;   /* default — chips, inputs, buttons */
+  --r-1:   3px;   /* default: chips, inputs, buttons */
   --r-2:   6px;   /* cards */
   --r-3:   10px;  /* large panels */
   --r-pill: 999px;
