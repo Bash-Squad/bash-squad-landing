@@ -59,7 +59,7 @@ export function WhatWeDo({ onNav }: WhatWeDoProps) {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
         {SERVICES.map((s) => {
           const card = (
-            <Card pad="lg" interactive={LINK_CARDS} style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
+            <Card pad="lg" interactive={LINK_CARDS} hoverLift style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 width: 42, height: 42, borderRadius: 'var(--r-2)',

@@ -9,6 +9,7 @@ type CardPad = 'none' | 'sm' | 'md' | 'lg';
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
   interactive?: boolean;
+  hoverLift?: boolean;  // hover lift (border + shadow) without the pointer/click affordance
   topEdge?: boolean;  // acid hairline along the top
   pad?: CardPad;      // 'none' | 'sm' | 'md' | 'lg'
 }
@@ -16,6 +17,7 @@ interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 export function Card({
   children,
   interactive = false,
+  hoverLift = false,
   topEdge = false,    // acid hairline along the top
   pad = 'md',         // 'none' | 'sm' | 'md' | 'lg'
   style,
@@ -33,13 +35,13 @@ export function Card({
       style={{
         position: 'relative',
         background: 'var(--surface-card)',
-        border: `1px solid ${interactive && hover ? 'var(--border-strong)' : 'var(--border-hairline)'}`,
+        border: `1px solid ${(interactive || hoverLift) && hover ? 'var(--border-strong)' : 'var(--border-hairline)'}`,
         borderRadius: 'var(--r-2)',
         padding: pads[pad],
         cursor: interactive ? 'pointer' : 'default',
         transition: 'border-color var(--dur-2) var(--ease-out), transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out)',
-        transform: interactive && hover ? 'translateY(-2px)' : 'none',
-        boxShadow: interactive && hover ? 'var(--shadow-2)' : 'none',
+        transform: (interactive || hoverLift) && hover ? 'translateY(-2px)' : 'none',
+        boxShadow: (interactive || hoverLift) && hover ? 'var(--shadow-2)' : 'none',
         overflow: 'hidden',
         ...style,
       }}
@@ -49,7 +51,7 @@ export function Card({
         <span style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: 2,
           background: 'var(--accent)',
-          opacity: interactive ? (hover ? 1 : 0.5) : 1,
+          opacity: (interactive || hoverLift) ? (hover ? 1 : 0.5) : 1,
           transition: 'opacity var(--dur-2) var(--ease-out)',
         }} />
       )}
