@@ -1,13 +1,13 @@
 // BuildCTA: variant C endpoint. Ported from the homepage FinalCTA so the
-// build page shares the same qualifying form (budget band, recap opt-in),
+// build page shares the same qualifying form (budget band),
 // wired to the submitLead server action (email now, HQ forward once BS-OS is live).
 import React from 'react';
-import { Input, Select, Textarea, Button, Checkbox, Badge, CopyEmail } from '../components';
+import { Input, Select, Textarea, Button, Badge, CopyEmail } from '../components';
 import { Section, SectionHead } from '../sections/Section';
 import { submitLead } from '../lib/leadAction';
 import { isValidEmail } from '../lib/lead';
 
-const EMPTY_FORM = { name: '', company: '', broken: '', budget: '', email: '', recap: true, botcheck: '' };
+const EMPTY_FORM = { name: '', company: '', broken: '', budget: '', email: '', botcheck: '' };
 
 type FormState = typeof EMPTY_FORM;
 
@@ -40,7 +40,6 @@ export function BuildCTA({ index = '06' }: { index?: string } = {}) {
         company: form.company,
         budget: form.budget,
         message: form.broken,
-        recap: form.recap,
         botcheck: form.botcheck,
       });
       if (res.ok) { setStatus('sent'); setForm(EMPTY_FORM); }
@@ -84,7 +83,6 @@ export function BuildCTA({ index = '06' }: { index?: string } = {}) {
                 </div>
                 {/* honeypot: humans never see it, bots that fill it get dropped */}
                 <input type="text" name="botcheck" value={form.botcheck} onChange={set('botcheck')} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }} />
-                <Checkbox checked={form.recap} onChange={set('recap')} label="Email me a short recap + next steps" />
                 {error && <div role="alert" style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--danger)' }}>{error}</div>}
                 <Button variant="primary" prompt size="lg" full disabled={status === 'sending'} onClick={submit}>{status === 'sending' ? 'sending…' : 'Send it over'}</Button>
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--t-sm)', color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>No spam, no sales reps. One engineer, one reply.</p>

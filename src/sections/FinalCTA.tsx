@@ -1,12 +1,12 @@
 // FinalCTA: the funnel endpoint. Terminal-style qualifying form wired to the
 // submitLead server action (email now, HQ forward once BS-OS is live) + direct email line.
 import React from 'react';
-import { Input, Select, TerminalInput, Button, Checkbox, Badge, CopyEmail } from '../components';
+import { Input, Select, TerminalInput, Button, Badge, CopyEmail } from '../components';
 import { Section, SectionHead } from './Section';
 import { submitLead } from '../lib/leadAction';
 import { isValidEmail } from '../lib/lead';
 
-const EMPTY_FORM = { name: '', company: '', broken: '', budget: '', email: '', recap: true, botcheck: '' };
+const EMPTY_FORM = { name: '', company: '', broken: '', budget: '', email: '', botcheck: '' };
 
 type FormState = typeof EMPTY_FORM;
 type FieldValue = string | boolean | React.ChangeEvent<HTMLInputElement | HTMLSelectElement>;
@@ -31,7 +31,6 @@ export function FinalCTA() {
         company: form.company,
         budget: form.budget,
         message: form.broken,
-        recap: form.recap,
         botcheck: form.botcheck,
       });
       if (res.ok) { setStatus('sent'); setForm(EMPTY_FORM); }
@@ -75,7 +74,6 @@ export function FinalCTA() {
                 </div>
                 {/* honeypot: humans never see it, bots that fill it get dropped */}
                 <input type="text" name="botcheck" value={form.botcheck} onChange={set('botcheck')} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }} />
-                <Checkbox checked={form.recap} onChange={set('recap')} label="Email me a short recap + next steps" />
                 {error && <div role="alert" style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--danger)' }}>{error}</div>}
                 <Button variant="primary" prompt size="lg" full disabled={status === 'sending'} onClick={submit}>{status === 'sending' ? 'sending…' : 'Send it over'}</Button>
                 <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'var(--t-sm)', color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>No spam, no sales reps. One engineer, one reply.</p>

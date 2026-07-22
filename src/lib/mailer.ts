@@ -42,7 +42,6 @@ export async function sendLeadEmail(lead: Lead): Promise<void> {
         `Email:   ${lead.email}`,
         `Company: ${lead.company || '—'}`,
         `Budget:  ${lead.budget || '—'}`,
-        `Recap:   ${lead.recap ? 'yes' : 'no'}`,
         '',
         lead.message,
         ...(lead.detail ? ['', lead.detail] : []),

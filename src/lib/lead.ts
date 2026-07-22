@@ -10,7 +10,6 @@ export interface Lead {
   budget?: string;
   message: string;
   detail?: string;
-  recap?: boolean;
   // Honeypot: hidden field. '' from humans, filled by bots.
   botcheck?: boolean | string;
 }
