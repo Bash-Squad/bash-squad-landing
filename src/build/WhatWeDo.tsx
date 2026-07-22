@@ -40,6 +40,14 @@ interface WhatWeDoProps {
   onNav: (id: string) => void;
 }
 
+// TEMPORARY: flip to true once the owner has reviewed the service pages
+// (SEO-PLAN.md Section 0.A). While false, homepage cards render without
+// links so emailed clients don't land on unreviewed copy. The pages stay
+// live and crawlable via the footer, /services, and the sitemap, so no
+// SEO paths are lost. Do not leave false long-term: homepage links are
+// the strongest internal-linking signal for the service pages.
+const LINK_CARDS = false;
+
 export function WhatWeDo({ onNav }: WhatWeDoProps) {
   return (
     <Section id="services" tone="base">
@@ -49,9 +57,9 @@ export function WhatWeDo({ onNav }: WhatWeDoProps) {
         intro="We&rsquo;re engineers first, so our integrations hold up and our AI does real work, not demos. Here&rsquo;s the short list of what people hire us for."
       />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
-        {SERVICES.map((s) => (
-          <a key={s.title} href={s.href} style={{ display: 'flex', textDecoration: 'none' }}>
-            <Card pad="lg" interactive style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
+        {SERVICES.map((s) => {
+          const card = (
+            <Card pad="lg" interactive={LINK_CARDS} style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 width: 42, height: 42, borderRadius: 'var(--r-2)',
@@ -64,10 +72,15 @@ export function WhatWeDo({ onNav }: WhatWeDoProps) {
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {s.tags.map(t => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
               </div>
-              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--accent)' }}>$ read more →</span>
+              {LINK_CARDS && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--accent)' }}>$ read more →</span>}
             </Card>
-          </a>
-        ))}
+          );
+          return LINK_CARDS ? (
+            <a key={s.title} href={s.href} style={{ display: 'flex', textDecoration: 'none' }}>{card}</a>
+          ) : (
+            <div key={s.title} style={{ display: 'flex' }}>{card}</div>
+          );
+        })}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, marginTop: 44 }}>
         <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>Not sure which bucket you&rsquo;re in? That&rsquo;s normal. Describe it in plain words and we&rsquo;ll sort it.</p>
