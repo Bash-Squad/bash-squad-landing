@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Bash Squad — senior software & AI engineering. Marketing site (Next.js, static export).",
+  "description": "Bash Squad — senior software & AI engineering. Marketing site (Next.js App Router, deployed on Vercel).",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
