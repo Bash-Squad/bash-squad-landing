@@ -33,7 +33,7 @@ export function BuildProof() {
   const shown = hovered ?? active;
 
   return (
-    <Section id="how">
+    <Section id="how" tone="base">
       <SectionHead
         index="05" label="how it works"
         title="We meet you where you are."
