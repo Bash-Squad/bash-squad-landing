@@ -40,13 +40,13 @@ export function BuildHeader({ onNav }: BuildHeaderProps) {
                 {l.label}
               </a>
             ))}
+            <Button variant="primary" prompt size="sm" style={{ marginLeft: 8 }} onClick={() => onNav('book')}>Tell us what you need</Button>
             <a href="https://hq.bashsquad.com" aria-label="Squad login (HQ)"
                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginLeft: 8, background: 'var(--surface-card)', border: '1px solid var(--border-strong)', borderRadius: 'var(--r-1)', padding: '7px 11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', transition: 'color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out)' }}
                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-strong)'; e.currentTarget.style.borderColor = 'var(--accent)'; }}
                onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-muted)'; e.currentTarget.style.borderColor = 'var(--border-strong)'; }}>
               <span style={{ color: 'var(--accent)' }}>&gt;</span> HQ
             </a>
-            <Button variant="primary" prompt size="sm" style={{ marginLeft: 8 }} onClick={() => onNav('book')}>Tell us what you need</Button>
           </nav>
           <div className="bg-mobile-nav" style={{ display: 'none', gap: 8 }}>
             <IconButton variant="outline" label="Menu" onClick={() => setMenu(m => !m)}>{menu ? '✕' : '≡'}</IconButton>

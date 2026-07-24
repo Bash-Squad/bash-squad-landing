@@ -18,7 +18,7 @@ interface FooterProps {
 const DEFAULT_COLS: FooterCol[] = [
   { h: 'navigate', items: [['services', 'services'], ['why', 'how we work'], ['team', 'team'], ['book', "tell us what's broken"]] },
   { h: 'services', items: [['services', 'ai consulting'], ['services', 'automation'], ['services', 'integration'], ['services', 'custom software']] },
-  { h: 'family', items: [[null, 'squinty eyes holdings'], [null, 'blue ghost lab']] },
+  { h: 'family', items: [[null, 'blue ghost lab']] },
 ];
 
 export function Footer({ onNav, cols = DEFAULT_COLS }: FooterProps) {
@@ -64,7 +64,7 @@ export function Footer({ onNav, cols = DEFAULT_COLS }: FooterProps) {
         </div>
         <div style={{ marginTop: 'var(--space-12)' }}><Divider /></div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginTop: 'var(--space-6)', flexWrap: 'wrap', fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', color: 'var(--text-faint)', letterSpacing: '0.04em' }}>
-          <span>© {new Date().getFullYear()} bash squad · part of squinty eyes holdings</span>
+          <span>© {new Date().getFullYear()} bash squad</span>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}><span style={{ width: 7, height: 7, borderRadius: 999, background: 'var(--acid-500)', boxShadow: '0 0 8px var(--acid-glow)' }} /> all systems operational</span>
         </div>
       </div>
