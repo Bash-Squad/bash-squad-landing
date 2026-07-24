@@ -16,6 +16,8 @@ export function FinalCTA() {
   const [form, setForm] = React.useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = React.useState<'idle' | 'sending' | 'sent'>('idle'); // idle | sending | sent
   const [error, setError] = React.useState('');
+  // Time trap: bots submit near-instantly; the server drops too-fast leads.
+  const mountedAt = React.useRef(Date.now());
   const set = (k: keyof FormState) => (v: FieldValue) => setForm(f => ({ ...f, [k]: typeof v === 'object' ? v.target.value : v } as FormState));
 
   const submit = async () => {
@@ -32,6 +34,7 @@ export function FinalCTA() {
         budget: form.budget,
         message: form.broken,
         botcheck: form.botcheck,
+        elapsedMs: Date.now() - mountedAt.current,
       });
       if (res.ok) { setStatus('sent'); setForm(EMPTY_FORM); }
       else { setStatus('idle'); setError('[err] delivery failed. email us directly: hello@bashsquad.com'); }

@@ -17,6 +17,8 @@ export function GuideCTA() {
   const [form, setForm] = React.useState(EMPTY_FORM);
   const [status, setStatus] = React.useState<Status>('idle'); // idle | sending | sent
   const [error, setError] = React.useState('');
+  // Time trap: bots submit near-instantly; the server drops too-fast leads.
+  const mountedAt = React.useRef(Date.now());
   const set = (k: FormKey) => (v: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [k]: typeof v === 'string' ? v : v.target.value }));
 
@@ -33,6 +35,7 @@ export function GuideCTA() {
         message: form.question.trim() || form.context,
         detail: form.question.trim() ? form.context : undefined,
         botcheck: form.botcheck,
+        elapsedMs: Date.now() - mountedAt.current,
       });
       if (res.ok) { setStatus('sent'); setForm(EMPTY_FORM); }
       else { setStatus('idle'); setError('[err] delivery failed. email us directly: hello@bashsquad.com'); }
