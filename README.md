@@ -83,6 +83,10 @@ Env (server-only, in `.env.local`; see `.env.example`):
 - `HQ_LEAD_ENDPOINT`: Convex HTTP action for BS-OS lead ingest. When set, the
   server action also forwards each lead server-to-server (no CORS). Payload shape
   is documented at the top of `src/lib/leadAction.ts`.
+- `HQ_LEAD_TOKEN`: Shared secret for HQ ingest authentication (sent as the
+  `x-bs-token` header). If unset, the mirror still attempts the POST but HQ will
+  reject with 401 or 503. Mirror failures are best-effort and do not fail the
+  submission — email is the system of record.
 
 ## SEO
 
