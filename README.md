@@ -83,6 +83,26 @@ Env (server-only, in `.env.local`; see `.env.example`):
 - `HQ_LEAD_ENDPOINT`: Convex HTTP action for BS-OS lead ingest. When set, the
   server action also forwards each lead server-to-server (no CORS). Payload shape
   is documented at the top of `src/lib/leadAction.ts`.
+- `HQ_LEAD_TOKEN`: Shared secret for HQ ingest authentication (sent as the
+  `x-bs-token` header). The mirror only runs when BOTH endpoint and token are
+  set. Mirror failures are best-effort and do not fail the submission — email
+  is the system of record.
+
+Anti-spam (all server-side in `leadAction.ts`; every bot signal gets a silent
+accept so bots think they succeeded and the inbox stays clean):
+
+- Honeypot field (`botcheck`): hidden input, filled only by bots.
+- Time trap: forms send `elapsedMs` (mount to submit); submissions under 3s
+  are dropped. Thresholds live server-side only.
+- Size caps: message/detail 8k chars, other fields 300, email 254.
+- Link limit: more than 4 URLs across message + detail is treated as spam.
+- Per-IP rate limit: 5 submissions per 10 minutes (in-memory, per warm
+  serverless instance — best-effort, which is where burst spam lands).
+- Next.js server actions already enforce origin checks + encrypted action IDs,
+  so direct-POST bots can't hit the action without loading the page.
+
+Escalation path if spam still gets through: Cloudflare Turnstile (invisible
+mode) on the forms. Not added now to keep the site dependency-free.
 
 ## SEO
 

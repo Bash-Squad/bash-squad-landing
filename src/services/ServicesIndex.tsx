@@ -22,7 +22,7 @@ function navFrom(id: string): void {
 const FOOTER_COLS = [
   { h: 'navigate', items: [['/', 'home'], ['/#work', 'our work'], ['/#help', 'who we help'], ['book', 'tell us what you need']] as [string | null, string][] },
   { h: 'services', items: SERVICES.map((s) => [servicePath(s.slug), s.shortLabel]) as [string | null, string][] },
-  { h: 'family', items: [[null, 'squinty eyes holdings'], [null, 'blue ghost lab']] as [string | null, string][] },
+  { h: 'family', items: [[null, 'blue ghost lab']] as [string | null, string][] },
 ];
 
 export default function ServicesIndex() {

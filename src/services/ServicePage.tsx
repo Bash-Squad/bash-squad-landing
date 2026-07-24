@@ -35,7 +35,7 @@ const FOOTER_COLS = [
     h: 'services',
     items: SERVICES.map((s) => [servicePath(s.slug), s.shortLabel]) as [string | null, string][],
   },
-  { h: 'family', items: [[null, 'squinty eyes holdings'], [null, 'blue ghost lab']] as [string | null, string][] },
+  { h: 'family', items: [[null, 'blue ghost lab']] as [string | null, string][] },
 ];
 
 function Crumbs({ service }: { service: ServiceContent }) {

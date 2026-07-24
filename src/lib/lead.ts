@@ -12,6 +12,10 @@ export interface Lead {
   detail?: string;
   // Honeypot: hidden field. '' from humans, filled by bots.
   botcheck?: boolean | string;
+  // Milliseconds from form mount to submit. Bots fill forms near-instantly;
+  // the server drops suspiciously fast submissions. Optional so an old cached
+  // bundle that doesn't send it is never punished.
+  elapsedMs?: number;
 }
 
 export type LeadError = 'invalid-email' | 'empty-message' | 'delivery-failed';
