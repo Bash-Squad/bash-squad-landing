@@ -5,14 +5,15 @@ _We automate the work you hate doing._
 
 Dark, developer-native, single acid-green signal accent. Originally generated from
 the [Claude Design](https://claude.ai/design) design system, since migrated to
-Next.js + TypeScript and deployed on Vercel.
+Next.js + TypeScript and deployed on Cloudflare Workers.
 
 ## Stack
 
 - **Next.js 16 (App Router)** + **React 19** + **TypeScript** (strict).
 - **Statically prerendered.** Every route is a server component rendered to HTML
   at build time (SSG), so search and AI crawlers get full content with no client
-  JS required. Deployed on **Vercel** (no `output: 'export'`, so server actions
+  JS required. Deployed on **Cloudflare Workers** via `@opennextjs/cloudflare`
+  (full Node.js runtime on workerd — no `output: 'export'`, so server actions
   and API routes stay available).
 - **No CSS framework.** Design tokens are plain CSS custom properties in
   `src/styles/tokens/`, consumed via inline styles in the components.
@@ -27,11 +28,33 @@ pnpm dev         # dev server at http://localhost:3000
 pnpm build       # production build
 pnpm start       # serve the production build
 pnpm typecheck   # tsc --noEmit
+pnpm preview:cf  # build + run the production worker locally (workerd)
+pnpm deploy:cf   # build + deploy to Cloudflare Workers
 ```
 
 Copy `.env.example` to `.env.local` and fill in the values (all server-only; see
 [Contact form](#contact-form)). With no email key set, dev logs each submitted
 lead to the server console instead of sending.
+
+## Deploy (Cloudflare Workers)
+
+Deployed with the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare)
+(`wrangler.jsonc` + `open-next.config.ts`). Pages are prerendered and served as
+static assets (free/unmetered); only the `submitLead` server action executes in
+the worker.
+
+One-time setup:
+
+```bash
+pnpm exec wrangler login                          # authenticate the CLI
+pnpm exec wrangler secret put RESEND_API_KEY      # secrets (repeat for HQ_LEAD_TOKEN)
+pnpm deploy:cf                                    # build + deploy
+```
+
+Then attach the domain: Cloudflare dashboard → the worker → Settings →
+Domains & Routes → add `bashsquad.com` (+ `www`). Local production check:
+`pnpm preview:cf` runs the real worker in workerd; `.dev.vars` (gitignored)
+holds env values for it.
 
 ## Structure
 
@@ -68,15 +91,15 @@ BRAND.md               brand and voice guidelines
 ## Contact form
 
 Every CTA form calls the `submitLead` server action (`src/lib/leadAction.ts`),
-which runs on the server (Vercel): it validates, emails the lead to
+which runs on the server (Cloudflare Workers): it validates, emails the lead to
 `hello@bashsquad.com` via Resend (`src/lib/mailer.ts`, with Reply-To set to the
 lead), and forwards the lead to Bash Squad OS (HQ) when configured. No
 client-side form service and no public key in the browser.
 
 Env (server-only, in `.env.local`; see `.env.example`):
 
-- `RESEND_API_KEY`: Resend key (Vercel's Resend integration injects it). Empty in
-  dev means leads are logged to the server console instead of sent.
+- `RESEND_API_KEY`: Resend key (`wrangler secret put RESEND_API_KEY` in prod).
+  Empty in dev means leads are logged to the server console instead of sent.
 - `LEAD_TO`: inbox that receives leads (default `hello@bashsquad.com`).
 - `LEAD_FROM`: verified sender. Must be on the `mail.bashsquad.com` sending
   subdomain verified in Resend, not the apex.
@@ -97,7 +120,8 @@ accept so bots think they succeeded and the inbox stays clean):
 - Size caps: message/detail 8k chars, other fields 300, email 254.
 - Link limit: more than 4 URLs across message + detail is treated as spam.
 - Per-IP rate limit: 5 submissions per 10 minutes (in-memory, per warm
-  serverless instance — best-effort, which is where burst spam lands).
+  Workers isolate — best-effort, which is where burst spam lands). Client IP
+  comes from Cloudflare's `cf-connecting-ip` header.
 - Next.js server actions already enforce origin checks + encrypted action IDs,
   so direct-POST bots can't hit the action without loading the page.
 

@@ -1,9 +1,9 @@
 'use server';
 
 // The single funnel endpoint for every form on the site. Runs server-side on
-// Vercel, so no delivery key ships to the browser and there is no CORS to
-// manage. Emails the lead now; also forwards to Bash Squad OS (HQ) once
-// HQ_LEAD_ENDPOINT is set — no third-party form service involved.
+// Cloudflare Workers, so no delivery key ships to the browser and there is no
+// CORS to manage. Emails the lead now; also forwards to Bash Squad OS (HQ)
+// once HQ_LEAD_ENDPOINT is set — no third-party form service involved.
 //
 // Anti-spam: every bot signal gets a silent accept ({ ok: true } without
 // sending anything) so bots think they succeeded and don't adapt. Signals and
@@ -47,9 +47,9 @@ function spamReason(lead: Lead): string | null {
 }
 
 // ---------------------------------------------------------------------------
-// Per-IP rate limit. In-memory, so it's per warm serverless instance —
+// Per-IP rate limit. In-memory, so it's per warm Workers isolate —
 // best-effort, but that's exactly where burst spam lands (a bot hammering the
-// endpoint keeps hitting the same warm instance). Generous window: a human
+// endpoint keeps hitting the same warm isolate). Generous window: a human
 // never sends 5 leads in 10 minutes.
 const RATE_WINDOW_MS = 10 * 60_000;
 const RATE_MAX = 5;
@@ -80,7 +80,12 @@ export async function submitLead(lead: Lead): Promise<LeadResult> {
   }
 
   const hdrs = await headers();
-  const ip = hdrs.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+  // cf-connecting-ip is Cloudflare's canonical client IP (set by the edge,
+  // not spoofable); x-forwarded-for kept as fallback for other runtimes/dev.
+  const ip =
+    hdrs.get('cf-connecting-ip') ||
+    hdrs.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    'unknown';
   if (isRateLimited(ip)) {
     console.info(`[lead] dropped (rate-limited) ip=${ip}`);
     return { ok: true };
