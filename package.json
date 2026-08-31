@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "packageManager": "pnpm@11.6.0",
   "description": "Bash Squad — senior software & AI engineering. Marketing site (Next.js App Router, deployed on Cloudflare Workers).",
   "scripts": {
     "dev": "next dev",
