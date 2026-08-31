@@ -15,5 +15,12 @@
     // Workers static-asset layer; only the lead server action hits the worker.
     "directory": ".open-next/assets",
     "binding": "ASSETS"
+  },
+  // Non-secret lead-pipeline config (see .env.example). Secrets are NOT here:
+  // RESEND_API_KEY and HQ_LEAD_TOKEN go in via `wrangler secret put`, and
+  // HQ_LEAD_ENDPOINT joins once BS-OS is live.
+  "vars": {
+    "LEAD_TO": "hello@bashsquad.com",
+    "LEAD_FROM": "Bash Squad <leads@mail.bashsquad.com>"
   }
 }
