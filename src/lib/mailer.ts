@@ -1,10 +1,10 @@
 // Server-only lead email delivery. Uses Resend's REST API over HTTP so it
-// works on Vercel serverless without a persistent SMTP connection. Kept
+// works on Cloudflare Workers without a persistent SMTP connection. Kept
 // dependency-free: to change providers, swap the endpoint and body below.
 //
 // Env (server-only — NOT prefixed NEXT_PUBLIC, so never exposed to the browser):
-//   RESEND_API_KEY  Resend key. Vercel's Resend integration injects this for
-//                   you, so there's nothing to copy around by hand.
+//   RESEND_API_KEY  Resend key. Set locally in .env.local; in production via
+//                   `wrangler secret put RESEND_API_KEY`.
 //   LEAD_TO         inbox that receives leads (default hello@bashsquad.com).
 //   LEAD_FROM       verified sender. Until the domain is verified in Resend,
 //                   the shared onboarding@resend.dev sender works for testing.

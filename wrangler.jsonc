@@ -1,0 +1,35 @@
+{
+  // Cloudflare Workers deployment via the OpenNext adapter
+  // (@opennextjs/cloudflare). `pnpm deploy:cf` builds the Next.js app, adapts
+  // it with OpenNext, and deploys the worker + static assets.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Must match the Workers Builds project name (created from the GitHub repo).
+  "name": "bash-squad-landing",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-08-01",
+  // Custom build: wrangler itself generates the worker before any
+  // deploy/versions-upload/dev run. Makes deployment independent of the
+  // Workers Builds dashboard build command (branch preview builds run
+  // default commands and skipped the OpenNext step, breaking deploys).
+  "build": {
+    "command": "pnpm run build:cf",
+    "watch_dir": "src"
+  },
+  // nodejs_compat: the adapter runs Next.js on workerd's Node.js runtime.
+  // global_fetch_strictly_public: recommended by OpenNext — prevents the
+  // worker from fetching itself through its own public hostname.
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    // Prerendered pages and _next/static, served free and unmetered from the
+    // Workers static-asset layer; only the lead server action hits the worker.
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // Non-secret lead-pipeline config (see .env.example). Secrets are NOT here:
+  // RESEND_API_KEY and HQ_LEAD_TOKEN go in via `wrangler secret put`, and
+  // HQ_LEAD_ENDPOINT joins once BS-OS is live.
+  "vars": {
+    "LEAD_TO": "hello@bashsquad.com",
+    "LEAD_FROM": "Bash Squad <leads@mail.bashsquad.com>"
+  }
+}
