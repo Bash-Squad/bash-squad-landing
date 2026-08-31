@@ -7,6 +7,14 @@
   "name": "bash-squad-landing",
   "main": ".open-next/worker.js",
   "compatibility_date": "2026-08-01",
+  // Custom build: wrangler itself generates the worker before any
+  // deploy/versions-upload/dev run. Makes deployment independent of the
+  // Workers Builds dashboard build command (branch preview builds run
+  // default commands and skipped the OpenNext step, breaking deploys).
+  "build": {
+    "command": "pnpm run build:cf",
+    "watch_dir": "src"
+  },
   // nodejs_compat: the adapter runs Next.js on workerd's Node.js runtime.
   // global_fetch_strictly_public: recommended by OpenNext — prevents the
   // worker from fetching itself through its own public hostname.
