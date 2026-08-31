@@ -28,8 +28,9 @@ pnpm dev         # dev server at http://localhost:3000
 pnpm build       # production build
 pnpm start       # serve the production build
 pnpm typecheck   # tsc --noEmit
+pnpm build:cf    # worker build incl. SSG cache — used by Workers Builds (CI)
 pnpm preview:cf  # build + run the production worker locally (workerd)
-pnpm deploy:cf   # build + deploy to Cloudflare Workers
+pnpm deploy:cf   # build + deploy to Cloudflare Workers from this machine
 ```
 
 Copy `.env.example` to `.env.local` and fill in the values (all server-only; see
