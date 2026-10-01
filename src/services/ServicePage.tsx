@@ -30,7 +30,7 @@ function navFrom(id: string): void {
 }
 
 const FOOTER_COLS = [
-  { h: 'navigate', items: [['/', 'home'], ['/services', 'services'], ['/#work', 'our work'], ['book', 'tell us what you need']] as [string | null, string][] },
+  { h: 'navigate', items: [['/', 'home'], ['/services', 'services'], ['/work', 'our work'], ['book', 'tell us what you need']] as [string | null, string][] },
   {
     h: 'services',
     items: SERVICES.map((s) => [servicePath(s.slug), s.shortLabel]) as [string | null, string][],

@@ -1,12 +1,13 @@
-// Work: merged "our work": products, open-source tools, and client builds
-// in one image-forward grid. Real screenshots where we have them (Wrangle),
-// lightweight on-brand mockups as stand-ins otherwise. Cards lift on hover
-// and link out to the live site / repo.
-// TODO(owner): replace Banter + Client-website mockups with real screenshots
-// (drop PNGs in public/work/ and set `img`), and confirm their links.
+// Work: merged "our work": client builds, products, and open-source tools
+// in one image-forward grid. Client builds with a case study come from the
+// src/work registry (card links to /work/<slug>); products are listed here
+// with real screenshots. Cards lift on hover and link out to the live site,
+// repo, or case study.
+// TODO(owner): Banter has no live link yet; confirm when it ships.
 import React from 'react';
 import { Badge } from '../components';
 import { Section, SectionHead } from '../sections/Section';
+import { CASE_STUDIES, caseStudyPath } from '../work';
 
 export const GITHUB_ORG = 'https://github.com/Bash-Squad';
 
@@ -94,7 +95,7 @@ const SiteMock = () => (
 
 /* --- data ----------------------------------------------------------------- */
 
-interface Project {
+export interface Project {
   name: string;
   kind: string;
   img?: string;
@@ -103,9 +104,11 @@ interface Project {
   desc: string;
   tags: string[];
   links: { live?: string; repo?: string };
+  /** Internal path to the write-up, when there is one. */
+  caseStudy?: string;
 }
 
-const PROJECTS: Project[] = [
+const PRODUCTS: Project[] = [
   {
     name: 'Banter', kind: 'realtime product',
     img: '/work/banter.png',
@@ -120,20 +123,27 @@ const PROJECTS: Project[] = [
     tags: ['swift', 'macos', 'open source'],
     links: { live: 'https://www.wrangleapp.dev/', repo: 'https://github.com/J-Krush/wrangle' },
   },
-  // TODO(owner): add a real client website here when there's one to show.
-  // {
-  //   name: 'Client website', kind: 'web build',
-  //   chrome: { url: 'a-client.com' }, mock: <SiteMock />,
-  //   desc: 'A bespoke marketing site, hand-built for speed and polish, with a clean handoff so the client can run and update it themselves.',
-  //   tags: ['next.js', 'design', 'seo'], links: {},
-  // },
+];
+
+// Case studies lead, newest first, so the card and the write-up never drift.
+export const PROJECTS: Project[] = [
+  ...CASE_STUDIES.map((c): Project => ({
+    name: c.name,
+    kind: c.kind,
+    img: c.cover.src,
+    desc: c.cardDescription,
+    tags: c.tags,
+    links: c.links,
+    caseStudy: caseStudyPath(c.slug),
+  })),
+  ...PRODUCTS,
 ];
 
 /* --- card ----------------------------------------------------------------- */
 
-function ProjectCard({ p }: { p: Project }) {
+export function ProjectCard({ p }: { p: Project }) {
   const [hover, setHover] = React.useState(false);
-  const primary = p.links.live || p.links.repo;
+  const external = p.links.live || p.links.repo;
   return (
     <div
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
@@ -147,9 +157,11 @@ function ProjectCard({ p }: { p: Project }) {
         boxShadow: hover ? 'var(--shadow-2)' : 'none',
       }}
     >
-      {primary
-        ? <a href={primary} target="_blank" rel="noreferrer" aria-label={`${p.name}: open`} style={{ display: 'block' }}><Preview chrome={p.chrome} img={p.img} alt={`${p.name} screenshot`}>{p.mock}</Preview></a>
-        : <Preview chrome={p.chrome} img={p.img} alt={`${p.name} preview`}>{p.mock}</Preview>}
+      {p.caseStudy
+        ? <a href={p.caseStudy} aria-label={`${p.name}: read the case study`} style={{ display: 'block' }}><Preview chrome={p.chrome} img={p.img} alt={`${p.name} screenshot`}>{p.mock}</Preview></a>
+        : external
+          ? <a href={external} target="_blank" rel="noreferrer" aria-label={`${p.name}: open`} style={{ display: 'block' }}><Preview chrome={p.chrome} img={p.img} alt={`${p.name} screenshot`}>{p.mock}</Preview></a>
+          : <Preview chrome={p.chrome} img={p.img} alt={`${p.name} preview`}>{p.mock}</Preview>}
       <div style={{ padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 12, flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
           <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--t-h4)', color: 'var(--text-strong)', margin: 0 }}>{p.name}</h3>
@@ -159,16 +171,19 @@ function ProjectCard({ p }: { p: Project }) {
         <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
           {p.tags.map(t => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 2, minHeight: 18 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginTop: 2, minHeight: 18, flexWrap: 'wrap' }}>
+          {p.caseStudy && (
+            <a href={p.caseStudy} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', color: 'var(--accent)' }}>$ read the case study →</a>
+          )}
           {p.links.repo && (
             <a href={p.links.repo} target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', color: 'var(--text-muted)' }}>
               <GitHubMark /> code
             </a>
           )}
           {p.links.live && (
-            <a href={p.links.live} target="_blank" rel="noreferrer" style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', color: 'var(--accent)' }}>live site ↗</a>
+            <a href={p.links.live} target="_blank" rel="noreferrer" style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', color: p.caseStudy ? 'var(--text-muted)' : 'var(--accent)' }}>live site ↗</a>
           )}
-          {!p.links.repo && !p.links.live && (
+          {!p.caseStudy && !p.links.repo && !p.links.live && (
             <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', color: 'var(--text-faint)' }}>// walkthrough on request</span>
           )}
         </div>
@@ -183,7 +198,7 @@ export function Work() {
       <SectionHead
         index="03" label="our work"
         title="Things we've built."
-        intro="A mix of our own products and open-source tools."
+        intro="Client builds, our own products, and open-source tools."
       />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>
         {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
