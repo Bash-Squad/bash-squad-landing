@@ -12,7 +12,7 @@ const EMPTY_FORM = { name: '', company: '', broken: '', budget: '', email: '', b
 type FormState = typeof EMPTY_FORM;
 
 
-export function BuildCTA({ index = '06' }: { index?: string } = {}) {
+export function BuildCTA({ index = '06', source = 'build page — tell us the hard thing' }: { index?: string; source?: string } = {}) {
   const [form, setForm] = React.useState(EMPTY_FORM);
   const [status, setStatus] = React.useState('idle'); // idle | sending | sent
   const [error, setError] = React.useState('');
@@ -36,7 +36,7 @@ export function BuildCTA({ index = '06' }: { index?: string } = {}) {
     setError('');
     try {
       const res = await submitLead({
-        source: 'build page — tell us the hard thing',
+        source,
         name: form.name,
         email: form.email,
         company: form.company,

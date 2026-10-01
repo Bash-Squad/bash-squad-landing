@@ -10,6 +10,7 @@ import { TechStack } from './TechStack';
 import { Work } from './Work';
 import { WhoWeHelp } from './WhoWeHelp';
 import { BuildProof } from './BuildProof';
+import { CASE_STUDIES, caseStudyPath } from '../work';
 import { BuildCTA } from './BuildCTA';
 import { Footer } from '../sections/Footer';
 
@@ -29,12 +30,18 @@ interface Command {
   icon: string;
   hint: string;
   keywords?: string;
+  /** Real page to open; without it, `id` is a homepage section to scroll to. */
+  href?: string;
 }
 
 const COMMANDS: Command[] = [
   { id: 'services', label: 'what we do', group: 'navigate', icon: '#', hint: '/services', keywords: 'services build software integration ai legacy rescue team' },
   { id: 'stack', label: 'own your stack', group: 'navigate', icon: '#', hint: '/stack', keywords: 'react next.js node typescript react native swift rust python postgres aws cloudflare convex neo4j n8n zapier self-hosted own your data tech stack tools languages frameworks build with' },
-  { id: 'work', label: 'our work', group: 'navigate', icon: '#', hint: '/work', keywords: 'portfolio projects proof wrangle banter github repos open source' },
+  { id: 'work', label: 'our work', group: 'navigate', icon: '#', hint: '/work', keywords: 'portfolio projects proof wrangle banter land to listings github repos open source case studies' },
+  ...CASE_STUDIES.map((c): Command => ({
+    id: `case-${c.slug}`, label: `case study: ${c.name.toLowerCase()}`, group: 'navigate', icon: '#', hint: caseStudyPath(c.slug),
+    href: caseStudyPath(c.slug), keywords: `case study client build ${c.tags.join(' ')} ${c.client.toLowerCase()}`,
+  })),
   { id: 'help', label: 'who we help', group: 'navigate', icon: '#', hint: '/help', keywords: 'segments legacy hospital modernize engineering team website integration sync vibe' },
   { id: 'how', label: 'how it works', group: 'navigate', icon: '#', hint: '/how', keywords: 'process discovery scope build handoff' },
   { id: 'book', label: 'tell us what you need', group: 'actions', icon: '$', hint: 'enter', keywords: 'contact start project hire book call' },
@@ -65,8 +72,9 @@ export default function BuildApp() {
     };
     scrollToId(map[c] || 'book');
   };
-  const onSelect = (command: { id: string }) => {
+  const onSelect = (command: { id: string; href?: string }) => {
     if (command.id === 'email') { window.location.href = 'mailto:hello@bashsquad.com'; return; }
+    if (command.href) { window.location.href = command.href; return; }
     scrollToId(command.id);
   };
 
@@ -89,7 +97,7 @@ export default function BuildApp() {
         <BuildCTA />
       </main>
       <Footer onNav={onNav} cols={[
-        { h: 'navigate', items: [['services', 'what we do'], ['work', 'our work'], ['help', 'who we help'], ['how', 'how it works'], ['book', 'tell us what you need']] },
+        { h: 'navigate', items: [['services', 'what we do'], ['work', 'our work'], ['/work', 'case studies'], ['help', 'who we help'], ['how', 'how it works'], ['book', 'tell us what you need']] },
         { h: 'services', items: [['/services/custom-software', 'custom software'], ['/services/integrations', 'integrations & syncs'], ['/services/ai-automation', 'ai & automation'], ['/services/legacy-modernization', 'legacy modernization'], ['/services/vibe-code-rescue', 'vibe-code rescue'], ['/services/fractional-engineering-team', 'your engineering team']] },
         { h: 'family', items: [[null, 'blue ghost lab']] },
       ]} />
