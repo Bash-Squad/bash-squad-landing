@@ -6,7 +6,7 @@
 // Shape of the story, in order:
 //   hero (crumbs, H1, the 40-60 word answer, the cover screen, the build
 //   log, the project sheet, four real numbers) -> 01 brief -> 02 build
-//   (scroll story) -> 03 the home page (before/after) -> 04 details
+//   (scroll story) -> 03 compare (optional before/after) -> 04 details
 //   (+ phones) -> 05 stack + outcome -> 06 book. A fixed rail of survey
 //   stations tracks the chapters on wide screens. Motion lives in ./motion.tsx.
 import React from 'react';
@@ -75,7 +75,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
   const chapters = [
     { id: 'brief', label: 'the brief' },
     { id: 'build', label: 'what we built' },
-    ...(study.compare ? [{ id: 'head', label: 'the home page' }] : []),
+    ...(study.compare ? [{ id: 'compare', label: study.compare.label }] : []),
     { id: 'details', label: 'the small things' },
     { id: 'outcome', label: 'stack and outcome' },
     { id: 'book', label: 'tell us what you need' },
@@ -193,16 +193,16 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           <ScrollStory steps={study.story.steps} frameUrl={() => liveHost} />
         </Section>
 
-        {/* 03 the home page: before / after */}
+        {/* 03 compare: before / after (optional) */}
         {study.compare && (
-          <Section id="head" tone="page">
+          <Section id="compare" tone="page">
             <Reveal>
-              <SectionLabel index={index('head')}>the home page</SectionLabel>
+              <SectionLabel index={index('compare')}>{study.compare.label}</SectionLabel>
               <h2 style={H2}>{study.compare.title}</h2>
             </Reveal>
             <p style={{ ...BODY, fontSize: 'var(--t-lg)', lineHeight: 1.6, maxWidth: 760, margin: '24px 0 clamp(32px, 5vw, 56px)' }}>{study.compare.body}</p>
             <Reveal figure>
-              <CompareSlider compare={study.compare} url={`${liveHost}/?v=2 → /?v=3`} />
+              <CompareSlider compare={study.compare} url={study.compare.url} />
             </Reveal>
           </Section>
         )}

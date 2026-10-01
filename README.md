@@ -101,7 +101,9 @@ BRAND.md               brand and voice guidelines
 
 ## Case studies
 
-`/work/<slug>` pages are content-driven. To add one:
+`/work/<slug>` pages are content-driven. The full workflow (fact-gathering,
+capture, copy rules, verification) is the `case-study` agent skill in
+`.claude/skills/case-study/`. In short:
 
 1. Capture screens of the real product into `public/work/<slug>/`: desktop at
    1440x900 (`name.webp` plus a `name@2x.webp` sibling), phones at 780 wide
