@@ -35,12 +35,85 @@
   pointer-events: none;
   user-select: none;
 }
-.cs-hero__split {
+.cs-hero__top {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(280px, 4fr);
-  gap: clamp(32px, 5vw, 72px);
+  grid-template-columns: minmax(0, 7fr) minmax(300px, 5fr);
+  gap: clamp(24px, 4vw, 64px);
   align-items: end;
 }
+.cs-hero__h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--t-display);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  color: var(--text-strong);
+  margin: 18px 0 0;
+  text-wrap: balance;
+}
+.cs-hero__aside { display: flex; flex-direction: column; }
+
+/* the desk: cover screen left (measured), build log + title block right */
+.cs-hero__desk {
+  display: grid;
+  grid-template-columns: minmax(0, 8fr) minmax(300px, 4fr);
+  gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+  margin-top: clamp(32px, 4.5vw, 56px);
+}
+.cs-hero__side { display: grid; gap: clamp(16px, 2vw, 24px); }
+.cs-hero__side .cs-block { font-size: var(--t-xs); }
+@keyframes cs-hero-art-in {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: none; }
+}
+.cs-hero__art {
+  position: relative;
+  animation: cs-hero-art-in 720ms var(--ease-out) 120ms both;
+}
+.cs-hero__art .cs-frame { box-shadow: var(--shadow-3), 0 0 0 1px rgba(0,0,0,0.45); }
+
+/* survey corner marks around the cover */
+.cs-mark {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 0 solid var(--accent);
+  pointer-events: none;
+}
+.cs-mark--tl { top: -9px; left: -9px; border-top-width: 1px; border-left-width: 1px; }
+.cs-mark--tr { top: -9px; right: -9px; border-top-width: 1px; border-right-width: 1px; }
+.cs-mark--bl { bottom: -9px; left: -9px; border-bottom-width: 1px; border-left-width: 1px; }
+.cs-mark--br { bottom: -9px; right: -9px; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* dimension line: |---- 16 DAYS ----| in acid mono, like the plat's */
+.cs-dim {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--t-2xs);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+.cs-dim__tick { width: 1px; height: 12px; background: currentColor; }
+.cs-dim__line { flex: 1; height: 1px; background: currentColor; opacity: 0.6; }
+.cs-dim__label { white-space: nowrap; }
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    @keyframes cs-grid-lag { to { transform: translateY(28%); } }
+    .cs-hero__grid {
+      animation: cs-grid-lag linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 120vh;
+    }
+  }
+}
+
+
 
 /* --- title block: the plat's "sheet 1 of 1" box, in our ink --- */
 .cs-block {
@@ -464,6 +537,7 @@
 }
 .cs-btn-link:hover { border-color: var(--accent); color: var(--accent); }
 .cs-btn-link--sm { padding: 7px 12px; font-size: var(--t-xs); gap: 7px; }
+.cs-btn-link--md { padding: 11px 18px; font-size: var(--t-sm); gap: 9px; }
 
 /* --- next / all work --- */
 .cs-next {
@@ -500,7 +574,7 @@
   .cs-rail { display: flex; }
 }
 @media (max-width: 960px) {
-  .cs-hero__split, .cs-brief, .cs-outcome { grid-template-columns: 1fr; }
+  .cs-hero__top, .cs-hero__desk, .cs-brief, .cs-outcome { grid-template-columns: 1fr; }
   .cs-story { grid-template-columns: 1fr; }
   .cs-story__figure { display: none; }
   .cs-story__inline { display: block; }
@@ -508,6 +582,8 @@
   .cs-story__step > * { opacity: 1; }
   .cs-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cs-stack__row { grid-template-columns: 1fr; gap: 6px; }
+  .cs-mark--tl, .cs-mark--bl { left: -6px; }
+  .cs-mark--tr, .cs-mark--br { right: -6px; }
 }
 @media (max-width: 560px) {
   .cs-phones { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }

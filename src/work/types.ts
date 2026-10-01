@@ -43,6 +43,15 @@ export interface CaseStudyStackRow {
   items: string[];
 }
 
+/** One line of the build log typed into the hero terminal. */
+export interface CaseStudyLogLine {
+  /** Short date as it should print: "sep 15". */
+  date: string;
+  text: string;
+  /** 'ok' prints in acid. */
+  tone?: 'ok';
+}
+
 export interface CaseStudyCompare {
   title: string;
   body: string;
@@ -75,26 +84,29 @@ export interface CaseStudyContent {
   intro: string;
   /** One sentence for the Work grid card and llms.txt. */
   cardDescription: string;
-  /** The title block cells beside the H1. */
+  /** The project-sheet strip under the hero (CLIENT, WHERE, SHIPPED...). */
   facts: CaseStudyFact[];
   links: { live?: string; repo?: string };
   /** Short lowercase tags for cards: ['astro', 'cloudflare', 'maps']. */
   tags: string[];
-  /** The big screen under the hero. Also the Work grid card image. */
+  /** The big screen in the hero. Also the Work grid card image. */
   cover: CaseStudyImage;
+  /** Mono dimension-line label drawn over the cover: "16 days, first commit to handover". */
+  dimension: string;
+  /** Title-bar text of the hero terminal: "landtolistings: git log". */
+  logTitle: string;
+  /** The build log, in date order, typed into the hero terminal. Real dates only. */
+  timeline: CaseStudyLogLine[];
   /** 1200x630 share card under /public. */
   ogImage: string;
   /** Three or four real numbers. */
   stats: CaseStudyStat[];
-  /** Mono strip under the cover: the stack in capitals. */
-  marquee: string[];
   brief: { title: string; body: string[]; asks: string[] };
   story: { title: string; intro: string; steps: CaseStudyStep[] };
   compare?: CaseStudyCompare;
   details: { title: string; intro: string; items: CaseStudyItem[] };
   /** Three phone screens, shown as a row. */
   phones?: { caption: string; images: CaseStudyImage[] };
-  hardParts: { title: string; intro: string; items: CaseStudyItem[] };
   stack: CaseStudyStackRow[];
   outcome: { title: string; body: string[] };
   /** Related service slugs (src/services). */

@@ -5,7 +5,8 @@
 // compositor. Under prefers-reduced-motion the finished state renders and
 // nothing moves.
 import React from 'react';
-import type { CaseStudyImage, CaseStudyStep, CaseStudyCompare, CaseStudyStat } from './types';
+import { Terminal } from '../components';
+import type { CaseStudyImage, CaseStudyStep, CaseStudyCompare, CaseStudyStat, CaseStudyLogLine } from './types';
 
 export function useReducedMotion(): boolean {
   const [reduced, setReduced] = React.useState(false);
@@ -68,6 +69,55 @@ export function Reveal({ figure = false, className = '', children, ...rest }: Re
     <div className={`cs-reveal${figure ? ' cs-reveal--figure' : ''}${className ? ' ' + className : ''}`} {...rest}>
       {children}
     </div>
+  );
+}
+
+/* --- build log: the timeline typed into a terminal, once, on load -------- */
+
+export function BuildLog({ title, lines }: { title: string; lines: CaseStudyLogLine[] }) {
+  const command = 'git log --oneline --reverse';
+  const reduced = useReducedMotion();
+  // typed: characters of the command shown; printed: log lines shown.
+  const [typed, setTyped] = React.useState(0);
+  const [printed, setPrinted] = React.useState(0);
+  const done = printed >= lines.length;
+
+  React.useEffect(() => {
+    if (reduced) { setTyped(command.length); setPrinted(lines.length); return; }
+    let t = 0;
+    const timers: number[] = [];
+    t += 420;
+    for (let i = 1; i <= command.length; i++) {
+      t += 28;
+      timers.push(window.setTimeout(() => setTyped(i), t));
+    }
+    t += 260;
+    for (let i = 1; i <= lines.length; i++) {
+      t += 150;
+      timers.push(window.setTimeout(() => setPrinted(i), t));
+    }
+    return () => timers.forEach(clearTimeout);
+  }, [reduced, lines.length, command.length]);
+
+  const mono: React.CSSProperties = { fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', lineHeight: 1.75 };
+  return (
+    <Terminal title={title} aria-label="Build log">
+      <div style={{ ...mono, whiteSpace: 'pre-wrap', color: 'var(--text-strong)' }}>
+        <span style={{ color: 'var(--accent)' }}>$ </span>{command.slice(0, typed)}
+        {typed < command.length && <span className="bg-cursor" style={{ height: '1.05em' }} />}
+      </div>
+      <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+        {lines.map((l, i) => (
+          <li key={l.date + l.text} style={{ ...mono, display: 'flex', gap: 14, visibility: i < printed ? 'visible' : 'hidden', color: l.tone === 'ok' ? 'var(--accent)' : 'var(--text-body)' }}>
+            <span style={{ color: l.tone === 'ok' ? 'var(--accent)' : 'var(--text-faint)', flexShrink: 0, minWidth: '6ch' }}>{l.date}</span>
+            <span>{l.text}</span>
+          </li>
+        ))}
+      </ol>
+      <div style={{ ...mono, color: 'var(--text-strong)', visibility: done ? 'visible' : 'hidden' }} aria-hidden="true">
+        <span style={{ color: 'var(--accent)' }}>$ </span><span className="bg-cursor" style={{ height: '1.05em' }} />
+      </div>
+    </Terminal>
   );
 }
 
