@@ -111,7 +111,9 @@ const landToListings: CaseStudyContent = {
     ],
   },
   compare: {
+    label: 'the home page',
     title: 'Two versions of the home page. They picked the map.',
+    url: 'landtolistings.bashsquad.com/?v=2 → /?v=3',
     body:
       'We built two versions of the home page and put both on the live site, each behind its own link, so they could compare them in a browser instead of in a mockup. The first draws a survey sheet around the headline: contour lines, two photographs, dimension lines. The second turns the whole screen into a surveyor\'s map of an imaginary street. The boundary draws itself, pins drop at the corners, a road sweeps in, lots get divided up, houses go up, and a moving truck drives down the lane while the live counts of parcels and homes roll up. If you\'ve turned off animations, or JavaScript, you get the finished drawing. They picked the map. Drag the handle to compare.',
     before: { label: 'v2 · the survey sheet', image: screen('hero-v2', 'Home page version 2: the headline "From land to listings" with two photographs inside registration marks, dimension lines, and two entry links for land and homes.') },

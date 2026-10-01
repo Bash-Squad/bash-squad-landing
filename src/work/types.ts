@@ -52,9 +52,14 @@ export interface CaseStudyLogLine {
   tone?: 'ok';
 }
 
+/** Before/after slider: two screens of the same thing, compared side by side. */
 export interface CaseStudyCompare {
+  /** Mono eyebrow and chapter-rail label: "the home page", "the old admin". */
+  label: string;
   title: string;
   body: string;
+  /** Text in the frame's address bar: "landtolistings.bashsquad.com/?v=2 → /?v=3". */
+  url: string;
   before: { label: string; image: CaseStudyImage };
   after: { label: string; image: CaseStudyImage };
 }
