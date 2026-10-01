@@ -64,14 +64,22 @@ src/
   app/                 Next.js App Router
     layout.tsx         root layout: fonts, metadata, Organization JSON-LD
     page.tsx           home route (renders build/BuildApp)
-    sitemap.ts         generated /sitemap.xml
+    services/          /services hub + /services/[slug] (static params)
+    work/              /work hub + /work/[slug] case studies (static params)
+    sitemap.ts         generated /sitemap.xml (services + case studies)
     robots.ts          generated /robots.txt
+    llms.txt/          generated /llms.txt (services + case studies)
   build/               the LIVE landing page: BuildApp composition + sections
                        (BuildHero, WhatWeDo, WhoWeHelp, Work, TechStack,
                        BuildProof, BuildCTA, BuildHeader)
   sections/            shared sections + Section scaffold (Hero, Problem,
                        Services, Symptoms, WhyUs, FitFilter, Squad, FinalCTA,
                        Header, Footer)
+  services/            service pages: types.ts (content model), content/*,
+                       index.ts (registry), ServicePage, ServicesIndex
+  work/                case studies: types.ts (content model), content/*,
+                       index.ts (registry), CaseStudyPage, WorkIndex,
+                       motion.tsx (scroll rail, story, compare, counters)
   guide/, App.tsx      earlier landing variants, kept for reference (not routed)
   components/          design system, imported via the src/components barrel
     core/              Button, IconButton, Badge, Tag, Card, Avatar,
@@ -82,12 +90,39 @@ src/
   lib/                 lead.ts (type + validation), leadAction.ts (server
                        action), mailer.ts (Resend delivery)
   styles/              styles.css (entry), landing.css (responsive rules),
+                       work.css (case-study layout + motion),
                        tokens/ (colors, typography, spacing, effects, fonts, base)
 public/                og.png, favicon.svg, logo marks, work/ screenshots
+                       (work/<slug>/ holds a case study's screens + og.png)
 concepts/              earlier brand explorations (static HTML)
 SEO-PLAN.md            SEO strategy notes
 BRAND.md               brand and voice guidelines
 ```
+
+## Case studies
+
+`/work/<slug>` pages are content-driven. The full workflow (fact-gathering,
+capture, copy rules, verification) is the `case-study` agent skill in
+`.claude/skills/case-study/`. In short:
+
+1. Capture screens of the real product into `public/work/<slug>/`: desktop at
+   1440x900 (`name.webp` plus a `name@2x.webp` sibling), phones at 780 wide
+   (`m-name.webp`), and a 1200x630 `og.png` share card.
+2. Write `src/work/content/<slug>.ts` against `CaseStudyContent`
+   (`src/work/types.ts`). Real specifics only; if there is no metric,
+   describe what shipped. Plain sentences, no em-dashes, and no client
+   names unless they have agreed to be named.
+3. Register it in `src/work/index.ts`. That alone adds it to `/work`, the
+   homepage Work grid, the ⌘K palette, the sitemap, and `llms.txt`.
+4. Check `/work/<slug>` in a browser at desktop and phone widths, and with
+   reduced motion on.
+
+Motion on these pages is deliberate and small: the hero terminal types the
+build log once on load, section heads and figures reveal with a CSS
+scroll-driven animation (no JS), the chapter rail and scroll story use an
+IntersectionObserver, the before/after slider is a range input, and the
+stat counters tick once. Everything renders in its final state with
+`prefers-reduced-motion`.
 
 ## Contact form
 

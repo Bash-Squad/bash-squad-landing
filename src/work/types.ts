@@ -1,0 +1,119 @@
+// Case-study content model. One file per project in src/work/content/,
+// registered in src/work/index.ts. Everything here is rendered into static
+// HTML (and some of it into JSON-LD), so keep copy in the site's voice:
+// plain sentences, contractions, real specifics only, no invented numbers,
+// no em-dashes. If we don't have a metric, describe what shipped instead.
+
+export interface CaseStudyImage {
+  /** Path under /public to the 1x file, e.g. /work/land-to-listings/land.webp. */
+  src: string;
+  /** What's in the picture, for people who can't see it. */
+  alt: string;
+  /** Intrinsic size of the 1x file. Keeps the layout steady before load. */
+  width: number;
+  height: number;
+  /** True when a `<name>@2x.webp` sibling exists next to `src`. */
+  retina?: boolean;
+}
+
+/** One cell of the title block beside the H1 (CLIENT, WHERE, SHIPPED...). */
+export interface CaseStudyFact {
+  label: string;
+  value: string;
+}
+
+/** A headline number. `value` is shown as written; digits count up on entry. */
+export interface CaseStudyStat {
+  value: string;
+  label: string;
+}
+
+export interface CaseStudyItem {
+  title: string;
+  body: string;
+}
+
+/** One beat of the scroll story: text on the left, its screen on the right. */
+export interface CaseStudyStep extends CaseStudyItem {
+  image: CaseStudyImage;
+}
+
+export interface CaseStudyStackRow {
+  label: string;
+  items: string[];
+}
+
+/** One line of the build log typed into the hero terminal. */
+export interface CaseStudyLogLine {
+  /** Short date as it should print: "sep 15". */
+  date: string;
+  text: string;
+  /** 'ok' prints in acid. */
+  tone?: 'ok';
+}
+
+/** Before/after slider: two screens of the same thing, compared side by side. */
+export interface CaseStudyCompare {
+  /** Mono eyebrow and chapter-rail label: "the home page", "the old admin". */
+  label: string;
+  title: string;
+  body: string;
+  /** Text in the frame's address bar: "landtolistings.bashsquad.com/?v=2 → /?v=3". */
+  url: string;
+  before: { label: string; image: CaseStudyImage };
+  after: { label: string; image: CaseStudyImage };
+}
+
+export interface CaseStudyContent {
+  /** URL segment under /work/. */
+  slug: string;
+  /** Display name: "Land to Listings". */
+  name: string;
+  /** Who it was for, as it should appear publicly. */
+  client: string;
+  /** Mono eyebrow after "case study": "client build", "product", "open source". */
+  kind: string;
+  /** Year shown in the eyebrow and card. */
+  year: string;
+  /** ISO date for JSON-LD datePublished. */
+  published: string;
+  /** SERP title WITHOUT the "| bash squad" suffix (the template adds it). <= 52 chars. */
+  metaTitle: string;
+  /** 140-160 chars. */
+  metaDescription: string;
+  /** The page's H1. Plain, one line if it can be. */
+  h1: string;
+  /** 40-60 words, answer-first: what it is, who it's for, what we did. Also the schema abstract. */
+  answer: string;
+  /** One or two supporting sentences under the answer. */
+  intro: string;
+  /** One sentence for the Work grid card and llms.txt. */
+  cardDescription: string;
+  /** The project-sheet strip under the hero (CLIENT, WHERE, SHIPPED...). */
+  facts: CaseStudyFact[];
+  links: { live?: string; repo?: string };
+  /** Short lowercase tags for cards: ['astro', 'cloudflare', 'maps']. */
+  tags: string[];
+  /** The big screen in the hero. Also the Work grid card image. */
+  cover: CaseStudyImage;
+  /** Mono dimension-line label drawn over the cover: "16 days, first commit to handover". */
+  dimension: string;
+  /** Title-bar text of the hero terminal: "landtolistings: git log". */
+  logTitle: string;
+  /** The build log, in date order, typed into the hero terminal. Real dates only. */
+  timeline: CaseStudyLogLine[];
+  /** 1200x630 share card under /public. */
+  ogImage: string;
+  /** Three or four real numbers. */
+  stats: CaseStudyStat[];
+  brief: { title: string; body: string[]; asks: string[] };
+  story: { title: string; intro: string; steps: CaseStudyStep[] };
+  compare?: CaseStudyCompare;
+  details: { title: string; intro: string; items: CaseStudyItem[] };
+  /** Three phone screens, shown as a row. */
+  phones?: { caption: string; images: CaseStudyImage[] };
+  stack: CaseStudyStackRow[];
+  outcome: { title: string; body: string[] };
+  /** Related service slugs (src/services). */
+  related: string[];
+}
