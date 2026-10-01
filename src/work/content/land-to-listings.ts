@@ -20,7 +20,7 @@ function phone(name: string, alt: string): CaseStudyImage {
 const landToListings: CaseStudyContent = {
   slug: 'land-to-listings',
   name: 'Land to Listings',
-  client: 'Emily Mitchell & Emma Douglass',
+  client: 'A two-broker real estate firm',
   kind: 'client build',
   year: '2026',
   published: '2026-09-30',
@@ -29,13 +29,13 @@ const landToListings: CaseStudyContent = {
     'A map-first land and homes site for two North Carolina brokers. Astro on Cloudflare Workers with D1, R2, MapLibre and a magic-link admin, live sixteen days after the first commit.',
   h1: 'From raw land to a live listings site in sixteen days.',
   answer:
-    'Land to Listings is a listings site for Emily Mitchell and Emma Douglass, two brokers in the Triangle, North Carolina. They sell development land to builders and homes to the people who\'ll live in them. We designed it and built it on Cloudflare Workers with Astro, D1 and R2, and it was live sixteen days after the first commit.',
+    'Land to Listings is a listings site for a two-broker real estate firm in the Triangle, North Carolina. They sell development land to builders and homes to the people who\'ll live in them. We designed it and built it on Cloudflare Workers with Astro, D1 and R2, and it was live sixteen days after the first commit.',
   intro:
-    'Sixteen days from the first commit to a site they can run themselves. Here\'s what they needed, what we built, and where it got hard.',
+    'Sixteen days from the first commit to a site they can run themselves. Here\'s what they needed and what we built.',
   cardDescription:
     'A map-first land and homes site for two Triangle, NC brokers: Astro on Cloudflare Workers, D1, R2, MapLibre, and an admin with no passwords.',
   facts: [
-    { label: 'client', value: 'Emily Mitchell & Emma Douglass' },
+    { label: 'client', value: 'A two-broker real estate firm' },
     { label: 'where', value: 'The Triangle, North Carolina' },
     { label: 'shipped', value: 'September 2026' },
     { label: 'role', value: 'Design, build, deploy, handover' },
@@ -44,6 +44,20 @@ const landToListings: CaseStudyContent = {
   links: { live: 'https://landtolistings.bashsquad.com/?v=3' },
   tags: ['astro', 'cloudflare', 'maps', 'design'],
   cover: screen('hero-v3', 'The Land to Listings home page: a surveyor\'s plat with contours, a parcel boundary, Listings Lane, and a title block reading "From land to listings" with live counts of parcels, acres, homes and towns.'),
+  dimension: '16 days, first commit to handover',
+  logTitle: 'landtolistings: git log --reverse',
+  // Dates are the milestones on main, from the repo's reflog.
+  timeline: [
+    { date: 'sep 15', text: 'scaffold: astro, workers, d1, r2, auth' },
+    { date: 'sep 16', text: 'land + homes split, map, geocoding' },
+    { date: 'sep 17', text: 'blank basemap and back button fixed' },
+    { date: 'sep 22', text: 'ui slices 1 to 5, 55 tests green' },
+    { date: 'sep 25', text: 'redesign: the surveyor\'s sheet' },
+    { date: 'sep 27', text: 'third home page: the plat, /?v=3' },
+    { date: 'sep 28', text: 'copy pass: every page and email' },
+    { date: 'sep 29', text: 'approved. they picked the plat', tone: 'ok' },
+    { date: 'sep 30', text: 'handover. 61 commits, 58 tests', tone: 'ok' },
+  ],
   ogImage: `${DIR}/og.png`,
   stats: [
     { value: '16', label: 'days, first commit to handover' },
@@ -51,11 +65,10 @@ const landToListings: CaseStudyContent = {
     { value: '58', label: 'tests, run inside workerd' },
     { value: '$0', label: 'a month to host' },
   ],
-  marquee: ['Astro 7', 'Cloudflare Workers', 'D1', 'R2', 'MapLibre', 'Better Auth', 'Turnstile', 'Image Transformations', 'Vitest in workerd'],
   brief: {
     title: 'Two kinds of buyer, one site.',
     body: [
-      'Emily and Emma sell two different things to two different people. Builders want acreage, lot counts, county and sewer, and they want to see it on a map. Home buyers want photos, beds and baths, and a price.',
+      'The brokers sell two different things to two different people. Builders want acreage, lot counts, county and sewer, and they want to see it on a map. Home buyers want photos, beds and baths, and a price.',
       'They needed one site that worked for both without feeling like two sites stapled together. They needed to add and edit listings themselves, without calling us. And they wanted a way for landowners to ask what their land is worth, because that\'s where a lot of their land deals start.',
       'No MLS feed and no CRM in the first phase, and no monthly software bill to keep it running.',
     ],
@@ -74,7 +87,7 @@ const landToListings: CaseStudyContent = {
       {
         title: 'Everything is on the map.',
         body:
-          'Land and homes live in one table. Two fields, division and category, decide every page, so the site is a handful of queries over the same rows. The list and the map always show the same filtered set. Hover a card and its pin lights up; hover a pin and its card does. Land gets a tree pin and homes get a house, so the map reads without a legend. Every filter lives in the URL, so a search can be sent to a client and the back button does what you expect.',
+          'Land and homes live in one table. Two fields, division and category, decide every page, so the site is a handful of queries over the same rows. The list and the map always show the same filtered set. Hover a card and its pin lights up; hover a pin and its card does. Land gets a tree pin and homes get a house, so the map reads without a legend. Every filter lives in the URL, so a search can be sent to a client as a link.',
         image: screen('land', 'The Land for sale page: a filter bar, listing cards with a plat drawing and an aerial photo, and a map of the Triangle with tree-shaped pins on each parcel.'),
       },
       {
@@ -92,30 +105,30 @@ const landToListings: CaseStudyContent = {
       {
         title: 'An admin with no passwords.',
         body:
-          'Emily and Emma sign in with a link emailed to them. Tokens last fifteen minutes and work once. One form covers both land and homes: leave a field blank and it doesn\'t show. Type an address and the pin places itself; if the geocoder guesses wrong, drag it. Photos upload straight to R2 and are resized on the way out, so nobody has to think about image sizes.',
+          'The brokers sign in with a link emailed to them. Tokens last fifteen minutes and work once. One form covers both land and homes: leave a field blank and it doesn\'t show. Type an address and the pin places itself; if the geocoder guesses wrong, drag it. Photos upload straight to R2 and are resized on the way out, so nobody has to think about image sizes.',
         image: screen('login', 'The admin sign-in page: "Sign in" with an email field and a button reading "Email me a sign-in link". No password field.'),
       },
     ],
   },
   compare: {
-    title: 'Two heads. They picked the plat.',
+    title: 'Two versions of the home page. They picked the map.',
     body:
-      'The headline came first: From land to listings. We built two more first screens behind a query string so they could compare them on the live site instead of in a mockup. Version 2 draws the survey sheet: contours draw in, the words set one by one, the photographs develop inside their registration marks. Version 3 is a full plat: a reticle hops the corners dropping iron pins, Listings Lane sweeps to a cul-de-sac, lots subdivide, houses go up, and a moving truck drives the lane while the live inventory rolls up like an odometer. With reduced motion, or no JavaScript, you get the finished drawing. Drag the handle to compare.',
-    before: { label: 'v2 · the sheet, drawn', image: screen('hero-v2', 'Home page version 2: the headline "From land to listings" with two photographs inside registration marks, dimension lines, and two entry links for land and homes.') },
-    after: { label: 'v3 · the plat (their pick)', image: screen('hero-v3', 'Home page version 3: the headline over a full surveyor\'s plat with contours, a parcel boundary with bearings, Listings Lane, a legend and a scale bar.') },
+      'We built two versions of the home page and put both on the live site, each behind its own link, so they could compare them in a browser instead of in a mockup. The first draws a survey sheet around the headline: contour lines, two photographs, dimension lines. The second turns the whole screen into a surveyor\'s map of an imaginary street. The boundary draws itself, pins drop at the corners, a road sweeps in, lots get divided up, houses go up, and a moving truck drives down the lane while the live counts of parcels and homes roll up. If you\'ve turned off animations, or JavaScript, you get the finished drawing. They picked the map. Drag the handle to compare.',
+    before: { label: 'v2 · the survey sheet', image: screen('hero-v2', 'Home page version 2: the headline "From land to listings" with two photographs inside registration marks, dimension lines, and two entry links for land and homes.') },
+    after: { label: 'v3 · the map (their pick)', image: screen('hero-v3', 'Home page version 3: the headline over a full surveyor\'s map with contours, a parcel boundary with bearings, Listings Lane, a legend and a scale bar.') },
   },
   details: {
     title: 'The small things.',
-    intro: 'None of these is a feature. All of them are why it feels finished.',
+    intro: 'Each one is something a buyer, a builder or the brokers would feel, even if they couldn\'t name it.',
     items: [
-      { title: 'Reads without a legend', body: 'A tree for land, a house for a home. Two pin shapes and no key to decode.' },
-      { title: 'The back button works', body: 'Filters live in the URL and we don\'t rewrite history while the page loads, so back goes where you came from.' },
-      { title: 'Phones get a switch', body: 'List or map, one tap. The same filters, nothing clipped, down to a 320px screen.' },
-      { title: 'Errors in plain sentences', body: 'The same wording in the browser and on the server. Submit with JavaScript off and the page comes back with the problems named.' },
-      { title: 'Nothing required that doesn\'t need to be', body: 'The land value form takes a road name. Acreage, timing and a phone number are optional and say so.' },
-      { title: 'The intro waits for the page', body: 'The animated head holds its first frame until the fonts and photos are in. If that takes more than 1.4 seconds, it skips to the finished drawing.' },
-      { title: 'Sold stays sold', body: 'A sold listing keeps its page and gets a stamp. The structured data says SoldOut, so Google doesn\'t keep advertising it.' },
-      { title: 'Light pages', body: 'The hero photos went from 530KB and 410KB JPEGs to about 40KB each as AVIF. The map script, about 200KB, loads only when you scroll to it.' },
+      { title: 'Every search is a link', body: 'Filters live in the URL, so a broker can text a builder the exact set of parcels they were looking at, and the page opens on it.' },
+      { title: 'Reads without a legend', body: 'A tree pin for land, a house pin for a home. The map explains itself, and hovering a card lights up its pin.' },
+      { title: 'Pins place themselves', body: 'Type an address and the listing lands on the map when it\'s saved. Raw land with only a road name gets a best guess and a note about how precise it is, and any pin can be dragged if the geocoder guessed wrong.' },
+      { title: 'Photos size themselves', body: 'The brokers upload whatever comes off the phone. Originals go to R2 and come back resized for the screen that asked, so nobody thinks about image sizes.' },
+      { title: 'Leads can\'t get lost', body: 'Every inquiry is saved before the email goes out. If the mail fails, the lead is still there, flagged, and exportable as a CSV. The forms work with JavaScript off.' },
+      { title: 'No passwords to forget or leak', body: 'Sign-in is an emailed link that works once and expires in fifteen minutes. An unknown address gets the same reply as a real one, so nobody can probe for accounts.' },
+      { title: 'Fast on a cold load', body: 'The hero photos went from 530KB JPEGs to about 40KB AVIF. The map script loads only when you scroll to it, and the animated home page waits for its fonts and photos before it plays.' },
+      { title: 'Search engines get the whole story', body: 'Page descriptions are built from live inventory, every entry point has its own share card, and a sold listing keeps its page, gets a stamp, and tells Google it\'s sold.' },
     ],
   },
   phones: {
@@ -124,32 +137,6 @@ const landToListings: CaseStudyContent = {
       phone('m-hero', 'The home page on a phone: the plat drawing with houses, a SOLD stamp, and a List / Map switch at the bottom.'),
       phone('m-land', 'The Land for sale page on a phone: the filter bar and a listing card with a plat drawing.'),
       phone('m-listing', 'A home listing on a phone: price, beds, baths and square feet, a photo with a filmstrip under it.'),
-    ],
-  },
-  hardParts: {
-    title: 'Where it got hard.',
-    intro: 'The parts that didn\'t go in the demo, and took the longest.',
-    items: [
-      {
-        title: 'A blank map with no error.',
-        body: 'MapLibre finds its web worker with a URL that Vite rewrote to a chunk that didn\'t exist, and MapLibre swallows the failure. Pins floating on beige, nothing in the console. The fix is a one-line setWorkerUrl with the worker imported as an asset, so it ships with its shared chunk.',
-      },
-      {
-        title: 'Forms that rejected anyone who skipped the phone field.',
-        body: 'Astro Actions send null for an empty input, so a schema default of an empty string never applied and the whole submission failed validation. A small optionalText() helper turns null into an empty string. Wrapping the schema in superRefine broke form coercion too, so the cross-field rules moved into a plain function the action calls.',
-      },
-      {
-        title: 'Delete means delete, in both stores.',
-        body: 'A listing\'s photos live in R2 and its row in D1, and SQL can\'t reach the bucket. Deleting the row first would leave paid-for photos nobody can find. So the bucket prefix goes first, driven by what\'s actually in the bucket, then the row. A test uploads an orphan and checks it\'s gone too.',
-      },
-      {
-        title: 'Passwordless on Workers.',
-        body: 'Better Auth\'s cookie cache misbehaves on Workers, so it\'s off. The client IP comes from cf-connecting-ip. The domain allowlist is an exact match, so x@landtolistings.com.evil.net is out, and an unknown address gets the same "check your email" page with no email, so nobody can probe for accounts.',
-      },
-      {
-        title: 'Tests in the real runtime.',
-        body: 'The 58 tests run the built Worker inside workerd with a local D1 and R2, migrations applied per file. Any network call that isn\'t stubbed fails the test, so nothing quietly hits Turnstile or the geocoder during a run.',
-      },
     ],
   },
   stack: [
@@ -163,7 +150,7 @@ const landToListings: CaseStudyContent = {
   outcome: {
     title: 'Where it landed.',
     body: [
-      'Live at landtolistings.bashsquad.com while their own domain moves over. Emily and Emma can sign in and add listings today. What\'s on the site now is demo data until they do.',
+      'Live at landtolistings.bashsquad.com while their own domain moves over. The brokers can sign in and add listings today. What\'s on the site now is demo data until they do.',
       'It runs on Cloudflare\'s free tier: no server to patch and no monthly bill. Handover is a push to their own repo and their own Cloudflare account, with a deploy guide written for whoever comes next.',
     ],
   },

@@ -55,7 +55,7 @@ export function BuildCTA({ index = '06', source = 'build page — tell us the ha
 
   return (
     <Section id="book" style={{ borderBottom: 'none' }}>
-      <SectionHead index={index} label="book" title="Tell us the hard thing." intro="Two minutes. An engineer reads every one of these. No bots, no SDR cadence. Whether it's broken, half-built, or just an idea, if we're not the right fit we'll say so." align="center" />
+      <SectionHead index={index} label="book" title="Tell us the hard thing." intro="It takes about two minutes. An engineer reads every one of these, not a bot and not a sales sequence. Whether it's broken, half-built, or still just an idea, tell us what it is. If we're not the right fit, we'll say so." align="center" />
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,0.85fr)', gap: 16, alignItems: 'start' }} className="bg-cta-grid">
         {/* terminal form */}
         <div style={{ background: 'var(--surface-inset)', border: '1px solid var(--border-strong)', borderRadius: 'var(--r-2)', overflow: 'hidden' }}>

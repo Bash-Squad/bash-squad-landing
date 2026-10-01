@@ -4,13 +4,13 @@
 // by the server route (src/app/work/[slug]/page.tsx).
 //
 // Shape of the story, in order:
-//   hero (crumbs, H1, the 40-60 word answer, title block) -> cover screen
-//   -> four real numbers -> stack marquee -> 01 brief -> 02 build (scroll
-//   story) -> 03 the head (before/after) -> 04 details (+ phones) -> 05 hard
-//   parts -> 06 stack + outcome -> 07 book. A fixed rail of survey stations
-//   tracks the chapters on wide screens. Motion lives in ./motion.tsx.
+//   hero (crumbs, H1, the 40-60 word answer, the cover screen, the build
+//   log, the project sheet, four real numbers) -> 01 brief -> 02 build
+//   (scroll story) -> 03 the home page (before/after) -> 04 details
+//   (+ phones) -> 05 stack + outcome -> 06 book. A fixed rail of survey
+//   stations tracks the chapters on wide screens. Motion lives in ./motion.tsx.
 import React from 'react';
-import { Badge, Button, MarqueeStrip, Pictogram, SectionLabel } from '../components';
+import { Badge, Button, Pictogram, SectionLabel } from '../components';
 import { Section, SectionHead } from '../sections/Section';
 import { Footer } from '../sections/Footer';
 import { BuildHeader } from '../build/BuildHeader';
@@ -19,7 +19,7 @@ import { SERVICES, servicePath } from '../services';
 import type { ServiceContent } from '../services';
 import { CASE_STUDIES, caseStudyPath } from './index';
 import type { CaseStudyContent } from './types';
-import { ChapterRail, CompareSlider, Frame, PhoneRow, Reveal, ScrollStory, Stats } from './motion';
+import { BuildLog, ChapterRail, CompareSlider, Frame, PhoneRow, Reveal, ScrollStory, Stats } from './motion';
 
 function scrollToId(id: string): void {
   if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
@@ -75,9 +75,8 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
   const chapters = [
     { id: 'brief', label: 'the brief' },
     { id: 'build', label: 'what we built' },
-    ...(study.compare ? [{ id: 'head', label: 'the head' }] : []),
+    ...(study.compare ? [{ id: 'head', label: 'the home page' }] : []),
     { id: 'details', label: 'the small things' },
-    { id: 'hard', label: 'where it got hard' },
     { id: 'outcome', label: 'stack and outcome' },
     { id: 'book', label: 'tell us what you need' },
   ];
@@ -90,62 +89,73 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
       <BuildHeader onNav={navFrom} />
       <ChapterRail chapters={chapters} />
       <main>
-        {/* hero: crumbs, eyebrow, H1, the extractable answer, title block */}
-        <Section tone="base" className="cs-hero" style={{ borderBottom: 'none' }}>
+        {/* hero: the headline beside the answer, then the desk: the cover
+            screen measured with a survey dimension line, the build log
+            typing beside it, the project sheet under that, and the numbers.
+            The page opens on the work, not on a paragraph. */}
+        <Section tone="base" className="cs-hero">
           <div className="cs-hero__grid" aria-hidden="true" />
           <div className="cs-hero__stations" aria-hidden="true">{STATIONS.map((s) => <span key={s}>{s}</span>)}</div>
-          <div className="cs-hero__split" style={{ position: 'relative' }}>
+          <div className="cs-hero__top" style={{ position: 'relative' }}>
             <div>
               <Crumbs study={study} />
               <SectionLabel index="cs">case study · {study.kind} · {study.year}</SectionLabel>
-              <h1 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--t-display)', lineHeight: 1.02, letterSpacing: '-0.03em', color: 'var(--text-strong)', margin: '18px 0 0', textWrap: 'balance' }}>
-                {study.h1}
-              </h1>
-              <p style={{ fontSize: 'var(--t-lg)', color: 'var(--text-body)', lineHeight: 1.6, margin: '24px 0 0', maxWidth: 720 }}>
+              <h1 className="cs-hero__h1">{study.h1}</h1>
+            </div>
+            <div className="cs-hero__aside">
+              <p style={{ fontSize: 'var(--t-lg)', color: 'var(--text-body)', lineHeight: 1.55, margin: 0 }}>
                 {study.answer}
               </p>
-              <p style={{ fontSize: 'var(--t-body)', color: 'var(--text-muted)', lineHeight: 1.6, margin: '16px 0 0', maxWidth: 720 }}>
-                {study.intro}
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 22 }}>
+                <Button variant="primary" prompt size="md" onClick={() => scrollToId('book')}>Tell us what you need</Button>
                 {live && (
-                  <a href={live} target="_blank" rel="noreferrer" className="cs-btn-link">
-                    <span style={{ color: 'var(--accent)' }}>&gt;</span> open the live site <span aria-hidden="true">↗</span>
+                  <a href={live} target="_blank" rel="noreferrer" className="cs-btn-link cs-btn-link--md">
+                    open the live site <span aria-hidden="true">↗</span>
                   </a>
                 )}
-                <Button variant="primary" prompt size="lg" onClick={() => scrollToId('book')}>Tell us what you need</Button>
               </div>
             </div>
-            <div className="cs-block" aria-label="Project sheet">
-              <div className="cs-block__head"><span>project sheet</span><span>sheet 1 of 1</span></div>
-              {study.facts.map((f) => (
-                <div key={f.label} className="cs-block__row">
-                  <span className="cs-block__k">{f.label}</span>
-                  <span className="cs-block__v">{f.value}</span>
+          </div>
+
+          {/* the desk: the cover screen measured with a dimension line, the
+              build log typing beside it, and the title block under that */}
+          <div className="cs-hero__desk" style={{ position: 'relative' }}>
+            <div>
+              <div className="cs-dim" aria-hidden="true">
+                <span className="cs-dim__tick" /><span className="cs-dim__line" />
+                <span className="cs-dim__label">{study.dimension}</span>
+                <span className="cs-dim__line" /><span className="cs-dim__tick" />
+              </div>
+              <div className="cs-hero__art">
+                <span className="cs-mark cs-mark--tl" aria-hidden="true" /><span className="cs-mark cs-mark--tr" aria-hidden="true" />
+                <span className="cs-mark cs-mark--bl" aria-hidden="true" /><span className="cs-mark cs-mark--br" aria-hidden="true" />
+                <Frame image={study.cover} url={live ? live.replace(/^https?:\/\//, '') : study.name} priority />
+              </div>
+            </div>
+            <div className="cs-hero__side">
+              <BuildLog title={study.logTitle} lines={study.timeline} />
+              <dl className="cs-block" aria-label="Project sheet" style={{ margin: 0 }}>
+                <div className="cs-block__head" aria-hidden="true"><span>project sheet</span><span>sheet 1 of 1</span></div>
+                {study.facts.map((f) => (
+                  <div key={f.label} className="cs-block__row">
+                    <dt className="cs-block__k">{f.label}</dt>
+                    <dd className="cs-block__v" style={{ margin: 0 }}>{f.value}</dd>
+                  </div>
+                ))}
+                <div className="cs-block__row">
+                  <dt className="cs-block__k">tags</dt>
+                  <dd style={{ margin: 0, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                    {study.tags.map((t) => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
+                  </dd>
                 </div>
-              ))}
-              <div className="cs-block__row">
-                <span className="cs-block__k">tags</span>
-                <span style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {study.tags.map((t) => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
-                </span>
-              </div>
+              </dl>
             </div>
           </div>
 
-          {/* the cover screen */}
-          <div style={{ position: 'relative', marginTop: 'clamp(40px, 6vw, 80px)' }}>
-            <Reveal figure>
-              <Frame image={study.cover} url={live ? live.replace(/^https?:\/\//, '') : study.name} priority />
-            </Reveal>
-          </div>
-
-          <div style={{ marginTop: 'clamp(28px, 4vw, 48px)' }}>
+          <div style={{ position: 'relative', marginTop: 'clamp(24px, 3.5vw, 40px)' }}>
             <Stats stats={study.stats} />
           </div>
         </Section>
-
-        <MarqueeStrip items={study.marquee.map((m) => m.toUpperCase())} speed={36} style={{ background: 'var(--surface-inset)' }} />
 
         {/* 01 brief */}
         <Section id="brief" tone="page">
@@ -183,11 +193,11 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           <ScrollStory steps={study.story.steps} frameUrl={() => liveHost} />
         </Section>
 
-        {/* 03 the head: before / after */}
+        {/* 03 the home page: before / after */}
         {study.compare && (
           <Section id="head" tone="page">
             <Reveal>
-              <SectionLabel index={index('head')}>the head</SectionLabel>
+              <SectionLabel index={index('head')}>the home page</SectionLabel>
               <h2 style={H2}>{study.compare.title}</h2>
             </Reveal>
             <p style={{ ...BODY, fontSize: 'var(--t-lg)', lineHeight: 1.6, maxWidth: 760, margin: '24px 0 clamp(32px, 5vw, 56px)' }}>{study.compare.body}</p>
@@ -219,28 +229,8 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           )}
         </Section>
 
-        {/* 05 where it got hard */}
-        <Section id="hard" tone="page">
-          <Reveal>
-            <SectionHead index={index('hard')} label="where it got hard" title={study.hardParts.title} intro={study.hardParts.intro} />
-          </Reveal>
-          <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'grid', gap: 1, background: 'var(--border-hairline)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--r-2)', overflow: 'hidden', maxWidth: 900 }}>
-            {study.hardParts.items.map((item, i) => (
-              <li key={item.title} style={{ background: 'var(--surface-card)', padding: 'var(--space-6)', display: 'flex', gap: 18, alignItems: 'baseline' }}>
-                <span aria-hidden="true" style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--accent)', minWidth: 28 }}>
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div>
-                  <h3 style={H3}>{item.title}</h3>
-                  <p style={{ ...SMALL, margin: '8px 0 0' }}>{item.body}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Section>
-
-        {/* 06 stack + outcome */}
-        <Section id="outcome" tone="base">
+        {/* 05 stack + outcome */}
+        <Section id="outcome" tone="page">
           <div className="cs-outcome">
             <div>
               <Reveal>

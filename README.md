@@ -108,17 +108,19 @@ BRAND.md               brand and voice guidelines
    (`m-name.webp`), and a 1200x630 `og.png` share card.
 2. Write `src/work/content/<slug>.ts` against `CaseStudyContent`
    (`src/work/types.ts`). Real specifics only; if there is no metric,
-   describe what shipped. Plain sentences, no em-dashes.
+   describe what shipped. Plain sentences, no em-dashes, and no client
+   names unless they have agreed to be named.
 3. Register it in `src/work/index.ts`. That alone adds it to `/work`, the
    homepage Work grid, the ⌘K palette, the sitemap, and `llms.txt`.
 4. Check `/work/<slug>` in a browser at desktop and phone widths, and with
    reduced motion on.
 
-Motion on these pages is deliberate and small: section heads and figures
-reveal with a CSS scroll-driven animation (no JS), the chapter rail and
-scroll story use an IntersectionObserver, the before/after slider is a
-range input, and the stat counters tick once. Everything renders in its
-final state with `prefers-reduced-motion`.
+Motion on these pages is deliberate and small: the hero terminal types the
+build log once on load, section heads and figures reveal with a CSS
+scroll-driven animation (no JS), the chapter rail and scroll story use an
+IntersectionObserver, the before/after slider is a range input, and the
+stat counters tick once. Everything renders in its final state with
+`prefers-reduced-motion`.
 
 ## Contact form
 
