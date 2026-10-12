@@ -109,6 +109,12 @@ export interface CaseStudyContent {
   brief: { title: string; body: string[]; asks: string[] };
   story: { title: string; intro: string; steps: CaseStudyStep[] };
   compare?: CaseStudyCompare;
+  /**
+   * Heading for this study's custom flair section. The visual is a component
+   * in src/work/flair/, registered by slug in src/work/flair/index.ts; the
+   * section renders only when both exist.
+   */
+  flair?: { label: string; title: string; body: string };
   details: { title: string; intro: string; items: CaseStudyItem[] };
   /** Three phone screens, shown as a row. */
   phones?: { caption: string; images: CaseStudyImage[] };

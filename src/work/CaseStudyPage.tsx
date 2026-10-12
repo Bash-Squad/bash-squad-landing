@@ -20,6 +20,7 @@ import type { ServiceContent } from '../services';
 import { CASE_STUDIES, caseStudyPath } from './index';
 import type { CaseStudyContent } from './types';
 import { BuildLog, ChapterRail, CompareSlider, Frame, PhoneRow, Reveal, ScrollStory, Stats } from './motion';
+import { FLAIR } from './flair';
 
 function scrollToId(id: string): void {
   if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
@@ -72,17 +73,20 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
     .filter((s): s is ServiceContent => Boolean(s));
   const others = CASE_STUDIES.filter((c) => c.slug !== study.slug);
 
+  const Flair = FLAIR[study.slug];
   const chapters = [
     { id: 'brief', label: 'the brief' },
     { id: 'build', label: 'what we built' },
     ...(study.compare ? [{ id: 'compare', label: study.compare.label }] : []),
+    ...(study.flair && Flair ? [{ id: 'flair', label: study.flair.label }] : []),
     { id: 'details', label: 'the small things' },
     { id: 'outcome', label: 'stack and outcome' },
     { id: 'book', label: 'tell us what you need' },
   ];
-  // Section numbering follows the chapters, so a study without a compare
-  // block doesn't skip a number.
+  // Numbering and background tone follow the chapters, so optional blocks
+  // never skip a number or put two same-tone sections back to back.
   const index = (id: string) => String(chapters.findIndex((c) => c.id === id) + 1).padStart(2, '0');
+  const tone = (id: string): 'page' | 'base' => (chapters.findIndex((c) => c.id === id) % 2 === 0 ? 'page' : 'base');
 
   return (
     <React.Fragment>
@@ -157,8 +161,8 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           </div>
         </Section>
 
-        {/* 01 brief */}
-        <Section id="brief" tone="page">
+        {/* the brief */}
+        <Section id="brief" tone={tone('brief')}>
           <div className="cs-brief">
             <div>
               <Reveal>
@@ -185,17 +189,17 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           </div>
         </Section>
 
-        {/* 02 what we built: scroll story */}
-        <Section id="build" tone="base">
+        {/* what we built: scroll story */}
+        <Section id="build" tone={tone('build')}>
           <Reveal>
             <SectionHead index={index('build')} label="what we built" title={study.story.title} intro={study.story.intro} />
           </Reveal>
           <ScrollStory steps={study.story.steps} frameUrl={() => liveHost} />
         </Section>
 
-        {/* 03 compare: before / after (optional) */}
+        {/* compare: before / after (optional) */}
         {study.compare && (
-          <Section id="compare" tone="page">
+          <Section id="compare" tone={tone('compare')}>
             <Reveal>
               <SectionLabel index={index('compare')}>{study.compare.label}</SectionLabel>
               <h2 style={H2}>{study.compare.title}</h2>
@@ -207,8 +211,20 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           </Section>
         )}
 
-        {/* 04 the small things */}
-        <Section id="details" tone="base">
+        {/* optional: this study's own flair (src/work/flair) */}
+        {study.flair && Flair && (
+          <Section id="flair" tone={tone('flair')}>
+            <Reveal>
+              <SectionLabel index={index('flair')}>{study.flair.label}</SectionLabel>
+              <h2 style={H2}>{study.flair.title}</h2>
+            </Reveal>
+            <p style={{ ...BODY, fontSize: 'var(--t-lg)', lineHeight: 1.6, maxWidth: 760, margin: '24px 0 clamp(32px, 5vw, 56px)' }}>{study.flair.body}</p>
+            <Flair />
+          </Section>
+        )}
+
+        {/* the small things */}
+        <Section id="details" tone={tone('details')}>
           <Reveal>
             <SectionHead index={index('details')} label="the small things" title={study.details.title} intro={study.details.intro} />
           </Reveal>
@@ -229,8 +245,8 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           )}
         </Section>
 
-        {/* 05 stack + outcome */}
-        <Section id="outcome" tone="page">
+        {/* stack + outcome */}
+        <Section id="outcome" tone={tone('outcome')}>
           <div className="cs-outcome">
             <div>
               <Reveal>

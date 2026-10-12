@@ -103,7 +103,8 @@ BRAND.md               brand and voice guidelines
 
 `/work/<slug>` pages are content-driven. The full workflow (fact-gathering,
 capture, copy rules, verification) is the `case-study` agent skill in
-`.claude/skills/case-study/`. In short:
+`.claude/skills/case-study/`. A study can also have one custom "flair"
+piece (`src/work/flair/`, registered by slug). In short:
 
 1. Capture screens of the real product into `public/work/<slug>/`: desktop at
    1440x900 (`name.webp` plus a `name@2x.webp` sibling), phones at 780 wide

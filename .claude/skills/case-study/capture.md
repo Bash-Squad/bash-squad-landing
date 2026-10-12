@@ -73,6 +73,17 @@ const tab = await browser.open({ name: 'cs', url: 'about:blank', app: { path: ex
 await browser.close({ name: 'cs', kill: true });
 ```
 
+**Maps need WebGL.** The dedicated browser above runs with `--disable-gpu`,
+so MapLibre/Mapbox maps render blank (no `<canvas>`). Capture map screens
+with the shared browser (`browser.open` without `app`), which has WebGL, and
+check `document.querySelectorAll('canvas').length > 0` before the shot.
+
+**Local dev screens:** hide framework toolbars before the screenshot
+(`await page.addStyleTag({ content: 'astro-dev-toolbar, nextjs-portal { display: none !important }' })`)
+and add your own sign-in email to `hide`. If a wide admin table clips at
+1440, capture at `{ width: 1600, height: 1000, deviceScaleFactor: 1.8 }`:
+still 2880x1800 pixels, so `resize.py` accepts it.
+
 Then size them:
 
 ```bash

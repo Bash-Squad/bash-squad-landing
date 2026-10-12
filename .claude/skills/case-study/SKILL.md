@@ -37,9 +37,13 @@ Copy and track:
 - [ ] 8. Commit, push, PR with screenshots and open decisions
 ```
 
-**Updating an existing study:** skip 1's slug choice, edit the content file,
-recapture only screens that changed (same filenames), re-render `og.png` if
-the H1, stats or cover changed, then verify as below.
+**Updating an existing study:** edit the content file, recapture only screens
+that changed, re-render `og.png` if the H1, stats or cover changed, then
+verify as below. Before writing, re-check every existing claim against the
+project as it is now: hosting cost, live URL, demo vs real data, features
+that were removed (an old compare can describe a version that no longer
+exists), and counts. Rename or delete captures that no longer match; leave
+no unused files.
 
 ### 2. Facts
 
@@ -64,7 +68,9 @@ file or command citations:
 
 Follow [capture.md](capture.md): sizes, hiding names, the capture snippet,
 `scripts/resize.py`, and `scripts/og.py` for the share card. Look at every
-image before using it.
+image before using it. Admin screens come from the project running locally
+(it may hold a copy of production data, so the hide list matters more, and
+never capture leads or anything with a real person's contact details).
 
 ### 5. Content
 
@@ -80,6 +86,22 @@ themselves.
 **If a project needs something the pattern lacks,** add it generically:
 a new optional field in `types.ts`, rendered in `CaseStudyPage.tsx` from
 content only. Never put a project's words, URLs or labels in the template.
+
+### Flair (optional, one per study)
+
+A study may have one small-to-medium custom piece that shows the project's
+signature, built into our page in our ink: for Land to Listings, the home
+page's plat redrawn in our palette and built layer by layer on scroll.
+- Component: `src/work/flair/<Name>.tsx` (+ a `.module.css` for its styles),
+  registered by slug in `src/work/flair/index.ts`.
+- Heading: the study's `flair: { label, title, body }`. The section only
+  renders when both exist, and joins the chapter rail.
+- Visual only, no copy beyond labels. Site tokens, one accent. Animate
+  transform, opacity or clip-path; finished state under reduced motion, on
+  narrow screens and where scroll-driven animation isn't supported.
+- Prefer the project's own assets (recolored), not footage or screenshots:
+  those belong in the story. Ask Steve before building one; propose the idea
+  in a sentence first.
 
 ### 7. Verify
 
