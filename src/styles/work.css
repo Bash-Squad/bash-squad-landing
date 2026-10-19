@@ -159,11 +159,22 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
   .cs-run--action:hover { background: var(--acid-400) !important; }
 }
 
-/* pinned: the board holds while the art builds (plat.module.css ranges) */
+/* pinned, but not frozen: while the art builds (plat.module.css ranges, the
+   first 100svh of scroll) the board drifts up at 0.3x the scroll, so the page
+   visibly moves while the drawing runs at full speed. After the pin it scrolls
+   normally from where the drift left it; the negative margin closes the 30svh
+   the drift would otherwise leave above the brief. */
+@keyframes cs-drift { to { transform: translateY(-30svh); } }
 @supports (animation-timeline: scroll()) {
   @media (prefers-reduced-motion: no-preference) and (min-width: 1100px) and (min-height: 700px) {
-    .cs-hero { height: calc(200svh - var(--cs-header)); }
-    .cs-board { position: sticky; top: var(--cs-header); }
+    .cs-hero { height: calc(200svh - var(--cs-header)); margin-bottom: -30svh; }
+    .cs-board {
+      position: sticky;
+      top: var(--cs-header);
+      animation: cs-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 100svh;
+    }
   }
 }
 
