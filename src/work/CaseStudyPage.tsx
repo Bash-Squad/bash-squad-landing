@@ -30,6 +30,21 @@ function navFrom(id: string): void {
   window.location.href = '/#' + id;
 }
 
+// Where copy names the live site ("Live at landtolistings.com since…"), the
+// name is a followed link to it: real attribution for the client, and a
+// reader can check the claim in one click.
+function withLiveLink(text: string, href: string | undefined, host: string | undefined): React.ReactNode {
+  const at = host ? text.indexOf(host) : -1;
+  if (!href || !host || at < 0) return text;
+  return (
+    <React.Fragment>
+      {text.slice(0, at)}
+      <a href={href} className="cs-link" target="_blank" rel="noopener">{host}</a>
+      {text.slice(at + host.length)}
+    </React.Fragment>
+  );
+}
+
 const FOOTER_COLS = [
   { h: 'navigate', items: [['/', 'home'], ['/services', 'services'], ['/work', 'our work'], ['book', 'tell us what you need']] as [string | null, string][] },
   {
@@ -140,7 +155,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
         <section id="landed" className="cs-sec cs-landed">
           <div className="cs-head">
             <h2 className="cs-h" data-enter>{study.landed.title}</h2>
-            <p className="cs-lead" data-enter="1">{study.landed.lead}</p>
+            <p className="cs-lead" data-enter="1">{withLiveLink(study.landed.lead, live, liveHost)}</p>
           </div>
           <div className="cs-landed__tiles">
             <div className="cs-landed__film" data-enter>

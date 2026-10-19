@@ -54,6 +54,8 @@
   text-underline-offset: 0.2em;
   transition: text-decoration-color 180ms ease, background-color 180ms ease;
 }
+/* inside a sentence a link must look like one at rest: acid underline */
+p .cs-link { text-decoration-color: var(--cs-accent); }
 @media (hover: hover) and (pointer: fine) {
   .cs-link:hover { text-decoration-color: currentColor; }
 }
