@@ -11,7 +11,7 @@ import { BuildHeader } from '../build/BuildHeader';
 import { BuildCTA } from '../build/BuildCTA';
 import { GITHUB_ORG, PROJECTS, ProjectCard } from '../build/Work';
 import { CASE_STUDIES, caseStudyPath } from './index';
-import { Frame } from './motion';
+import { Shot } from './motion';
 
 function scrollToId(id: string): void {
   if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
@@ -66,7 +66,7 @@ export default function WorkIndex() {
             {CASE_STUDIES.map((c) => (
               <article key={c.slug} className="cs-feature">
                 <a href={caseStudyPath(c.slug)} aria-label={`${c.name}: read the case study`} style={{ display: 'block' }}>
-                  <Frame image={c.cover} url={c.links.live ? c.links.live.replace(/^https?:\/\//, '') : c.name} />
+                  <Shot image={c.cover} />
                 </a>
                 <div className="cs-feature__body">
                   <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', letterSpacing: 'var(--ls-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
@@ -75,14 +75,14 @@ export default function WorkIndex() {
                   <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--t-h1)', lineHeight: 1.05, letterSpacing: '-0.03em', color: 'var(--text-strong)', margin: '12px 0 0' }}>
                     <a href={caseStudyPath(c.slug)}>{c.name}</a>
                   </h2>
-                  <p style={{ fontSize: 'var(--t-body)', color: 'var(--text-body)', lineHeight: 1.6, margin: '14px 0 0' }}>{c.h1}</p>
+                  <p style={{ fontSize: 'var(--t-body)', color: 'var(--text-body)', lineHeight: 1.6, margin: '14px 0 0' }}>{c.statement}</p>
                   <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-muted)', lineHeight: 1.55, margin: '10px 0 0' }}>{c.cardDescription}</p>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 16 }}>
                     {c.tags.map((t) => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
                   </div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 22 }}>
-                    <a href={caseStudyPath(c.slug)} className="cs-btn-link cs-btn-link--sm"><span style={{ color: 'var(--accent)' }}>$</span> read the case study →</a>
-                    {c.links.live && <a href={c.links.live} target="_blank" rel="noreferrer" className="cs-btn-link cs-btn-link--sm">live site ↗</a>}
+                    <a href={caseStudyPath(c.slug)} className="cs-btn-link cs-btn-link--accent">Read the case study</a>
+                    {c.links.live && <a href={c.links.live} target="_blank" rel="noreferrer" className="cs-btn-link">Visit the live site</a>}
                   </div>
                 </div>
               </article>
@@ -96,7 +96,7 @@ export default function WorkIndex() {
             {products.map((p) => <ProjectCard key={p.name} p={p} />)}
           </div>
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
-            <a href={GITHUB_ORG} target="_blank" rel="noreferrer" className="cs-btn-link cs-btn-link--sm">
+            <a href={GITHUB_ORG} target="_blank" rel="noreferrer" className="cs-btn-link">
               see all our repos on github →
             </a>
           </div>

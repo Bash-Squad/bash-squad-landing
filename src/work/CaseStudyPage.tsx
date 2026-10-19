@@ -1,36 +1,32 @@
 'use client';
-// CaseStudyPage: shared template for every /work/<slug> page. Content comes
-// from src/work/content/* via the registry; JSON-LD and metadata are emitted
-// by the server route (src/app/work/[slug]/page.tsx).
+// CaseStudyPage: the template for every /work/<slug> page. Content comes from
+// src/work/content/* via the registry; a study can add custom pieces through
+// src/work/flair (hero art, a live demo). JSON-LD and metadata come from the
+// server route (src/app/work/[slug]/page.tsx). Layout and motion: work.css.
 //
-// Shape of the story, in order:
-//   hero (crumbs, H1, the 40-60 word answer, the cover screen, the build
-//   log, the project sheet, four real numbers) -> 01 brief -> 02 build
-//   (scroll story) -> 03 compare (optional before/after) -> 04 details
-//   (+ phones) -> 05 stack + outcome -> 06 book. A fixed rail of survey
-//   stations tracks the chapters on wide screens. Motion lives in ./motion.tsx.
+// The page is a board of flat tiles (art direction: "the well-kept board",
+// .taste-skill/direction.json). In order:
+//   hero board (name, jump links, portrait + facts, hero art + statement,
+//   features + action), pinned while the hero art builds on scroll
+//   -> brief (lead + four readers) -> demo (optional live thing)
+//   -> pinned story of screens -> pipeline (optional) -> timeline tabs
+//   -> stepped numbers -> where it landed (video, region, facts)
+//   -> the action row (#book) -> site footer.
 import React from 'react';
-import { Badge, Button, Pictogram, SectionLabel } from '../components';
-import { Section, SectionHead } from '../sections/Section';
 import { Footer } from '../sections/Footer';
 import { BuildHeader } from '../build/BuildHeader';
-import { BuildCTA } from '../build/BuildCTA';
 import { SERVICES, servicePath } from '../services';
-import type { ServiceContent } from '../services';
 import { CASE_STUDIES, caseStudyPath } from './index';
 import type { CaseStudyContent } from './types';
-import { BuildLog, ChapterRail, CompareSlider, Frame, PhoneRow, Reveal, ScrollStory, Stats } from './motion';
+import { LoopVideo, ScrollStory, Shot, Stats, Timeline } from './motion';
+import Pipeline from './Pipeline';
+import CloseForm from './CloseForm';
 import { FLAIR } from './flair';
 
-function scrollToId(id: string): void {
-  if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// Header/footer nav ids live on the homepage; 'book' is the local CTA form.
+// Header/footer nav ids live on the homepage; 'book' is this page's action row.
 function navFrom(id: string): void {
-  if (id === 'top' || id === 'book') { scrollToId(id); return; }
+  if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
+  if (id === 'book') { document.getElementById('book')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   window.location.href = '/#' + id;
 }
 
@@ -43,288 +39,158 @@ const FOOTER_COLS = [
   { h: 'family', items: [[null, 'blue ghost lab']] as [string | null, string][] },
 ];
 
-const H2: React.CSSProperties = { fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: 'var(--t-display)', lineHeight: 1.0, letterSpacing: '-0.03em', color: 'var(--text-strong)', margin: '18px 0 0' };
-const H3: React.CSSProperties = { fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--t-h4)', lineHeight: 1.2, color: 'var(--text-strong)', margin: 0 };
-const BODY: React.CSSProperties = { fontSize: 'var(--t-body)', color: 'var(--text-body)', lineHeight: 1.65, margin: 0 };
-const SMALL: React.CSSProperties = { fontSize: 'var(--t-sm)', color: 'var(--text-body)', lineHeight: 1.55, margin: 0 };
-
-function Crumbs({ study }: { study: CaseStudyContent }) {
-  const link: React.CSSProperties = { fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--text-muted)' };
-  return (
-    <nav aria-label="Breadcrumb" style={{ marginBottom: 22 }}>
-      <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8 }}>
-        <li><a href="/" style={link}>~</a></li>
-        <li aria-hidden="true" style={{ ...link, color: 'var(--text-faint)' }}>/</li>
-        <li><a href="/work" style={link}>work</a></li>
-        <li aria-hidden="true" style={{ ...link, color: 'var(--text-faint)' }}>/</li>
-        <li aria-current="page" style={{ ...link, color: 'var(--accent)' }}>{study.slug}</li>
-      </ol>
-    </nav>
-  );
-}
-
-const STATIONS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-
 export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
+  const flair = FLAIR[study.slug] ?? {};
+  const Hero = flair.hero;
+  const Demo = study.demo ? flair.demo : undefined;
   const live = study.links.live;
-  const liveHost = live ? live.replace(/^https?:\/\//, '').replace(/\/.*$/, '') : study.name.toLowerCase();
+  const liveHost = live?.replace(/^https?:\/\//, '').replace(/\/$/, '');
   const related = study.related
     .map((slug) => SERVICES.find((s) => s.slug === slug))
-    .filter((s): s is ServiceContent => Boolean(s));
+    .filter((s) => s !== undefined);
   const others = CASE_STUDIES.filter((c) => c.slug !== study.slug);
 
-  const Flair = FLAIR[study.slug];
-  const chapters = [
-    { id: 'brief', label: 'the brief' },
-    { id: 'build', label: 'what we built' },
-    ...(study.compare ? [{ id: 'compare', label: study.compare.label }] : []),
-    ...(study.flair && Flair ? [{ id: 'flair', label: study.flair.label }] : []),
-    { id: 'details', label: 'the small things' },
-    { id: 'outcome', label: 'stack and outcome' },
-    { id: 'book', label: 'tell us what you need' },
+  const jumps = [
+    { href: '#brief', label: 'The brief' },
+    Demo ? { href: '#search', label: 'Try the search' } : { href: '#numbers', label: 'The numbers' },
+    { href: '#built', label: 'What we built' },
+    live ? { href: live, label: liveHost ?? 'The live site', external: true } : { href: '#landed', label: 'Where it landed' },
   ];
-  // Numbering and background tone follow the chapters, so optional blocks
-  // never skip a number or put two same-tone sections back to back.
-  const index = (id: string) => String(chapters.findIndex((c) => c.id === id) + 1).padStart(2, '0');
-  const tone = (id: string): 'page' | 'base' => (chapters.findIndex((c) => c.id === id) % 2 === 0 ? 'page' : 'base');
+  const latest = study.timeline.weeks.length - 1;
 
   return (
     <React.Fragment>
       <BuildHeader onNav={navFrom} />
-      <ChapterRail chapters={chapters} />
-      <main>
-        {/* hero: the headline beside the answer, then the desk: the cover
-            screen measured with a survey dimension line, the build log
-            typing beside it, the project sheet under that, and the numbers.
-            The page opens on the work, not on a paragraph. */}
-        <Section tone="base" className="cs-hero">
-          <div className="cs-hero__grid" aria-hidden="true" />
-          <div className="cs-hero__stations" aria-hidden="true">{STATIONS.map((s) => <span key={s}>{s}</span>)}</div>
-          <div className="cs-hero__top" style={{ position: 'relative' }}>
-            <div>
-              <Crumbs study={study} />
-              <SectionLabel index="cs">case study · {study.kind} · {study.year}</SectionLabel>
-              <h1 className="cs-hero__h1">{study.h1}</h1>
+      <main className="cs-page">
+        {/* hero: one pinned board of tiles; the art builds while it holds */}
+        <section className="cs-hero" aria-labelledby="cs-name">
+          <div className="cs-board">
+            <div className="cs-band">
+              <h1 id="cs-name" className="cs-band__name">{study.name}</h1>
             </div>
-            <div className="cs-hero__aside">
-              <p style={{ fontSize: 'var(--t-lg)', color: 'var(--text-body)', lineHeight: 1.55, margin: 0 }}>
-                {study.answer}
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 22 }}>
-                <Button variant="primary" prompt size="md" onClick={() => scrollToId('book')}>Tell us what you need</Button>
-                {live && (
-                  <a href={live} target="_blank" rel="noreferrer" className="cs-btn-link cs-btn-link--md">
-                    open the live site <span aria-hidden="true">↗</span>
-                  </a>
-                )}
+            <nav className="cs-jumps" aria-label="On this page">
+              {jumps.map((j) => (
+                <a key={j.href} href={j.href} className="cs-tile cs-jump cs-link" {...('external' in j && j.external ? { target: '_blank', rel: 'noreferrer' } : {})}>
+                  {j.label}
+                </a>
+              ))}
+            </nav>
+            <div className="cs-board__main">
+              <div className="cs-rail-left">
+                <figure className="cs-tile cs-portrait"><Shot image={study.portrait} priority /></figure>
+                <dl className="cs-tile cs-facts">
+                  {study.facts.map((f) => (
+                    <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>
+                  ))}
+                </dl>
+              </div>
+              <div className="cs-tile cs-art">
+                {Hero ? <Hero /> : <Shot image={study.cover} priority className="cs-art__cover" />}
+                <p className="cs-art__statement">{study.statement}</p>
+              </div>
+              <div className="cs-rail-right">
+                {study.features.map((f) => <p key={f} className="cs-tile cs-run">{f}</p>)}
+                <a href="#book" className="cs-tile cs-run cs-run--action">Tell us what you need</a>
               </div>
             </div>
           </div>
+        </section>
 
-          {/* the desk: the cover screen measured with a dimension line, the
-              build log typing beside it, and the title block under that */}
-          <div className="cs-hero__desk" style={{ position: 'relative' }}>
-            <div>
-              <div className="cs-dim" aria-hidden="true">
-                <span className="cs-dim__tick" /><span className="cs-dim__line" />
-                <span className="cs-dim__label">{study.dimension}</span>
-                <span className="cs-dim__line" /><span className="cs-dim__tick" />
-              </div>
-              <div className="cs-hero__art">
-                <span className="cs-mark cs-mark--tl" aria-hidden="true" /><span className="cs-mark cs-mark--tr" aria-hidden="true" />
-                <span className="cs-mark cs-mark--bl" aria-hidden="true" /><span className="cs-mark cs-mark--br" aria-hidden="true" />
-                <Frame image={study.cover} url={live ? live.replace(/^https?:\/\//, '') : study.name} priority />
-              </div>
+        {/* the brief: a lead, then the four people the site is for */}
+        <section id="brief" className="cs-sec cs-brief" aria-label="The brief">
+          <p className="cs-lead cs-brief__lead" data-enter>{study.answer}</p>
+          <div className="cs-brief__cols">
+            {study.brief.audiences.map((a, i) => (
+              <p key={a.lead} className="cs-body" data-enter={String(i)}><strong>{a.lead}</strong> {a.body}</p>
+            ))}
+          </div>
+        </section>
+
+        {/* the live thing */}
+        {study.demo && Demo && (
+          <section id="search" className="cs-sec cs-demo">
+            <div className="cs-demo__inner">
+              <h2 className="cs-lead cs-strong" data-enter>{study.demo.title}</h2>
+              <p className="cs-body cs-demo__body" data-enter="1">{study.demo.body}</p>
+              <div data-enter="2"><Demo /></div>
+              <p className="cs-small cs-demo__hint">{study.demo.hint}</p>
             </div>
-            <div className="cs-hero__side">
-              <BuildLog title={study.logTitle} lines={study.timeline} />
-              <dl className="cs-block" aria-label="Project sheet" style={{ margin: 0 }}>
-                <div className="cs-block__head" aria-hidden="true"><span>project sheet</span><span>sheet 1 of 1</span></div>
-                {study.facts.map((f) => (
-                  <div key={f.label} className="cs-block__row">
-                    <dt className="cs-block__k">{f.label}</dt>
-                    <dd className="cs-block__v" style={{ margin: 0 }}>{f.value}</dd>
-                  </div>
+          </section>
+        )}
+
+        {/* what we built: the pinned story of screens */}
+        <section id="built" className="cs-sec">
+          <div className="cs-head">
+            <h2 className="cs-h" data-enter>{study.story.title}</h2>
+            <p className="cs-body" data-enter="1">{study.story.intro}</p>
+          </div>
+          <ScrollStory steps={study.story.steps} />
+        </section>
+
+        {study.pipeline && (
+          <section id="mls" className="cs-sec">
+            <Pipeline pipeline={study.pipeline} />
+          </section>
+        )}
+
+        {/* how it went: one tab per week */}
+        <section id="timeline" className="cs-sec cs-tl">
+          <div className="cs-tl__head">
+            <h2 className="cs-h" data-enter>
+              <span className="cs-soft">{study.timeline.title[0]}</span><br />
+              {study.timeline.title[1]}
+            </h2>
+            {live && <a href={live} target="_blank" rel="noreferrer" className="cs-link cs-body cs-tl__live">Visit {liveHost}</a>}
+          </div>
+          <Timeline weeks={study.timeline.weeks} initial={latest} />
+        </section>
+
+        <section id="numbers" className="cs-sec">
+          <Stats title={study.stats.title} items={study.stats.items} />
+        </section>
+
+        {/* where it landed: the real thing moving, the place, the plain facts */}
+        <section id="landed" className="cs-sec cs-landed">
+          <div className="cs-head">
+            <h2 className="cs-h" data-enter>{study.landed.title}</h2>
+            <p className="cs-lead" data-enter="1">{study.landed.lead}</p>
+          </div>
+          <div className="cs-landed__tiles">
+            <div className="cs-landed__film" data-enter>
+              <LoopVideo video={study.landed.video} />
+              <p className="cs-landed__note cs-body">{study.landed.note}</p>
+            </div>
+            <div className="cs-landed__side" data-enter="1">
+              <figure className="cs-landed__region">
+                <svg viewBox={`-8 -8 ${study.landed.region.width + 16} ${study.landed.region.height + 16}`} role="img" aria-label={study.landed.region.label}>
+                  <path d={study.landed.region.d} />
+                  <circle cx={study.landed.region.dot[0]} cy={study.landed.region.dot[1]} r={6} />
+                </svg>
+              </figure>
+              <dl className="cs-landed__facts">
+                {study.landed.facts.map((f) => (
+                  <div key={f.label}><dt>{f.label}</dt><dd>{f.value}</dd></div>
                 ))}
-                <div className="cs-block__row">
-                  <dt className="cs-block__k">tags</dt>
-                  <dd style={{ margin: 0, display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    {study.tags.map((t) => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
-                  </dd>
-                </div>
               </dl>
             </div>
           </div>
+        </section>
 
-          <div style={{ position: 'relative', marginTop: 'clamp(24px, 3.5vw, 40px)' }}>
-            <Stats stats={study.stats} />
+        {/* the action row: cropped from a longer row of the board */}
+        <section id="book" className="cs-close" aria-labelledby="cs-close-title">
+          <div className="cs-close__flank cs-close__flank--img" aria-hidden="true"><Shot image={study.close.image} /></div>
+          <div className="cs-close__tile">
+            <h2 id="cs-close-title" className="cs-h">{study.close.title}</h2>
+            <p className="cs-body">{study.close.body}</p>
+            <CloseForm source={`case study: ${study.slug}`} />
           </div>
-        </Section>
-
-        {/* the brief */}
-        <Section id="brief" tone={tone('brief')}>
-          <div className="cs-brief">
-            <div>
-              <Reveal>
-                <SectionLabel index={index('brief')}>the brief</SectionLabel>
-                <h2 style={H2}>{study.brief.title}</h2>
-              </Reveal>
-              <div style={{ display: 'grid', gap: 18, marginTop: 28, maxWidth: 640 }}>
-                {study.brief.body.map((p) => <p key={p} style={{ ...BODY, fontSize: 'var(--t-lg)', lineHeight: 1.6 }}>{p}</p>)}
-              </div>
-            </div>
-            <Reveal>
-              <div className="cs-block">
-                <div className="cs-block__head"><span>what they asked for</span><span>{study.brief.asks.length} items</span></div>
-                <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                  {study.brief.asks.map((ask, i) => (
-                    <li key={ask} className="cs-block__row" style={{ gridTemplateColumns: '32px minmax(0, 1fr)' }}>
-                      <span className="cs-block__k" style={{ color: 'var(--accent)' }}>{String(i + 1).padStart(2, '0')}</span>
-                      <span className="cs-block__v">{ask}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </Reveal>
-          </div>
-        </Section>
-
-        {/* what we built: scroll story */}
-        <Section id="build" tone={tone('build')}>
-          <Reveal>
-            <SectionHead index={index('build')} label="what we built" title={study.story.title} intro={study.story.intro} />
-          </Reveal>
-          <ScrollStory steps={study.story.steps} frameUrl={() => liveHost} />
-        </Section>
-
-        {/* compare: before / after (optional) */}
-        {study.compare && (
-          <Section id="compare" tone={tone('compare')}>
-            <Reveal>
-              <SectionLabel index={index('compare')}>{study.compare.label}</SectionLabel>
-              <h2 style={H2}>{study.compare.title}</h2>
-            </Reveal>
-            <p style={{ ...BODY, fontSize: 'var(--t-lg)', lineHeight: 1.6, maxWidth: 760, margin: '24px 0 clamp(32px, 5vw, 56px)' }}>{study.compare.body}</p>
-            <Reveal figure>
-              <CompareSlider compare={study.compare} url={study.compare.url} />
-            </Reveal>
-          </Section>
-        )}
-
-        {/* optional: this study's own flair (src/work/flair) */}
-        {study.flair && Flair && (
-          <Section id="flair" tone={tone('flair')}>
-            <Reveal>
-              <SectionLabel index={index('flair')}>{study.flair.label}</SectionLabel>
-              <h2 style={H2}>{study.flair.title}</h2>
-            </Reveal>
-            <p style={{ ...BODY, fontSize: 'var(--t-lg)', lineHeight: 1.6, maxWidth: 760, margin: '24px 0 clamp(32px, 5vw, 56px)' }}>{study.flair.body}</p>
-            <Flair />
-          </Section>
-        )}
-
-        {/* the small things */}
-        <Section id="details" tone={tone('details')}>
-          <Reveal>
-            <SectionHead index={index('details')} label="the small things" title={study.details.title} intro={study.details.intro} />
-          </Reveal>
-          <div className="cs-details">
-            {study.details.items.map((d) => (
-              <div key={d.title} className="cs-detail">
-                <h3 style={H3}>{d.title}</h3>
-                <p style={SMALL}>{d.body}</p>
-              </div>
-            ))}
-          </div>
-          {study.phones && (
-            <div style={{ marginTop: 'clamp(48px, 7vw, 96px)' }}>
-              <Reveal figure>
-                <PhoneRow images={study.phones.images} caption={study.phones.caption} />
-              </Reveal>
-            </div>
-          )}
-        </Section>
-
-        {/* stack + outcome */}
-        <Section id="outcome" tone={tone('outcome')}>
-          <div className="cs-outcome">
-            <div>
-              <Reveal>
-                <SectionLabel index={index('outcome')}>the stack</SectionLabel>
-                <h2 style={H2}>What it runs on.</h2>
-              </Reveal>
-              <div className="cs-stack" style={{ marginTop: 28 }}>
-                {study.stack.map((row) => (
-                  <div key={row.label} className="cs-stack__row">
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', letterSpacing: 'var(--ls-label)', textTransform: 'uppercase', color: 'var(--text-faint)' }}>{row.label}</span>
-                    <span style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                      {row.items.map((it) => <Badge key={it} tone="neutral" variant="outline">{it}</Badge>)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div>
-              <Reveal>
-                <SectionLabel>the outcome</SectionLabel>
-                <h2 style={H2}>{study.outcome.title}</h2>
-              </Reveal>
-              <div style={{ display: 'grid', gap: 18, marginTop: 28 }}>
-                {study.outcome.body.map((p) => <p key={p} style={{ ...BODY, fontSize: 'var(--t-lg)', lineHeight: 1.6 }}>{p}</p>)}
-              </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 28 }}>
-                {live && (
-                  <a href={live} target="_blank" rel="noreferrer" className="cs-btn-link cs-btn-link--sm">
-                    live site <span aria-hidden="true">↗</span>
-                  </a>
-                )}
-                {study.links.repo && (
-                  <a href={study.links.repo} target="_blank" rel="noreferrer" className="cs-btn-link cs-btn-link--sm">
-                    code <span aria-hidden="true">↗</span>
-                  </a>
-                )}
-              </div>
-              {related.length > 0 && (
-                <div style={{ marginTop: 40 }}>
-                  <SectionLabel>services this used</SectionLabel>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 16 }}>
-                    {related.map((r) => (
-                      <a key={r.slug} href={servicePath(r.slug)} style={{ display: 'inline-flex', alignItems: 'center', gap: 10, padding: '12px 16px', border: '1px solid var(--border-hairline)', borderRadius: 'var(--r-2)', background: 'var(--surface-card)', fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)' }}>
-                        <span style={{ color: 'var(--accent)', display: 'inline-flex' }}><Pictogram name={r.icon} size={16} /></span>
-                        {r.name}
-                        <span aria-hidden="true" style={{ color: 'var(--text-faint)' }}>→</span>
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* more work: other case studies as cards when there are any, and
-              always a way back to the hub */}
-          <div style={{ marginTop: 'clamp(48px, 7vw, 96px)' }}>
-            <SectionLabel>more work</SectionLabel>
-            {others.length > 0 && (
-              <div className="cs-next" style={{ marginTop: 16 }}>
-                {others.map((c) => (
-                  <a key={c.slug} href={caseStudyPath(c.slug)} style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: 'var(--space-6)', border: '1px solid var(--border-hairline)', borderRadius: 'var(--r-2)', background: 'var(--surface-card)' }}>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', letterSpacing: 'var(--ls-label)', textTransform: 'uppercase', color: 'var(--text-muted)' }}>case study · {c.kind}</span>
-                    <span style={H3}>{c.name}</span>
-                    <span style={SMALL}>{c.cardDescription}</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--accent)' }}>$ read it →</span>
-                  </a>
-                ))}
-              </div>
-            )}
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 16 }}>
-              <a href="/work" className="cs-btn-link cs-btn-link--sm"><span style={{ color: 'var(--accent)' }}>$</span> cd ~/work</a>
-              <a href="/#work" className="cs-btn-link cs-btn-link--sm">everything we&rsquo;ve built →</a>
-            </div>
-          </div>
-        </Section>
-
-        <BuildCTA index={index('book')} source={`case study: ${study.slug}`} />
+          <div className="cs-close__flank" aria-hidden="true" />
+        </section>
+        <nav className="cs-more" aria-label="More">
+          <a className="cs-link" href="/work">All our work</a>
+          {others.map((c) => <a key={c.slug} className="cs-link" href={caseStudyPath(c.slug)}>{c.name}</a>)}
+          {related.map((r) => <a key={r.slug} className="cs-link" href={servicePath(r.slug)}>{r.name}</a>)}
+        </nav>
       </main>
       <Footer onNav={navFrom} cols={FOOTER_COLS} />
     </React.Fragment>

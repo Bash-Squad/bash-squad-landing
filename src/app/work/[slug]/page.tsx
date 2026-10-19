@@ -53,7 +53,7 @@ export default async function CaseStudyRoute({ params }: Props) {
       {
         '@type': 'Article',
         '@id': `${url}#article`,
-        headline: study.h1,
+        headline: study.statement,
         abstract: study.answer,
         description: study.metaDescription,
         datePublished: study.published,

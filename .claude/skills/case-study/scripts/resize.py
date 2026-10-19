@@ -40,6 +40,9 @@ def main(directory: str) -> None:
             im.resize(DESKTOP, Image.LANCZOS).save(path, 'WEBP', quality=88, method=6)
     for f in sorted(os.listdir(directory)):
         p = os.path.join(directory, f)
+        if not f.endswith(('.webp', '.png', '.jpg')):
+            print(f'{f:28} {"":11}  {os.path.getsize(p) // 1024}KB')
+            continue
         with Image.open(p) as im:
             print(f'{f:28} {im.width}x{im.height}  {os.path.getsize(p) // 1024}KB')
 

@@ -1,11 +1,19 @@
-// Flair registry: one optional custom piece per case study, keyed by slug.
-// The template renders it in its own chapter, under the heading from the
-// study's `flair` content field. A flair component owns its visuals only
-// (no copy beyond labels), uses the site tokens, animates transform,
-// opacity or clip-path, and shows its finished state under reduced motion.
+// Flair registry: optional custom pieces for one case study, keyed by slug.
+// - hero: the art in the hero's large tile (otherwise the study's cover image).
+// - demo: the live thing, rendered under the study's `demo` heading.
+// A flair piece owns visuals only (labels at most), uses the site tokens or
+// the client's own colours, animates transform, opacity or clip-path, and
+// shows its finished state under reduced motion. Interface fragments of the
+// client's product put `data-ui` on their root.
 import type { ComponentType } from 'react';
-import LandToListingsPlat from './LandToListingsPlat';
+import Plat from './land-to-listings/Plat';
+import Search from './land-to-listings/Search';
 
-export const FLAIR: Partial<Record<string, ComponentType>> = {
-  'land-to-listings': LandToListingsPlat,
+export interface Flair {
+  hero?: ComponentType;
+  demo?: ComponentType;
+}
+
+export const FLAIR: Partial<Record<string, Flair>> = {
+  'land-to-listings': { hero: Plat, demo: Search },
 };

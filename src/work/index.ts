@@ -4,10 +4,7 @@
 import type { CaseStudyContent } from './types';
 import landToListings from './content/land-to-listings';
 
-export type {
-  CaseStudyContent, CaseStudyImage, CaseStudyItem, CaseStudyStep, CaseStudyStat,
-  CaseStudyFact, CaseStudyStackRow, CaseStudyCompare,
-} from './types';
+export type { CaseStudyContent, CaseStudyImage, CaseStudyStep, CaseStudyStat, CaseStudyFact } from './types';
 
 export const CASE_STUDIES: readonly CaseStudyContent[] = [
   landToListings,

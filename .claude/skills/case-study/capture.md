@@ -7,10 +7,10 @@ content file get committed; delete the rest before the PR.
 
 | File | Viewport | Scale | Used for |
 |---|---|---|---|
-| `<cover>.webp` | 1440x900 | 2 | `cover` (hero + Work grid card) and the share card |
-| 3 to 5 `<screen>.webp` | 1440x900 | 2 | `story.steps[].image`, one per step |
-| `<before>.webp`, `<after>.webp` | 1440x900 | 2 | `compare` (optional; two versions of the same screen) |
-| 3 `m-<screen>.webp` | 390x844, mobile + touch | 3 | `phones` (optional) |
+| `<cover>.webp` | 1440x900 | 2 | `cover`: Work grid card, share card, and the hero art if the study has no hero flair |
+| 3 to 5 `<screen>.webp` | 1440x900 | 2 | `story.steps[].image`, one per step (admin screens from a local run) |
+| `m-<screen>.webp` | 390x844, mobile + touch | 3 | `portrait`: the phone screen in the hero's left rail |
+| `intro.webm`, `intro.mp4`, `intro-poster.webp` | 1440x900 recording | 1 | `landed.video`: a 10-15 s muted loop of the real product moving |
 | `og.png` | 1200x630 | 1 | `ogImage` (see "Share card" below) |
 
 Pick screens that show the work, not chrome: the cover is the screen a
@@ -30,6 +30,11 @@ screens that need auth or unpublished data.
   screen you need.
 
 ## Capture snippet (omp `eval`, JavaScript)
+
+If the JavaScript eval's browser helpers fail (`__omp_display__ is not a
+function`), use Python eval: `tab = await browser.open(name=…, app={…})`,
+then `await tab.run("<the same JS body as a string>", timeout=120)` with the
+arguments inlined via `json.dumps`.
 
 The shared headless browser can stall; `tab.run` with Puppeteer's `page`
 is the reliable path. Adjust `hide` to the strings that must not appear.
@@ -93,32 +98,62 @@ python3 .claude/skills/case-study/scripts/resize.py public/work/<slug>
 Desktop files must come out 1440x900 plus `@2x`; phones 780 wide. Set
 `retina: true` on desktop images in the content file, not on phones.
 
+## The moving picture
+
+Record the real product doing its most characteristic thing (an intro, a
+map filling in, a slideshow), with names hidden from the first frame:
+
+```python
+# omp eval, Python (the JS browser prelude can fail; Python works)
+HIDE_JS = "(() => { const hide = () => { if (!document.body) return; const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) if (/Jane|Doe/.test(n.textContent)) n.parentElement.style.visibility = 'hidden'; }; new MutationObserver(hide).observe(document, { childList: true, subtree: true }); })();"
+rec = await browser.open(name='rec', url='about:blank', viewport={'width': 1440, 'height': 900}, app={'path': exe, 'args': args})
+await rec.addInitScript(HIDE_JS)
+await rec.recordStart('/tmp/<slug>-intro.mp4')
+await rec.goto('https://example.com/')
+await asyncio.sleep(12)
+await rec.recordStop()
+```
+
+Then encode a small loop and a poster (look at frames first with
+`ffmpeg -ss <t> -i … -frames:v 1 f.png`):
+
+```bash
+cd public/work/<slug>
+ffmpeg -y -i /tmp/<slug>-intro.mp4 -t 12.3 -an -vf "scale=1280:-2,fps=30" -c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 intro.webm
+ffmpeg -y -i /tmp/<slug>-intro.mp4 -t 12.3 -an -vf "scale=1280:-2,fps=30" -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart intro.mp4
+ffmpeg -y -ss 11 -i /tmp/<slug>-intro.mp4 -frames:v 1 -vf scale=1280:-2 /tmp/poster.png
+python3 -c "from PIL import Image; Image.open('/tmp/poster.png').convert('RGB').save('intro-poster.webp','WEBP',quality=85)"
+```
+
+Aim for under 1 MB per file. Never put the client's own footage (their brand
+film, their drone clips) on our site; record their site instead.
+
 ## Share card
 
-1. Write the HTML (three stats max; reuse the H1 and the cover):
+1. Write the HTML (exactly three stats; reuse the statement and the cover):
 
    ```bash
    python3 .claude/skills/case-study/scripts/og.py \
-     --eyebrow "<name> · <kind> · <year>" --h1 "<h1>" --sub "<one sentence>" \
-     --stat "16|days" --stat "58|tests" --stat "\$0|a month to host" \
-     --url <live host> --dimension "<dimension>" \
+     --name "<name>" --statement "<statement>" \
+     --stat "27|days to launch" --stat "853|automated tests" --stat "98–100|desktop Lighthouse" \
      --cover public/work/<slug>/<cover>.webp --out /tmp/og-<slug>.html
    ```
 
-2. Render it at 1200x630, scale 1, after fonts load:
+2. Render it at 1200x630, scale 1, after fonts load (Python eval, same
+   dedicated browser as above):
 
-   ```js
-   const html = await Bun.file('/tmp/og-<slug>.html').text();
-   const og = await browser.open({ name: 'og', url: 'about:blank' });
-   await og.run(async ({ page }, a) => {
-     await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 1 });
-     await page.setContent(a.html, { waitUntil: 'load', timeout: 60000 });
-     await page.evaluate(() => document.fonts.ready);
-     await new Promise((r) => setTimeout(r, 1500));
-     await page.screenshot({ path: a.out, type: 'png' });
-   }, { args: [{ html, out: '/abs/path/public/work/<slug>/og.png' }], timeout: 90000 });
-   await browser.close({ name: 'og' });
+   ```python
+   og = await browser.open(name='og', url='about:blank', app={'path': exe, 'args': args})
+   await og.run("""
+   const html = %s;
+   await page.setViewport({ width: 1200, height: 630, deviceScaleFactor: 1 });
+   await page.setContent(html, { waitUntil: 'load', timeout: 60000 });
+   await page.evaluate(() => document.fonts.ready);
+   await new Promise(r => setTimeout(r, 1500));
+   await page.screenshot({ path: '/abs/path/public/work/<slug>/og.png', type: 'png' });
+   """ % json.dumps(open('/tmp/og-<slug>.html').read()), timeout=90)
+   await browser.close(name='og', kill=True)
    ```
 
-3. Look at the PNG. Headline must not overlap the cover; the cover must not
-   be blank.
+3. Look at the PNG. The name must sit inside its band; the cover must not be
+   blank.

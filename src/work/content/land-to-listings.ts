@@ -1,12 +1,14 @@
 import type { CaseStudyContent, CaseStudyImage } from '../types';
 
 // Every claim comes from the landtolistings repo (README, DEPLOY.md,
-// docs/mls.md, docs/design.md, src/lib/mls/*, the test suite) or the live
-// site, as of the Oct 12 2026 launch. Numbers: 27 days is first commit
-// (Sep 15) to launch (Oct 12); 277 commits is `git rev-list --count main`;
-// 470 is `vitest run` (42 files, all passing, run against a fresh build);
-// $5 is Workers Paid on their account (DEPLOY.md). Brokers stay unnamed.
-// Nothing about pricing, referrals, MLS costs or contacts belongs here.
+// docs/mls.md, docs/design.md, git history) or the live site, as of Oct 19
+// 2026. Numbers: 27 days is first commit (Sep 15) to launch (Oct 12);
+// 853 tests is the Oct 18-19 release gate in DEPLOY.md (763 application,
+// 58 script, 32 browser); Lighthouse 98-100 is the Oct 19 desktop run
+// recorded in DEPLOY.md; 25 listings and 802 photos is the Oct 14 MLS batch
+// (docs/mls.md). Video uploads are off on the live site, so the page doesn't
+// claim them. Brokers stay unnamed. Nothing about pricing, contacts or MLS
+// fees belongs here.
 
 const DIR = '/work/land-to-listings';
 
@@ -14,154 +16,183 @@ function screen(name: string, alt: string): CaseStudyImage {
   return { src: `${DIR}/${name}.webp`, alt, width: 1440, height: 900, retina: true };
 }
 
-function phone(name: string, alt: string): CaseStudyImage {
-  return { src: `${DIR}/${name}.webp`, alt, width: 780, height: 1688 };
-}
-
 const landToListings: CaseStudyContent = {
   slug: 'land-to-listings',
   name: 'Land to Listings',
-  client: 'A two-broker real estate firm',
+  client: 'A brokerage in eastern North Carolina',
   kind: 'client build',
   year: '2026',
-  published: '2026-10-12',
+  published: '2026-10-19',
   metaTitle: 'Land to Listings: a real estate site with MLS import',
   metaDescription:
-    'A map-first land and homes site for a North Carolina brokerage, built on Cloudflare Workers with an MLS import over the Spark API. Live in under four weeks.',
-  h1: 'From raw land to a live listings site in under four weeks.',
+    'How we designed and built a map-first land and homes site for a North Carolina brokerage, with listings imported from their MLS. Live in 27 days.',
+  statement: 'A brokerage’s website, map and MLS import, live in 27 days.',
   answer:
-    'Land to Listings is the website for a two-broker real estate firm in North Carolina. They sell development land to builders and homes to the people who\'ll live in them. We designed and built it on Cloudflare Workers, with listings that import from their MLS, and it went live at landtolistings.com 27 days after the first commit.',
-  intro:
-    'We started from what builders and home buyers each look for, then built the map, the listing pages, an admin they run themselves, and an import from their MLS.',
+    'Land to Listings sells raw land to builders and new homes to the families who buy them. We designed and built one site for both, with a map, an admin the brokers run and listings that arrive from their MLS.',
   cardDescription:
     'A map-first land and homes site for a North Carolina brokerage: Astro on Cloudflare Workers, an MLS import over the Spark API, and an admin with no passwords.',
-  facts: [
-    { label: 'client', value: 'A two-broker real estate firm' },
-    { label: 'where', value: 'The Triangle, eastern and coastal NC' },
-    { label: 'launched', value: 'October 2026' },
-    { label: 'role', value: 'Research, design, build, launch' },
-    { label: 'runs on', value: 'Cloudflare Workers, their account' },
-  ],
   links: { live: 'https://landtolistings.com' },
   tags: ['astro', 'cloudflare', 'mls', 'maps', 'design'],
-  cover: screen('home', 'The Land to Listings home page: the headline "From land to listings" over a surveyor\'s plat with contours, a parcel boundary, Listings Lane and its lots, and a title block with live counts of parcels, acres, homes and towns.'),
-  dimension: '27 days, first commit to launch',
-  logTitle: 'landtolistings: git log --reverse',
-  // Dates are milestones on main, from the repo's history.
-  timeline: [
-    { date: 'sep 15', text: 'scaffold: astro, workers, d1, r2' },
-    { date: 'sep 17', text: 'map, geocoding, leads, the admin' },
-    { date: 'sep 25', text: 'redesign: the surveyor\'s sheet' },
-    { date: 'sep 27', text: 'the plat home page draws itself' },
-    { date: 'oct 2', text: 'mls import built on the spark api' },
-    { date: 'oct 6', text: 'their logo, coming soon banners' },
-    { date: 'oct 9', text: 'first live mls key; communities' },
-    { date: 'oct 10', text: 'brand film from their drone clips' },
-    { date: 'oct 11', text: 'photos and video in one slideshow' },
-    { date: 'oct 12', text: 'landtolistings.com goes live', tone: 'ok' },
-  ],
+  cover: screen('home', 'The Land to Listings home page: the headline “From land to listings” over a surveyor’s plat of a street with its lots and houses, and a panel with live counts of land, acres, homes and towns.'),
   ogImage: `${DIR}/og.png`,
-  stats: [
-    { value: '27', label: 'days, first commit to launch' },
-    { value: '277', label: 'commits on main' },
-    { value: '470', label: 'tests, run inside workerd' },
-    { value: '$5', label: 'a month to host' },
+  portrait: { src: `${DIR}/m-home.webp`, alt: 'The Land to Listings home page on a phone: the headline over the plat drawing.', width: 780, height: 1688 },
+  facts: [
+    { label: 'For', value: 'A brokerage in eastern North Carolina' },
+    { label: 'Live', value: 'October 12, 2026' },
+    { label: 'Built in', value: '27 days' },
+    { label: 'Runs on', value: 'Their own Cloudflare account' },
+  ],
+  features: [
+    'A map where every search is a link',
+    'Listings imported from their MLS',
+    'Prices and status synced every night',
+    'An admin with no passwords',
   ],
   brief: {
-    title: 'Two kinds of buyer, one site.',
-    body: [
-      'The brokers sell two different things to two different people. Builders want acreage, lot counts, county and sewer, and they want to see it on a map. Home buyers want photos, beds and baths, and a price.',
-      'We started with a meeting about how they work and a look at what the best map and listing sites in real estate do well. Then we built three versions of the home page and put them all on the live site, so they could choose in a browser instead of from a mockup.',
-      'They needed to add listings themselves and pull them from the MLS instead of typing them in twice. They wanted landowners to have an easy way to ask what their land is worth. And it all had to run on their own account for a few dollars a month.',
+    audiences: [
+      { lead: 'Builders want', body: 'acreage, lot counts and the county, on a map. Land gets a tree-shaped pin and homes a house, and the map and the list always show the same results, so a builder can scan a county in a minute and send the exact search to a partner as a link.' },
+      { lead: 'Home buyers want', body: 'photos, beds, baths and a price. Each home opens on its facts under the price, then a strip of every photo at its own width that goes full screen and zooms in. The inquiry form sits on the page and already knows which home they mean.' },
+      { lead: 'Landowners want', body: 'to know what their land is worth without a sales pitch. The form asks where it is and how to reach them, nothing else is required, and the page says plainly that the reply is the brokers’ opinion, not an appraisal or an instant estimate.' },
+      { lead: 'The brokers want', body: 'to run it themselves. They sign in with an emailed link, bring a listing in by its MLS number, drag photos into order and undo a click right where they made it. Every inquiry is saved before the email goes out, so none is lost.' },
     ],
-    asks: [
-      'A map-first land inventory for builders and developers',
-      'A gallery of homes for buyers',
-      'A form for landowners asking what their land is worth',
-      'Listings imported from their MLS, not typed twice',
-      'An admin they can run without us',
-      'Pages for the communities their listings belong to',
-    ],
+  },
+  demo: {
+    title: 'Every search is a link',
+    body: 'This is their live inventory. Pick a side, a place and a price: the map and the address change together, and the link opens the same results on their site.',
+    hint: 'Try Land, then Nash.',
   },
   story: {
-    title: 'What we built.',
-    intro: 'Five screens carry most of the site. Scroll through them.',
+    title: 'What we built',
+    intro: 'Five screens from the live site and the admin.',
     steps: [
       {
-        title: 'Everything is on the map.',
-        body:
-          'Land and homes live in one table, so the list and the map always show the same filtered set. Hover a card and its pin lights up; hover a pin and its card does. Land gets a tree pin and homes get a house, so the map reads without a legend. When a seller doesn\'t want the exact spot public, the map shows a one-mile circle instead of a pin. Every filter lives in the URL, so a search can be sent to a client as a link.',
-        image: screen('land', 'The Land for sale page: filters, listing cards with aerial photos, and a map of eastern North Carolina with tree-shaped pins and soft circles where the exact location is hidden.'),
+        title: 'The map and the list agree',
+        body: 'Land and homes share one table, so the map and the list always show the same set. When a seller wants privacy, the map shows a one-mile circle around the property instead of its address, and the listing says the exact spot is available on request.',
+        image: screen('land', 'The Land for sale page: a search box, filters, listing cards with aerial photos, and a map of eastern North Carolina with tree-shaped pins and soft circles.'),
       },
       {
-        title: 'Each listing is its own sheet.',
-        body:
-          'The facts a buyer scans for sit in a ruled strip under the price: beds, baths and square feet for a home, acreage, lots and county for land. Photos run as a filmstrip with a full-screen view that works with arrow keys and swipe, and a listing\'s video sits in the same strip, playing only when someone presses it. The inquiry form is on the page and already knows which listing you\'re asking about.',
-        image: screen('listing', 'A home listing in Raleigh: the price, a ruled strip with beds, baths, interior square feet and year built, an "Ask about this home" button, and a filmstrip of photos.'),
+        title: 'Every photo, full size',
+        body: 'A home opens on the facts buyers compare, set out under the price, then every photo at its own width. Full screen works with arrow keys and swipe and zooms in. Photos are prepared when they’re uploaded, so a small copy loads wherever a photo shows small.',
+        image: screen('listing', 'A new home in Cary: the price with beds, baths, interior square feet and year built, an “Ask about this home” button, and a strip of large photos.'),
       },
       {
-        title: 'Listings arrive from the MLS.',
-        body:
-          'Type an MLS number and the listing comes in as a draft, with its facts and up to 20 photos copied over. The import talks to the MLS through the Spark API, accepts only the team\'s own listings, and honors the seller\'s display choices, because the MLS rules require it. From then on the MLS owns price and status and the brokers own the words. Each refresh takes withdrawn and expired listings off the site, and one that drops out of the feed is flagged, then hidden after three days.',
-        image: screen('admin-listings', 'The admin listings table: an "Add from MLS" box beside the "+ New listing" button, and rows with each listing\'s photo, type, price, status and actions.'),
+        title: 'A page for each development',
+        body: 'A development gets its own page with its photos, its pin and every home or lot in it. On the map and in the results it shows once, with its range of prices, instead of filling the list with near-identical homes.',
+        image: screen('community', 'A community page: an aerial photo of the development with its entrance sign, a site plan listing each lot and its acreage, and the community’s name and address.'),
       },
       {
-        title: 'An admin they run themselves.',
-        body:
-          'The brokers sign in with a link emailed to them; there are no passwords. One editor covers land and homes, and a field left blank simply doesn\'t show. Photos and video share one order that they drag to change. Type an address and the pin places itself, or drag it if the geocoder guessed wrong. A listing can join a community, and the community gets its own page once one of its listings is live.',
-        image: screen('admin-editor', 'The listing editor for a home: a grid of photos with the cover marked, a description field under each photo, and arrows to reorder them.'),
+        title: 'An admin they run',
+        body: 'Rows lead with the address and sort by status. Publish, Sold and Hide each offer one Undo in the row where you clicked. The editor holds the photos, the map pin, the MLS link and the community, with one Save that stays in view.',
+        image: screen('admin-listings', 'The admin listings table: Current and Sold tabs, a search box and a sort, and rows with each listing’s photo, address, type, price, status and actions.'),
       },
       {
-        title: 'A form landowners will fill in.',
-        body:
-          'The land value page asks for a road name or a parcel number, and nothing else is required. The reply is the brokers\' opinion, and the page says so plainly rather than pretending to be an instant estimate. Beside it, their own drone footage plays as a quiet loop, framed like a print. Every lead is saved before the email goes out, so a mail hiccup can\'t lose one.',
-        image: screen('land-value', 'The "Tell us about your land" page: an aerial video of a road through green fields, framed with corner marks and contour lines, beside a numbered form.'),
+        title: 'A form landowners finish',
+        body: 'It asks where the land is and how to reach them, and nothing else is required. Their own drone footage plays beside it as a slow loop. Every lead is saved before the email goes out, so a mail failure can’t lose one.',
+        image: screen('land-value', 'The “Tell us about your land” page: an aerial video of a road through green fields beside a numbered form.'),
       },
     ],
   },
-  flair: {
-    label: 'the home page',
-    title: 'The home page draws its own plat.',
-    body:
-      'Their home page opens on a surveyor\'s plat of an imaginary street that draws itself in under five seconds: contours, the boundary and its iron pins, the woods, the lane, the lots, then the houses. It waits for its fonts and photos before it plays, and goes straight to the finished drawing if they\'re slow or you\'ve turned animations off. This is the same plat in our ink. Scroll and it builds in the same order. The real one is on their site.',
+  pipeline: {
+    title: 'Listings arrive from the MLS',
+    body: 'Their listings already live in the MLS. We connected the site to it through the Spark API, so each listing is entered once and the site keeps up on its own.',
+    stages: [
+      { name: 'Feed', body: 'Each listing arrives with its facts, its agents and every photo. The site takes only the team’s own listings and follows each seller’s display choices.' },
+      { name: 'Import', body: 'A broker types an MLS number and gets a draft to review. The first batch brought in 25 listings and 802 photos.' },
+      { name: 'Nightly', body: 'At 4 a.m. the site checks every linked listing. Price and status follow the MLS, and the brokers’ descriptions are never touched.' },
+    ],
   },
-  details: {
-    title: 'The small things.',
-    intro: 'Each one is something a buyer, a builder or the brokers would feel, even if they couldn\'t name it.',
+  timeline: {
+    title: ['27 days to launch,', 'and the week after.'],
+    weeks: [
+      {
+        range: 'Sep 15–21',
+        theme: 'A working map',
+        milestones: [
+          { date: 'Sep 15', title: 'First commit', note: 'Astro on Cloudflare Workers, with D1, R2, email and sign-in links.' },
+          { date: 'Sep 17', title: 'Land and homes split', note: 'Two sides of the business, one listing form.' },
+          { date: 'Sep 18', title: 'The map works', note: 'A blank basemap and a broken back button, both fixed.' },
+        ],
+      },
+      {
+        range: 'Sep 22–28',
+        theme: 'The design',
+        milestones: [
+          { date: 'Sep 22', title: 'The map agrees with the list', note: 'Filters, menu and map share one set of results.' },
+          { date: 'Sep 25', title: 'The surveyor’s sheet', note: 'A full redesign: paper, ink and survey drawings on every page.' },
+          { date: 'Sep 27', title: 'Three home pages', note: 'Built side by side on the live site so the client could choose.' },
+          { date: 'Sep 28', title: 'Copy pass', note: 'Every page rewritten in plain language.' },
+        ],
+      },
+      {
+        range: 'Sep 29–Oct 5',
+        theme: 'The MLS',
+        milestones: [
+          { date: 'Oct 1', title: 'Team bios', note: 'An editor for the people on the About page.' },
+          { date: 'Oct 2', title: 'The plat home page', note: 'The client’s pick becomes the home page, and the MLS import is built.' },
+          { date: 'Oct 3', title: 'Their own account', note: 'The same code deployed to the client’s Cloudflare account.' },
+        ],
+      },
+      {
+        range: 'Oct 6–12',
+        theme: 'Launch',
+        milestones: [
+          { date: 'Oct 7', title: 'Disclaimers', note: 'Land disclaimers, and Equal Housing in the footer.' },
+          { date: 'Oct 9', title: 'Communities', note: 'Their seven categories, and the first live MLS key.' },
+          { date: 'Oct 10', title: 'Their footage', note: 'Two drone clips become slow loops on the site.' },
+          { date: 'Oct 12', title: 'landtolistings.com goes live', note: 'On their domain, with real listings.' },
+        ],
+      },
+      {
+        range: 'Oct 13–19',
+        theme: 'After launch',
+        milestones: [
+          { date: 'Oct 13', title: 'Photo import', note: 'No cap on photos per listing, and imports that resume.' },
+          { date: 'Oct 14', title: 'Nightly MLS sync', note: 'Prices and status update every night, and Undo arrives in the admin.' },
+          { date: 'Oct 16', title: 'Client call', note: 'Seven changes from the call shipped the same day.' },
+          { date: 'Oct 17', title: 'Agent credits', note: 'Listing agents and the MLS copyright, read from the feed.' },
+          { date: 'Oct 19', title: 'Faster pages', note: 'Thumbnails, no layout shift, and desktop Lighthouse scores of 98 to 100.' },
+        ],
+      },
+    ],
+  },
+  stats: {
+    title: 'The numbers',
     items: [
-      { title: 'Every search is a link', body: 'Filters live in the URL, so a broker can text a builder the exact set of parcels they were looking at, and the page opens on it.' },
-      { title: 'Listings can carry video', body: 'Brokers upload video in the editor next to the photos. Cloudflare Stream turns their drone footage into something every browser plays, and it never starts on its own.' },
-      { title: 'Their footage, used twice', body: 'Two of their aerial clips became quiet loops on the land value page and at the foot of the home page. The still shows first, the film loads after the page does, and a pause button is always there.' },
-      { title: 'Communities get their own page', body: 'A development\'s page shows its photos, its pin and every home in it. It appears on its own once one of its listings goes live, and joins the sitemap the same day.' },
-      { title: 'Leads can\'t get lost', body: 'Five forms feed one inbox. Every inquiry is saved before the email goes out, and if the mail fails the lead is still there, flagged and ready to export.' },
-      { title: 'No passwords to forget or leak', body: 'Sign-in is an emailed link that works once and expires in fifteen minutes. An unknown address gets the same reply as a real one, so nobody can probe for accounts.' },
-      { title: 'Fast on a cold load', body: 'Photos are resized on the way out for the screen that asked. The map script loads only when you scroll to it, and the animated home page waits for its fonts and photos before it plays.' },
-      { title: 'Search engines get the whole story', body: 'Page descriptions are built from live inventory, every entry point has its own share card, and a sold listing keeps its page, gets a stamp, and tells Google it\'s sold.' },
+      { value: '27', label: 'days from the first commit to launch' },
+      { value: '853', label: 'automated tests run before every release' },
+      { value: '98–100', label: 'desktop Lighthouse score on every page' },
     ],
   },
-  phones: {
-    caption: 'On a phone: the plat, the map with its list switch, and the photo strip.',
-    images: [
-      phone('m-home', 'The home page on a phone: the headline over the plat drawing with houses, lots and a SOLD stamp.'),
-      phone('m-land', 'The Land for sale page on a phone in map view: pins and circles across eastern North Carolina, with a List / Map switch.'),
-      phone('m-listing', 'A home listing on a phone: price, beds, baths, square feet and year built, a photo with a filmstrip under it.'),
+  landed: {
+    title: 'Where it landed',
+    lead: 'Live at landtolistings.com since October 12, on the firm’s own Cloudflare account. The brokers add listings themselves and the MLS keeps prices current overnight.',
+    note: 'Their home page opens on a plat of an imaginary street that draws itself: contours, the boundary, the lane, the lots, then the houses. With motion turned off it shows the finished drawing.',
+    video: {
+      webm: `${DIR}/intro.webm`,
+      mp4: `${DIR}/intro.mp4`,
+      poster: `${DIR}/intro-poster.webp`,
+      width: 1280,
+      height: 756,
+      label: 'A recording of the Land to Listings home page loading: the plat draws itself, from contour lines to the finished street of houses.',
+    },
+    region: {
+      label: 'North Carolina, with Raleigh marked',
+      width: 400,
+      height: 157,
+      d: 'M155.3 1.6L187.1 2.5L223.6 2.8L392.9 2.2L398.2 25.1L385.2 22.9L383.5 25.7L367.7 29.1L365.4 32.3L354.9 33.2L355.4 37.3L368.2 34.5L370 37L384 34.2L388.5 39.5L396.9 37.3L400 51.1L397.2 57.7L391.6 58.3L379.9 72.4L364.4 73L361.8 82.7L368.4 92.4L373.8 94.3L363.8 110.3L355.4 108.4L340.7 110L330.5 113.4L314.4 124.4L301.7 138.8L295.1 157L285.4 152.9L268.6 156.7L215.9 102.2L163.7 101.2L164.5 94.6L157.4 84.9L152.5 88.4L152.3 82.4L95 79.6L82.2 81.8L72.3 87.1L56.3 90.9L32.6 91.8L0 91.5L1.3 78L10.4 76.8L14 67.4L25.5 58.9L38.2 58.6L49.6 49.8L61.6 46.7L71.8 33.8L78.2 30.1L79.4 35.7L97.8 24.8L106.2 27L112 16.3L120.7 13.5L122.7 0L155.3 1.6Z',
+      dot: [264.1, 46.3],
+    },
+    facts: [
+      { label: 'Where', value: 'Raleigh and eastern North Carolina' },
+      { label: 'Live', value: 'October 12, 2026' },
+      { label: 'Runs on', value: 'Cloudflare Workers, D1, R2, Queues' },
+      { label: 'Built with', value: 'Astro, MapLibre, Better Auth, Spark API' },
     ],
   },
-  stack: [
-    { label: 'framework', items: ['Astro 7 (SSR)', 'TypeScript', 'Zod 4', 'Sass'] },
-    { label: 'platform', items: ['Cloudflare Workers', 'D1', 'R2', 'Images', 'Stream', 'Email Sending', 'Turnstile', 'Cron Triggers'] },
-    { label: 'mls', items: ['Spark API', 'RESO Web API'] },
-    { label: 'maps', items: ['MapLibre GL', 'OpenFreeMap tiles', 'US Census + Nominatim geocoding'] },
-    { label: 'auth', items: ['Better Auth', 'magic links only'] },
-    { label: 'testing', items: ['Vitest in workerd', 'Playwright', 'msw'] },
-    { label: 'type', items: ['Bricolage Grotesque', 'Cormorant Garamond', 'IBM Plex Mono'] },
-  ],
-  outcome: {
-    title: 'Where it landed.',
-    body: [
-      'Live at landtolistings.com since October 12, on their own Cloudflare account, for about $5 a month. The brokers add and edit listings themselves, and every listing on the site is a real one.',
-      'The MLS import is in their admin and tested against live MLS data. The nightly refresh is built and ready to switch on, and so are video uploads, whenever they want them.',
-    ],
+  close: {
+    title: 'Tell us the hard thing',
+    body: 'An engineer reads every message. Tell us what’s broken, half-built or still an idea, and we’ll say if we’re the right fit.',
+    image: screen('community', 'An aerial photo of a new development.'),
   },
   related: ['custom-software', 'fractional-engineering-team'],
 };

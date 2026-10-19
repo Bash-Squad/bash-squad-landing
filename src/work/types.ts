@@ -1,8 +1,9 @@
 // Case-study content model. One file per project in src/work/content/,
 // registered in src/work/index.ts. Everything here is rendered into static
-// HTML (and some of it into JSON-LD), so keep copy in the site's voice:
-// plain sentences, contractions, real specifics only, no invented numbers,
-// no em-dashes. If we don't have a metric, describe what shipped instead.
+// HTML (and some of it into JSON-LD), so it follows the copy rules in
+// .claude/skills/case-study/voice.md: plain sentences, real numbers only,
+// no client names unless they agreed, no em dashes. Headings are two to
+// five words and must fit on two lines at every width.
 
 export interface CaseStudyImage {
   /** Path under /public to the 1x file, e.g. /work/land-to-listings/land.webp. */
@@ -16,110 +17,124 @@ export interface CaseStudyImage {
   retina?: boolean;
 }
 
-/** One cell of the title block beside the H1 (CLIENT, WHERE, SHIPPED...). */
+/** A short muted loop of the real product, with a still for reduced motion. */
+export interface CaseStudyVideo {
+  webm: string;
+  mp4: string;
+  poster: string;
+  width: number;
+  height: number;
+  /** Read by screen readers in place of the footage. */
+  label: string;
+}
+
+/** A label and its value: "Live" / "October 12, 2026". */
 export interface CaseStudyFact {
   label: string;
   value: string;
 }
 
-/** A headline number. `value` is shown as written; digits count up on entry. */
+/** A headline number. `value` is shown as written; its first digits count up once. */
 export interface CaseStudyStat {
   value: string;
   label: string;
 }
 
-export interface CaseStudyItem {
-  title: string;
+/** One reader of the site and what they want from it; `lead` is the bold run-in. */
+export interface CaseStudyAudience {
+  lead: string;
   body: string;
 }
 
-/** One beat of the scroll story: text on the left, its screen on the right. */
-export interface CaseStudyStep extends CaseStudyItem {
+/** One beat of the pinned story: text on the left, its screen on the right. */
+export interface CaseStudyStep {
+  title: string;
+  body: string;
   image: CaseStudyImage;
 }
 
-export interface CaseStudyStackRow {
-  label: string;
-  items: string[];
-}
-
-/** One line of the build log typed into the hero terminal. */
-export interface CaseStudyLogLine {
-  /** Short date as it should print: "sep 15". */
+export interface CaseStudyMilestone {
+  /** Short date as printed: "Oct 12". */
   date: string;
-  text: string;
-  /** 'ok' prints in acid. */
-  tone?: 'ok';
+  title: string;
+  note: string;
 }
 
-/** Before/after slider: two screens of the same thing, compared side by side. */
-export interface CaseStudyCompare {
-  /** Mono eyebrow and chapter-rail label: "the home page", "the old admin". */
+/** One tab of the build timeline. */
+export interface CaseStudyWeek {
+  /** The tab's date range: "Oct 6–12". */
+  range: string;
+  /** What that week was about, in two or three words. */
+  theme: string;
+  milestones: CaseStudyMilestone[];
+}
+
+/** A North-up outline drawn as one filled shape, with one dot for the place. */
+export interface CaseStudyRegion {
   label: string;
-  title: string;
-  body: string;
-  /** Text in the frame's address bar: "landtolistings.bashsquad.com/?v=2 → /?v=3". */
-  url: string;
-  before: { label: string; image: CaseStudyImage };
-  after: { label: string; image: CaseStudyImage };
+  width: number;
+  height: number;
+  /** SVG path data in the width × height box. */
+  d: string;
+  dot: [number, number];
 }
 
 export interface CaseStudyContent {
   /** URL segment under /work/. */
   slug: string;
-  /** Display name: "Land to Listings". */
+  /** Display name, set huge in the hero: "Land to Listings". */
   name: string;
-  /** Who it was for, as it should appear publicly. */
+  /** Who it was for, as it may appear publicly. */
   client: string;
-  /** Mono eyebrow after "case study": "client build", "product", "open source". */
+  /** "client build", "product", "open source". Shown on cards. */
   kind: string;
-  /** Year shown in the eyebrow and card. */
   year: string;
-  /** ISO date for JSON-LD datePublished. */
+  /** ISO date for JSON-LD datePublished and the sitemap. */
   published: string;
-  /** SERP title WITHOUT the "| bash squad" suffix (the template adds it). <= 52 chars. */
+  /** SERP title WITHOUT the "| bash squad" suffix. <= 52 chars. */
   metaTitle: string;
   /** 140-160 chars. */
   metaDescription: string;
-  /** The page's H1. Plain, one line if it can be. */
-  h1: string;
-  /** 40-60 words, answer-first: what it is, who it's for, what we did. Also the schema abstract. */
+  /** The hero's one sentence, laid over the hero art. <= 60 chars. */
+  statement: string;
+  /** 30-40 words, answer-first: what it is, who it's for, what we did. Opens the brief; also the schema abstract. */
   answer: string;
-  /** One or two supporting sentences under the answer. */
-  intro: string;
   /** One sentence for the Work grid card and llms.txt. */
   cardDescription: string;
-  /** The project-sheet strip under the hero (CLIENT, WHERE, SHIPPED...). */
-  facts: CaseStudyFact[];
   links: { live?: string; repo?: string };
   /** Short lowercase tags for cards: ['astro', 'cloudflare', 'maps']. */
   tags: string[];
-  /** The big screen in the hero. Also the Work grid card image. */
+  /** Work grid card, share card source, and the hero art when the study has no hero flair. */
   cover: CaseStudyImage;
-  /** Mono dimension-line label drawn over the cover: "16 days, first commit to handover". */
-  dimension: string;
-  /** Title-bar text of the hero terminal: "landtolistings: git log". */
-  logTitle: string;
-  /** The build log, in date order, typed into the hero terminal. Real dates only. */
-  timeline: CaseStudyLogLine[];
   /** 1200x630 share card under /public. */
   ogImage: string;
-  /** Three or four real numbers. */
-  stats: CaseStudyStat[];
-  brief: { title: string; body: string[]; asks: string[] };
+  /** Hero left rail: a phone screen of the product. */
+  portrait: CaseStudyImage;
+  /** Hero left rail: four short facts. */
+  facts: CaseStudyFact[];
+  /** Hero right rail: four short lines on what it does. */
+  features: string[];
+  /** Four readers, four columns. */
+  brief: { audiences: CaseStudyAudience[] };
+  /** Heading for the interactive demo; renders only when the study has demo flair. */
+  demo?: { title: string; body: string; hint: string };
   story: { title: string; intro: string; steps: CaseStudyStep[] };
-  compare?: CaseStudyCompare;
-  /**
-   * Heading for this study's custom flair section. The visual is a component
-   * in src/work/flair/, registered by slug in src/work/flair/index.ts; the
-   * section renders only when both exist.
-   */
-  flair?: { label: string; title: string; body: string };
-  details: { title: string; intro: string; items: CaseStudyItem[] };
-  /** Three phone screens, shown as a row. */
-  phones?: { caption: string; images: CaseStudyImage[] };
-  stack: CaseStudyStackRow[];
-  outcome: { title: string; body: string[] };
+  /** Optional "many into one" diagram: three named stages, left to right. */
+  pipeline?: { title: string; body: string; stages: { name: string; body: string }[] };
+  /** Heading in two lines: the first set soft, the second in full ink. */
+  timeline: { title: [string, string]; weeks: CaseStudyWeek[] };
+  /** Exactly three real numbers; the first is the loud one. */
+  stats: { title: string; items: [CaseStudyStat, CaseStudyStat, CaseStudyStat] };
+  landed: {
+    title: string;
+    lead: string;
+    /** Laid over the top-right corner of the video. <= 35 words. */
+    note: string;
+    video: CaseStudyVideo;
+    region: CaseStudyRegion;
+    facts: CaseStudyFact[];
+  };
+  close: { title: string; body: string; image: CaseStudyImage };
   /** Related service slugs (src/services). */
   related: string[];
 }

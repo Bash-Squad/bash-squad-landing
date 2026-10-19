@@ -102,27 +102,30 @@ BRAND.md               brand and voice guidelines
 ## Case studies
 
 `/work/<slug>` pages are content-driven. The full workflow (fact-gathering,
-capture, copy rules, verification) is the `case-study` agent skill in
-`.claude/skills/case-study/`. A study can also have one custom "flair"
-piece (`src/work/flair/`, registered by slug). In short:
+capture, copy rules, the design gate, verification) is the `case-study`
+agent skill in `.claude/skills/case-study/`. A study can add a custom hero
+art piece and a live demo (`src/work/flair/`, registered by slug). In short:
 
-1. Capture screens of the real product into `public/work/<slug>/`: desktop at
-   1440x900 (`name.webp` plus a `name@2x.webp` sibling), phones at 780 wide
-   (`m-name.webp`), and a 1200x630 `og.png` share card.
+1. Capture the real product into `public/work/<slug>/`: desktop screens at
+   1440x900 (`name.webp` plus a `name@2x.webp` sibling), one phone screen at
+   780 wide (`m-name.webp`), a short muted screen recording (`intro.webm`,
+   `intro.mp4`, `intro-poster.webp`) and a 1200x630 `og.png` share card.
 2. Write `src/work/content/<slug>.ts` against `CaseStudyContent`
    (`src/work/types.ts`). Real specifics only; if there is no metric,
    describe what shipped. Plain sentences, no em-dashes, and no client
    names unless they have agreed to be named.
 3. Register it in `src/work/index.ts`. That alone adds it to `/work`, the
    homepage Work grid, the ⌘K palette, the sitemap, and `llms.txt`.
-4. Check `/work/<slug>` in a browser at desktop and phone widths, and with
-   reduced motion on.
+4. Gate it with the taste skill's `lint.mjs` and `inspect.mjs`, then check
+   it in a browser at desktop and phone widths, and with reduced motion on.
 
-Motion on these pages is deliberate and small: the hero terminal types the
-build log once on load, section heads and figures reveal with a CSS
-scroll-driven animation (no JS), the chapter rail and scroll story use an
-IntersectionObserver, the before/after slider is a range input, and the
-stat counters tick once. Everything renders in its final state with
+The page's art direction ("the well-kept board": flat tiles, square
+corners, one accent, no lines or monospace) is recorded in
+`.taste-skill/direction.json`. Motion: the hero board pins while its art
+builds with the scroll (CSS scroll-driven animation), section parts rise in
+as they scroll in (also CSS, no script), the story pins one screen while its
+steps pass, the numbers count up once, and the recording plays only while
+it's on screen. Everything renders in its final state with
 `prefers-reduced-motion`.
 
 ## Contact form
