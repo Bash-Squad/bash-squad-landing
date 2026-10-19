@@ -44,8 +44,12 @@ the word rules it can't check.
   two to five words; the note one short sentence. Leave out the process:
   calls, fixes, copy passes, how many changes went out when. Steve: "too
   much detail".
-- **Name a screen by what it is** ("The land value form"), not by a cute
-  claim about its users ("A form landowners finish" read as AI).
+- **Name a screen by what it is** ("Land for sale", "A home listing", "The
+  admin"), never by a claim about it. "A form landowners finish", "The map
+  and the list agree", "Every photo, full size" and "An admin they run" all
+  read as AI marketing. Bodies say what's on the screen and what it does,
+  in words a buyer would use: no "one table", no "without a sales pitch",
+  no "always show the same set".
 - **Describe what the system does, not what it leaves alone.** "Prices and
   status update on their own" lands; "the brokers' descriptions are never
   touched" reads oddly to a buyer.

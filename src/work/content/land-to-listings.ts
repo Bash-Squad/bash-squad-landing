@@ -46,14 +46,14 @@ const landToListings: CaseStudyContent = {
     'Land and homes on one map',
     'Listings imported from their MLS',
     'Prices and status synced every night',
-    'An admin with no passwords',
+    'Brokers sign in with an email link',
   ],
   brief: {
     audiences: [
-      { lead: 'Builders want', body: 'acreage, lot counts and the county, on a map. Land gets a tree-shaped pin and homes a house, and the map and the list always show the same results, so a builder can scan a county in a minute and send the exact search to a partner as a link.' },
-      { lead: 'Home buyers want', body: 'photos, beds, baths and a price. Each home opens on its facts under the price, then a strip of every photo at its own width that goes full screen and zooms in. The inquiry form sits on the page and already knows which home they mean.' },
-      { lead: 'Landowners want', body: 'to know what their land is worth without a sales pitch. The form asks where it is and how to reach them, nothing else is required, and the page says plainly that the reply is the brokers’ opinion, not an appraisal or an instant estimate.' },
-      { lead: 'The brokers want', body: 'to run it themselves. They sign in with an emailed link, bring a listing in by its MLS number, drag photos into order and undo a click right where they made it. Every inquiry is saved before the email goes out, so none is lost.' },
+      { lead: 'Builders want', body: 'acreage, lot counts and the county, on a map. Land gets a tree-shaped pin and homes get a house, so a builder can see a county’s land at a glance and filter it by price and size.' },
+      { lead: 'Home buyers want', body: 'photos, beds, baths and a price. Each home shows its price first, with the facts under it, then every photo in a strip that opens full screen. The inquiry form on the page tells the brokers which home it’s about.' },
+      { lead: 'Landowners want', body: 'an idea of what their land is worth. The form asks where it is and how to reach them, and nothing else is required. The page says the reply is the brokers’ opinion, not an appraisal.' },
+      { lead: 'The brokers want', body: 'to run it themselves. They sign in with an emailed link, bring a listing in by its MLS number, drag photos into order and undo a status change from the same row. Every inquiry is saved before the email goes out.' },
     ],
   },
   demo: {
@@ -66,37 +66,37 @@ const landToListings: CaseStudyContent = {
     intro: 'Five screens from the live site and the admin.',
     steps: [
       {
-        title: 'The map and the list agree',
-        body: 'Land and homes share one table, so the map and the list always show the same set. When a seller wants privacy, the map shows a one-mile circle around the property instead of its address, and the listing says the exact spot is available on request.',
+        title: 'Land for sale',
+        body: 'Filters for county, price and acreage narrow the cards and the map at once. When a seller wants privacy, the map shows a one-mile circle around the property instead of its address, and the listing says the exact spot is available on request.',
         image: screen('land', 'The Land for sale page: a search box, filters, listing cards with aerial photos, and a map of eastern North Carolina with tree-shaped pins and soft circles.'),
       },
       {
-        title: 'Every photo, full size',
-        body: 'A home opens on the facts buyers compare, set out under the price, then every photo at its own width. Full screen works with arrow keys and swipe and zooms in. Photos are prepared when they’re uploaded, so a small copy loads wherever a photo shows small.',
+        title: 'A home listing',
+        body: 'The price comes first, with beds, baths, square feet and year built under it. Below that is every photo; open one to go full screen, then swipe or zoom. Photos are resized when they’re uploaded, so a thumbnail loads a thumbnail-sized file.',
         image: screen('listing', 'A new home in Cary: the price with beds, baths, interior square feet and year built, an “Ask about this home” button, and a strip of large photos.'),
       },
       {
-        title: 'A page for each development',
-        body: 'A development gets its own page with its photos, its pin and every home or lot in it. On the map and in the results it shows once, with its range of prices, instead of filling the list with near-identical homes.',
+        title: 'A community page',
+        body: 'Each development has one page with its aerial photos, its site plan and every home or lot in it. In search results it appears once, with its price range, instead of as a dozen near-identical homes.',
         image: screen('community', 'A community page: an aerial photo of the development with its entrance sign, a site plan listing each lot and its acreage, and the community’s name and address.'),
       },
       {
-        title: 'An admin they run',
-        body: 'Rows lead with the address and sort by status. Publish, Sold and Hide each offer one Undo in the row where you clicked. The editor holds the photos, the map pin, the MLS link and the community, with one Save that stays in view.',
+        title: 'The admin',
+        body: 'Listings sort by status, with the address first. Publish, Sold and Hide each have an Undo in the same row. The editor holds the photos, the map pin, the MLS link and the community, with a Save button that stays on screen.',
         image: screen('admin-listings', 'The admin listings table: Current and Sold tabs, a search box and a sort, and rows with each listing’s photo, address, type, price, status and actions.'),
       },
       {
         title: 'The land value form',
-        body: 'It asks where the land is and how to reach them, and nothing else is required. Their own drone footage plays beside it as a slow loop. Every lead is saved before the email goes out, so a mail failure can’t lose one.',
+        body: 'It asks where the land is and how to reach them, and nothing else is required. Their own drone footage plays beside it on a slow loop. Each lead is saved before the email goes out, so a mail outage can’t lose one.',
         image: screen('land-value', 'The “Tell us about your land” page: an aerial video of a road through green fields beside a numbered form.'),
       },
     ],
   },
   pipeline: {
     title: 'Listings arrive from the MLS',
-    body: 'Their listings already live in the MLS. We connected the site to it through the Spark API, so each listing is entered once and the site keeps up on its own.',
+    body: 'Their listings already live in the MLS. We connected the site to it through the Spark API, so a listing is entered once, in the MLS, and not typed in again.',
     stages: [
-      { name: 'Feed', body: 'Each listing arrives with its facts, its agents and every photo. The site takes only the team’s own listings and follows each seller’s display choices.' },
+      { name: 'Feed', body: 'Each listing arrives with its facts, its agents and every photo. The site takes only the team’s own listings and follows each listing’s MLS display settings.' },
       { name: 'Import', body: 'A broker types an MLS number and gets a draft to review. The first batch brought in 25 listings and 802 photos.' },
       { name: 'Nightly', body: 'At 4 a.m. the site checks every linked listing against the MLS. Prices and status update on their own, a pending sale shows Under Contract, and a sold or withdrawn listing comes off the site.' },
     ],
@@ -116,7 +116,7 @@ const landToListings: CaseStudyContent = {
         range: 'Sep 22–28',
         theme: 'The design',
         milestones: [
-          { date: 'Sep 25', title: 'The surveyor’s sheet', note: 'Paper, ink and survey drawings across the site.' },
+          { date: 'Sep 25', title: 'Site design', note: 'Paper, ink and survey drawings across the site.' },
           { date: 'Sep 27', title: 'Home page options', note: 'Three directions for the client to pick from.' },
         ],
       },
@@ -151,7 +151,7 @@ const landToListings: CaseStudyContent = {
     items: [
       { value: '27', label: 'days from the first commit to launch' },
       { value: '853', label: 'automated tests run before every release' },
-      { value: '98–100', label: 'desktop Lighthouse score on every page' },
+      { value: '98–100', label: 'desktop Lighthouse scores, measured October 19' },
     ],
   },
   landed: {

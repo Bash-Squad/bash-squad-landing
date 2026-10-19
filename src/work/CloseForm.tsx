@@ -33,7 +33,7 @@ export default function CloseForm({ source }: { source: string }) {
   };
 
   if (status === 'sent') {
-    return <p className="cs-close__done cs-lead" role="status">Thanks. An engineer will reply within a working day.</p>;
+    return <p className="cs-close__done cs-lead" role="status">Thanks, we got it. We usually reply within one business day.</p>;
   }
 
   return (
