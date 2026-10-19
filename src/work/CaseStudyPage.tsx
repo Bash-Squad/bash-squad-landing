@@ -8,8 +8,8 @@
 // .taste-skill/direction.json). In order:
 //   hero board (name, jump links, portrait + facts, hero art + statement,
 //   features + action), pinned while the hero art builds on scroll
-//   -> brief (lead + four readers) -> demo (optional live thing)
-//   -> pinned story of screens -> pipeline (optional) -> timeline tabs
+//   -> brief (lead + four readers) -> pinned story of screens
+//   -> pipeline (optional) -> demo (optional live thing) -> timeline tabs
 //   -> stepped numbers -> where it landed (video, region, facts)
 //   -> the action row (#book) -> site footer.
 import React from 'react';
@@ -52,8 +52,8 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
 
   const jumps = [
     { href: '#brief', label: 'The brief' },
-    Demo ? { href: '#search', label: 'Try the search' } : { href: '#numbers', label: 'The numbers' },
     { href: '#built', label: 'What we built' },
+    Demo ? { href: '#search', label: 'Try their search' } : { href: '#numbers', label: 'The numbers' },
     live ? { href: live, label: liveHost ?? 'The live site', external: true } : { href: '#landed', label: 'Where it landed' },
   ];
   const latest = study.timeline.weeks.length - 1;
@@ -106,18 +106,6 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           </div>
         </section>
 
-        {/* the live thing */}
-        {study.demo && Demo && (
-          <section id="search" className="cs-sec cs-demo">
-            <div className="cs-demo__inner">
-              <h2 className="cs-lead cs-strong" data-enter>{study.demo.title}</h2>
-              <p className="cs-body cs-demo__body" data-enter="1">{study.demo.body}</p>
-              <div data-enter="2"><Demo /></div>
-              <p className="cs-small cs-demo__hint">{study.demo.hint}</p>
-            </div>
-          </section>
-        )}
-
         {/* what we built: the pinned story of screens */}
         <section id="built" className="cs-sec">
           <div className="cs-head">
@@ -130,6 +118,17 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
         {study.pipeline && (
           <section id="mls" className="cs-sec">
             <Pipeline pipeline={study.pipeline} />
+          </section>
+        )}
+
+        {/* the live thing */}
+        {study.demo && Demo && (
+          <section id="search" className="cs-sec cs-demo">
+            <div className="cs-demo__inner">
+              <h2 className="cs-lead cs-strong" data-enter>{study.demo.title}</h2>
+              <p className="cs-body cs-demo__body" data-enter="1">{study.demo.body}</p>
+              <div data-enter="2"><Demo hint={study.demo.hint} /></div>
+            </div>
           </section>
         )}
 
@@ -178,7 +177,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
 
         {/* the action row: cropped from a longer row of the board */}
         <section id="book" className="cs-close" aria-labelledby="cs-close-title">
-          <div className="cs-close__flank cs-close__flank--img" aria-hidden="true"><Shot image={study.close.image} /></div>
+          <div className="cs-close__flank" aria-hidden="true" />
           <div className="cs-close__tile">
             <h2 id="cs-close-title" className="cs-h">{study.close.title}</h2>
             <p className="cs-body">{study.close.body}</p>

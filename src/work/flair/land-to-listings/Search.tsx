@@ -39,9 +39,10 @@ function money(n: number): string {
   return n >= 1000000 ? `$${n / 1000000}M` : `$${n / 1000}k`;
 }
 
-export default function Search() {
+export default function Search({ hint }: { hint: string }) {
   const [s, setS] = React.useState<Selection>({ division: '', place: '', maxPrice: null, acres: null, beds: null, availability: '' });
-  const set = <K extends keyof Selection>(k: K, v: Selection[K]) => setS((prev) => ({ ...prev, [k]: v }));
+  const [touched, setTouched] = React.useState(false);
+  const set = <K extends keyof Selection>(k: K, v: Selection[K]) => { setTouched(true); setS((prev) => ({ ...prev, [k]: v })); };
 
   const matched = ENTRIES.map((e) => e.members.some((m) => memberMatches(e, m, s)));
   const results = matched.filter(Boolean).length;
@@ -104,6 +105,9 @@ export default function Search() {
       </div>
 
       <div className="ltl-search__controls">
+        <p className="ltl-search__try" data-touched={touched ? 'true' : 'false'}>
+          {touched ? 'The pins, the count and the address follow every pick.' : hint}
+        </p>
         <div className="ltl-search__row" role="group" aria-label="Show">
           <span>Show</span>
           <span className="ltl-search__seg">

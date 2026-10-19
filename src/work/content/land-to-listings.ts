@@ -43,7 +43,7 @@ const landToListings: CaseStudyContent = {
     { label: 'Runs on', value: 'Their own Cloudflare account' },
   ],
   features: [
-    'A map where every search is a link',
+    'Land and homes on one map',
     'Listings imported from their MLS',
     'Prices and status synced every night',
     'An admin with no passwords',
@@ -57,9 +57,9 @@ const landToListings: CaseStudyContent = {
     ],
   },
   demo: {
-    title: 'Every search is a link',
-    body: 'This is their live inventory. Pick a side, a place and a price: the map and the address change together, and the link opens the same results on their site.',
-    hint: 'Try Land, then Nash.',
+    title: 'Try their search',
+    body: 'This is their real inventory on a working map. Pick land or homes, a county, a price or a size, and the pins and the count follow along. The address changes too, so any search on their site can be sent as a link.',
+    hint: 'Start with Land, then pick Nash.',
   },
   story: {
     title: 'What we built',
@@ -86,7 +86,7 @@ const landToListings: CaseStudyContent = {
         image: screen('admin-listings', 'The admin listings table: Current and Sold tabs, a search box and a sort, and rows with each listing’s photo, address, type, price, status and actions.'),
       },
       {
-        title: 'A form landowners finish',
+        title: 'The land value form',
         body: 'It asks where the land is and how to reach them, and nothing else is required. Their own drone footage plays beside it as a slow loop. Every lead is saved before the email goes out, so a mail failure can’t lose one.',
         image: screen('land-value', 'The “Tell us about your land” page: an aerial video of a road through green fields beside a numbered form.'),
       },
@@ -98,7 +98,7 @@ const landToListings: CaseStudyContent = {
     stages: [
       { name: 'Feed', body: 'Each listing arrives with its facts, its agents and every photo. The site takes only the team’s own listings and follows each seller’s display choices.' },
       { name: 'Import', body: 'A broker types an MLS number and gets a draft to review. The first batch brought in 25 listings and 802 photos.' },
-      { name: 'Nightly', body: 'At 4 a.m. the site checks every linked listing. Price and status follow the MLS, and the brokers’ descriptions are never touched.' },
+      { name: 'Nightly', body: 'At 4 a.m. the site checks every linked listing against the MLS. Prices and status update on their own, a pending sale shows Under Contract, and a sold or withdrawn listing comes off the site.' },
     ],
   },
   timeline: {
@@ -108,49 +108,40 @@ const landToListings: CaseStudyContent = {
         range: 'Sep 15–21',
         theme: 'A working map',
         milestones: [
-          { date: 'Sep 15', title: 'First commit', note: 'Astro on Cloudflare Workers, with D1, R2, email and sign-in links.' },
-          { date: 'Sep 17', title: 'Land and homes split', note: 'Two sides of the business, one listing form.' },
-          { date: 'Sep 18', title: 'The map works', note: 'A blank basemap and a broken back button, both fixed.' },
+          { date: 'Sep 15', title: 'First commit', note: 'Astro on Cloudflare Workers.' },
+          { date: 'Sep 18', title: 'The map', note: 'Land and homes on one searchable map.' },
         ],
       },
       {
         range: 'Sep 22–28',
         theme: 'The design',
         milestones: [
-          { date: 'Sep 22', title: 'The map agrees with the list', note: 'Filters, menu and map share one set of results.' },
-          { date: 'Sep 25', title: 'The surveyor’s sheet', note: 'A full redesign: paper, ink and survey drawings on every page.' },
-          { date: 'Sep 27', title: 'Three home pages', note: 'Built side by side on the live site so the client could choose.' },
-          { date: 'Sep 28', title: 'Copy pass', note: 'Every page rewritten in plain language.' },
+          { date: 'Sep 25', title: 'The surveyor’s sheet', note: 'Paper, ink and survey drawings across the site.' },
+          { date: 'Sep 27', title: 'Home page options', note: 'Three directions for the client to pick from.' },
         ],
       },
       {
         range: 'Sep 29–Oct 5',
         theme: 'The MLS',
         milestones: [
-          { date: 'Oct 1', title: 'Team bios', note: 'An editor for the people on the About page.' },
-          { date: 'Oct 2', title: 'The plat home page', note: 'The client’s pick becomes the home page, and the MLS import is built.' },
-          { date: 'Oct 3', title: 'Their own account', note: 'The same code deployed to the client’s Cloudflare account.' },
+          { date: 'Oct 2', title: 'MLS import', note: 'Listings come in by their MLS number.' },
+          { date: 'Oct 3', title: 'Their own account', note: 'The site moves to the client’s Cloudflare account.' },
         ],
       },
       {
         range: 'Oct 6–12',
         theme: 'Launch',
         milestones: [
-          { date: 'Oct 7', title: 'Disclaimers', note: 'Land disclaimers, and Equal Housing in the footer.' },
-          { date: 'Oct 9', title: 'Communities', note: 'Their seven categories, and the first live MLS key.' },
-          { date: 'Oct 10', title: 'Their footage', note: 'Two drone clips become slow loops on the site.' },
-          { date: 'Oct 12', title: 'landtolistings.com goes live', note: 'On their domain, with real listings.' },
+          { date: 'Oct 9', title: 'Communities', note: 'Each development gets its own page.' },
+          { date: 'Oct 12', title: 'Live', note: 'landtolistings.com goes live with real listings.' },
         ],
       },
       {
         range: 'Oct 13–19',
         theme: 'After launch',
         milestones: [
-          { date: 'Oct 13', title: 'Photo import', note: 'No cap on photos per listing, and imports that resume.' },
-          { date: 'Oct 14', title: 'Nightly MLS sync', note: 'Prices and status update every night, and Undo arrives in the admin.' },
-          { date: 'Oct 16', title: 'Client call', note: 'Seven changes from the call shipped the same day.' },
-          { date: 'Oct 17', title: 'Agent credits', note: 'Listing agents and the MLS copyright, read from the feed.' },
-          { date: 'Oct 19', title: 'Faster pages', note: 'Thumbnails, no layout shift, and desktop Lighthouse scores of 98 to 100.' },
+          { date: 'Oct 14', title: 'Nightly sync', note: 'Prices and status stay current on their own.' },
+          { date: 'Oct 19', title: 'Faster pages', note: 'Desktop Lighthouse scores of 98 to 100.' },
         ],
       },
     ],
@@ -192,7 +183,6 @@ const landToListings: CaseStudyContent = {
   close: {
     title: 'Tell us the hard thing',
     body: 'An engineer reads every message. Tell us what’s broken, half-built or still an idea, and we’ll say if we’re the right fit.',
-    image: screen('community', 'An aerial photo of a new development.'),
   },
   related: ['custom-software', 'fractional-engineering-team'],
 };

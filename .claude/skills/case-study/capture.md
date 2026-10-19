@@ -84,10 +84,17 @@ with the shared browser (`browser.open` without `app`), which has WebGL, and
 check `document.querySelectorAll('canvas').length > 0` before the shot.
 
 **Local dev screens:** hide framework toolbars before the screenshot
-(`await page.addStyleTag({ content: 'astro-dev-toolbar, nextjs-portal { display: none !important }' })`)
-and add your own sign-in email to `hide`. If a wide admin table clips at
-1440, capture at `{ width: 1600, height: 1000, deviceScaleFactor: 1.8 }`:
-still 2880x1800 pixels, so `resize.py` accepts it.
+(`await page.addStyleTag({ content: 'astro-dev-toolbar, nextjs-portal { display: none !important }' })`).
+For private values in admin screens (MLS numbers, emails), **remove** the
+elements (`el.remove()`) instead of hiding them, so rows close up with no
+gaps. If a wide admin table clips at 1440, capture at
+`{ width: 1600, height: 1000, deviceScaleFactor: 1.8 }`: still 2880x1800
+pixels, so `resize.py` accepts it.
+
+**Signing in to a local Better Auth admin** when the dev server's log isn't
+yours to read: insert a one-hour token into local D1 with the recipe in the
+`better-auth-d1-magic-link-mint` skill (`--local` instead of `--remote`,
+`http://localhost:4321` as the site), and open the link in the capture tab.
 
 Then size them:
 

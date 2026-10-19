@@ -116,7 +116,8 @@ export interface CaseStudyContent {
   features: string[];
   /** Four readers, four columns. */
   brief: { audiences: CaseStudyAudience[] };
-  /** Heading for the interactive demo; renders only when the study has demo flair. */
+  /** Heading for the interactive demo; renders only when the study has demo flair.
+   *  `hint` is shown inside the demo as the first thing to try. */
   demo?: { title: string; body: string; hint: string };
   story: { title: string; intro: string; steps: CaseStudyStep[] };
   /** Optional "many into one" diagram: three named stages, left to right. */
@@ -134,7 +135,7 @@ export interface CaseStudyContent {
     region: CaseStudyRegion;
     facts: CaseStudyFact[];
   };
-  close: { title: string; body: string; image: CaseStudyImage };
+  close: { title: string; body: string };
   /** Related service slugs (src/services). */
   related: string[];
 }

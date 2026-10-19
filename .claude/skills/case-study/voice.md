@@ -39,8 +39,16 @@ the word rules it can't check.
 - **Re-check old claims on every update.** Features get switched off (video
   uploads), rules change (sold listings went private), costs change. A claim
   that was true at launch can be false a week later.
-- **Timeline milestones are real dates from the history.** Title in two to
-  five words; the note one plain sentence.
+- **Timeline milestones are real dates from the history**, two or three a
+  week, at the level of what shipped ("MLS import", "Communities"). Title in
+  two to five words; the note one short sentence. Leave out the process:
+  calls, fixes, copy passes, how many changes went out when. Steve: "too
+  much detail".
+- **Name a screen by what it is** ("The land value form"), not by a cute
+  claim about its users ("A form landowners finish" read as AI).
+- **Describe what the system does, not what it leaves alone.** "Prices and
+  status update on their own" lands; "the brokers' descriptions are never
+  touched" reads oddly to a buyer.
 
 ## Privacy
 
@@ -50,8 +58,10 @@ the word rules it can't check.
 - **Never publish:** pricing, discounts, fees, how the client found us,
   private emails or call notes, contract terms, analytics sample sizes, lead
   counts, or anything from a private planning doc that isn't visible on the
-  live site. Process facts are fine without names ("Seven changes from the
-  call shipped the same day").
+  live site. Leave out process detail entirely (calls, change counts).
+- **Remove, don't blank.** When a screenshot holds something private (an MLS
+  number, an email), delete the element before the shot so the layout closes
+  up; a hidden element leaves a hole that looks broken.
 - Search the rendered page for every name on the private list before the PR.
 
 ## What's worth bragging about
@@ -62,10 +72,11 @@ would feel it, and a competitor's site plausibly wouldn't do it.
 **Cut** (table stakes): the back button works, it's responsive, it has HTTPS,
 it loads, forms validate, it has a sitemap.
 
-**Keep** (outcomes): a search you can text to someone and it opens on the same
-results; staff bring a listing in from the MLS instead of typing it twice; a
-lead is saved even when the email fails; no passwords to leak; measured speed
-(Lighthouse, layout shift) with the date it was measured.
+**Keep** (outcomes): staff bring a listing in from the MLS instead of typing
+it twice; prices stay current overnight; a lead is saved even when the email
+fails; no passwords to leak; measured speed (Lighthouse, layout shift) with
+the date it was measured. Clever-but-niche details (a search you can send as
+a link) are fine as a supporting line or the demo, not as the headline.
 
 ## Field guide
 
@@ -77,13 +88,13 @@ lead is saved even when the email fails; no passwords to leak; measured speed
 | `facts` | Four hero facts: who for (described), live date, build time, where it runs. |
 | `features` | Four short lines for the hero's right rail, each under ~40 characters. |
 | `brief.audiences` | Four readers of the site. `lead` is the bold run-in ("Builders want"), `body` 40-60 words on what they get. |
-| `demo` | Only with a demo flair. Title two to five words; body one or two sentences; `hint` tells the visitor what to try first. |
+| `demo` | Only with a demo flair. Title says to use it ("Try their search"); body one or two sentences; `hint` is the first thing to try, shown in the accent inside the demo. It sits below the story, not near the top: it's the extra, not the pitch. |
 | `story.steps` | 3-5 screens. Title says what the screen does; body (40-55 words) says how and why it matters. |
 | `pipeline` | Optional. Three stages named in one word each; body one or two sentences with a real number. |
-| `timeline` | Two-line heading (first line soft); one tab per week, 3-5 dated milestones each. |
+| `timeline` | Two-line heading (first line soft); one tab per week, two or three dated milestones each. |
 | `stats` | Exactly three real numbers; the first is the loud one. Labels in plain words. |
 | `landed` | Where it stands now, honestly. `lead` under ~30 words; `note` over the video under 35 words; four facts. |
-| `close` | The site's own CTA voice; `image` crops into the narrow flank tile. |
+| `close` | The site's own CTA voice. Its flank tiles stay plain: a cropped client photo there looked random. |
 | `cardDescription` | One sentence for the Work grid and llms.txt: product, audience, stack. |
 | `metaTitle` | <= 52 chars, no "| bash squad" suffix. |
 | `metaDescription` | 140-160 chars. |

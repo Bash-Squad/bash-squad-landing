@@ -35,8 +35,8 @@ board": flat tiles on the page ground, 8px apart, square corners, one accent
 monospace, no eyebrow labels, no 01/02/03 numbering, five type sizes. In
 order: a pinned hero board (the name huge, jump links, phone screen + facts,
 the hero art + statement, features + the action) → the brief (lead + four
-readers) → the live demo → the pinned story of screens → the MLS-style
-pipeline → timeline tabs → three stepped numbers → where it landed (video,
+readers) → the pinned story of screens → the MLS-style pipeline → the live
+demo → timeline tabs → three stepped numbers → where it landed (video,
 region, facts) → the action row → site footer. Optional blocks (demo,
 pipeline) simply drop out.
 
