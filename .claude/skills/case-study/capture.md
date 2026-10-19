@@ -10,7 +10,7 @@ content file get committed; delete the rest before the PR.
 | `<cover>.webp` | 1440x900 | 2 | `cover`: Work grid card, share card, and the hero art if the study has no hero flair |
 | 3 to 5 `<screen>.webp` | 1440x900 | 2 | `story.steps[].image`, one per step (admin screens from a local run) |
 | `m-<screen>.webp` | 390x844, mobile + touch | 3 | `portrait`: the phone screen in the hero's left rail |
-| `intro.webm`, `intro.mp4`, `intro-poster.webp` | 1440x900 recording | 1 | `landed.video`: a 10-15 s muted loop of the real product moving |
+| `intro.mp4`, `intro-poster.webp` | 1440x900 recording | 1 | `landed.video`: a 10-15 s muted loop of the real product moving |
 | `og.png` | 1200x630 | 1 | `ogImage` (see "Share card" below) |
 
 Pick screens that show the work, not chrome: the cover is the screen a
@@ -126,8 +126,11 @@ Then encode a small loop and a poster (look at frames first with
 
 ```bash
 cd public/work/<slug>
-ffmpeg -y -i /tmp/<slug>-intro.mp4 -t 12.3 -an -vf "scale=1280:-2,fps=30" -c:v libvpx-vp9 -b:v 0 -crf 38 -row-mt 1 intro.webm
-ffmpeg -y -i /tmp/<slug>-intro.mp4 -t 12.3 -an -vf "scale=1280:-2,fps=30" -c:v libx264 -preset slow -crf 26 -pix_fmt yuv420p -movflags +faststart intro.mp4
+ffmpeg -y -i /tmp/<slug>-intro.mp4 -t 12.3 -an \
+  -vf "scale=1280:-2:out_range=tv:out_color_matrix=bt709,fps=30,format=yuv420p" \
+  -color_range tv -colorspace bt709 -color_primaries bt709 -color_trc bt709 \
+  -c:v libx264 -profile:v high -level 4.0 -preset slow -crf 24 -movflags +faststart intro.mp4
+ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt,color_range -of csv=p=0 intro.mp4  # must say yuv420p,tv
 ffmpeg -y -ss 11 -i /tmp/<slug>-intro.mp4 -frames:v 1 -vf scale=1280:-2 /tmp/poster.png
 python3 -c "from PIL import Image; Image.open('/tmp/poster.png').convert('RGB').save('intro-poster.webp','WEBP',quality=85)"
 ```

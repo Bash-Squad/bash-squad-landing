@@ -103,13 +103,13 @@ BRAND.md               brand and voice guidelines
 
 `/work/<slug>` pages are content-driven. The full workflow (fact-gathering,
 capture, copy rules, the design gate, verification) is the `case-study`
-agent skill in `.claude/skills/case-study/`. A study can add a custom hero
-art piece and a live demo (`src/work/flair/`, registered by slug). In short:
+agent skill in `.claude/skills/case-study/`. A study can add custom hero
+art (`src/work/flair/`, registered by slug). In short:
 
 1. Capture the real product into `public/work/<slug>/`: desktop screens at
    1440x900 (`name.webp` plus a `name@2x.webp` sibling), one phone screen at
-   780 wide (`m-name.webp`), a short muted screen recording (`intro.webm`,
-   `intro.mp4`, `intro-poster.webp`) and a 1200x630 `og.png` share card.
+   780 wide (`m-name.webp`), a short muted screen recording (`intro.mp4`,
+   `intro-poster.webp`) and a 1200x630 `og.png` share card.
 2. Write `src/work/content/<slug>.ts` against `CaseStudyContent`
    (`src/work/types.ts`). Real specifics only; if there is no metric,
    describe what shipped. Plain sentences, no em-dashes, and no client

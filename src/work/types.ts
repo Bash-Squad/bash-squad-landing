@@ -19,7 +19,7 @@ export interface CaseStudyImage {
 
 /** A short muted loop of the real product, with a still for reduced motion. */
 export interface CaseStudyVideo {
-  webm: string;
+  /** H.264, yuv420p, limited (tv) range: the one encoding every browser decodes. */
   mp4: string;
   poster: string;
   width: number;
@@ -116,9 +116,6 @@ export interface CaseStudyContent {
   features: string[];
   /** Four readers, four columns. */
   brief: { audiences: CaseStudyAudience[] };
-  /** Heading for the interactive demo; renders only when the study has demo flair.
-   *  `hint` is shown inside the demo as the first thing to try. */
-  demo?: { title: string; body: string; hint: string };
   story: { title: string; intro: string; steps: CaseStudyStep[] };
   /** Optional "many into one" diagram: three named stages, left to right. */
   pipeline?: { title: string; body: string; stages: { name: string; body: string }[] };

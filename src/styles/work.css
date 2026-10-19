@@ -180,103 +180,6 @@
 .cs-brief__cols p { color: var(--cs-soft); }
 
 /* ============================================================
-   DEMO: one filled panel, the product left, its controls right
-   ============================================================ */
-.cs-demo__inner { width: min(980px, 100%); margin: 0 auto; display: grid; gap: 16px; }
-.cs-demo__body { max-width: 40rem; margin-bottom: 20px; }
-/* the first thing to try, in the page's accent so it reads as an invitation;
-   after the first pick it settles into the panel and says what's happening */
-[data-ui] .ltl-search__try {
-  margin: 0 0 8px;
-  padding: 12px 14px;
-  background: var(--cs-accent);
-  color: var(--cs-on-accent);
-  font-size: 16px;
-  font-weight: 700;
-  transition: background-color 240ms ease, color 240ms ease;
-}
-[data-ui] .ltl-search__try[data-touched='true'] { background: #e8e1d3; color: #47433c; font-weight: 500; }
-
-/* the client's interface, so its own thin map lines live under [data-ui] */
-[data-ui].ltl-search {
-  display: grid;
-  grid-template-columns: minmax(0, 62fr) minmax(0, 38fr);
-  background: #faf7f0;
-  color: #171614;
-  font-family: var(--font-sans);
-  min-height: 640px;
-}
-[data-ui] .ltl-search__product { position: relative; background: #f3efe6; display: flex; flex-direction: column; padding: 16px; gap: 10px; }
-[data-ui] .ltl-search__url {
-  margin: 0;
-  padding: 10px 12px;
-  background: #e8e1d3;
-  font-size: 14px;
-  color: #47433c;
-  overflow-wrap: anywhere;
-  min-height: 44px;
-}
-[data-ui] .ltl-search__url span { color: #171614; font-weight: 600; }
-[data-ui] .ltl-search__map { width: 100%; height: auto; flex: 1; display: block; }
-[data-ui] .ltl-search__map path { fill: none; stroke: #d9d1c2; stroke-width: 0.8; transition: fill 240ms ease; }
-[data-ui] .ltl-search__map path.is-picked { fill: #f2c9d1; }
-[data-ui] .ltl-search__town circle { fill: #6b655b; }
-[data-ui] .ltl-search__town text { font-size: 11px; fill: #6b655b; font-family: var(--font-sans); }
-[data-ui] .ltl-search__pinbody { transition: opacity 240ms ease, transform 240ms var(--cs-ease); transform-origin: 0 0; }
-[data-ui] .ltl-search__pin[data-on='false'] .ltl-search__pinbody { opacity: 0.16; transform: scale(0.78); }
-[data-ui] .ltl-search__pinbody > path.is-land { fill: #171614; stroke: #faf7f0; stroke-width: 1.2; }
-[data-ui] .ltl-search__pinbody > path.is-home { fill: #faf7f0; stroke: #171614; stroke-width: 1.2; }
-[data-ui] .ltl-search__pinbody g path { fill: none; stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
-[data-ui] .ltl-search__pinbody g.is-land path { stroke: #faf7f0; }
-[data-ui] .ltl-search__pinbody g.is-home path { stroke: #171614; }
-[data-ui] .ltl-search__count { margin: 0; font-size: 16px; font-weight: 600; }
-[data-ui] .ltl-search__controls { display: flex; flex-direction: column; padding: 16px; gap: 4px; }
-[data-ui] .ltl-search__row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 6px;
-  padding: 8px 0;
-  font-size: 14px;
-  color: #47433c;
-}
-[data-ui] .ltl-search__row select,
-[data-ui] .ltl-search__seg button {
-  font: inherit;
-  font-size: 15px;
-  color: #171614;
-  background: #fff;
-  border: 1px solid #8a8377;
-  border-radius: 2px;
-  min-height: 44px;
-  padding: 0 10px;
-}
-[data-ui] .ltl-search__seg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
-[data-ui] .ltl-search__seg button { cursor: pointer; transition: background-color 150ms ease, color 150ms ease, transform 140ms var(--cs-ease); }
-[data-ui] .ltl-search__seg button + button { border-left: 0; }
-[data-ui] .ltl-search__seg button[aria-pressed='true'] { background: #171614; color: #faf7f0; border-color: #171614; }
-[data-ui] .ltl-search__seg button:active { transform: scale(0.97); }
-[data-ui] .ltl-search__asof { margin: auto 0 0; padding-top: 16px; font-size: 14px; color: #6b655b; }
-[data-ui] .ltl-search__open {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  margin-top: 10px;
-  background: #171614;
-  color: #faf7f0;
-  font-size: 15px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color 180ms ease, transform 140ms var(--cs-ease);
-}
-[data-ui] .ltl-search__open:active { transform: scale(0.98); }
-@media (hover: hover) and (pointer: fine) {
-  [data-ui] .ltl-search__open:hover { background: #47433c; }
-  [data-ui] .ltl-search__seg button:hover { background: #e8e1d3; }
-  [data-ui] .ltl-search__seg button[aria-pressed='true']:hover { background: #171614; }
-}
-
-/* ============================================================
    STORY: steps scroll on the left, one screen holds on the right
    ============================================================ */
 .cs-story { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
@@ -535,7 +438,6 @@
   .cs-rail-right { grid-column: 1 / -1; grid-row: 2; gap: 6px; }
   .cs-run { min-height: 76px; }
   .cs-brief__cols { grid-template-columns: 1fr; gap: 28px; margin-top: 48px; }
-  [data-ui].ltl-search { grid-template-columns: 1fr; min-height: 0; }
   .cs-pipe__stages { grid-template-columns: 1fr; }
   .cs-pipe__art { width: 160%; max-width: none; margin-left: -30%; }
   .cs-tl__head { align-items: flex-start; flex-direction: column; }

@@ -144,24 +144,45 @@ export function ScrollStory({ steps }: { steps: CaseStudyStep[] }) {
 export function LoopVideo({ video, className }: { video: CaseStudyVideo; className?: string }) {
   const ref = React.useRef<HTMLVideoElement>(null);
   const reduced = useReducedMotion();
+  // `playing` mirrors the element's own play/pause events, so the button
+  // always names the action a click will take. `held` is the visitor's pause:
+  // while it's set, scrolling back into view doesn't restart the loop.
   const [playing, setPlaying] = React.useState(false);
-  const [paused, setPaused] = React.useState(false);
+  const [held, setHeld] = React.useState(false);
 
   React.useEffect(() => {
     const el = ref.current;
-    if (!el || reduced || paused) { el?.pause(); return; }
+    if (!el) return;
+    const on = () => setPlaying(true);
+    const off = () => setPlaying(false);
+    el.addEventListener('playing', on);
+    el.addEventListener('pause', off);
+    return () => { el.removeEventListener('playing', on); el.removeEventListener('pause', off); };
+  }, []);
+
+  React.useEffect(() => {
+    const el = ref.current;
+    if (!el || reduced || held) return;
     const io = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) el.play().then(() => setPlaying(true), () => setPlaying(false));
-      else { el.pause(); setPlaying(false); }
+      if (entry.isIntersecting) el.play().catch(() => {});
+      else el.pause();
     }, { threshold: 0.25 });
     io.observe(el);
     return () => io.disconnect();
-  }, [reduced, paused]);
+  }, [reduced, held]);
+
+  const toggle = () => {
+    const el = ref.current;
+    if (!el) return;
+    if (playing) { setHeld(true); el.pause(); }
+    else { setHeld(false); el.play().catch(() => {}); }
+  };
 
   return (
     <div className={`cs-video ${className ?? ''}`}>
       <video
         ref={ref}
+        src={video.mp4}
         muted
         loop
         playsInline
@@ -170,17 +191,10 @@ export function LoopVideo({ video, className }: { video: CaseStudyVideo; classNa
         width={video.width}
         height={video.height}
         aria-label={video.label}
-      >
-        <source src={video.webm} type="video/webm" />
-        <source src={video.mp4} type="video/mp4" />
-      </video>
+      />
       {!reduced && (
-        <button
-          type="button"
-          className="cs-video__toggle"
-          onClick={() => { const next = !paused; setPaused(next); if (!next) ref.current?.play().then(() => setPlaying(true), () => {}); }}
-        >
-          {paused || !playing ? 'Play' : 'Pause'}
+        <button type="button" className="cs-video__toggle" onClick={toggle}>
+          {playing ? 'Pause' : 'Play'}
         </button>
       )}
     </div>

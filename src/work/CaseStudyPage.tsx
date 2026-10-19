@@ -1,7 +1,7 @@
 'use client';
 // CaseStudyPage: the template for every /work/<slug> page. Content comes from
-// src/work/content/* via the registry; a study can add custom pieces through
-// src/work/flair (hero art, a live demo). JSON-LD and metadata come from the
+// src/work/content/* via the registry; a study can add custom hero art
+// through src/work/flair. JSON-LD and metadata come from the
 // server route (src/app/work/[slug]/page.tsx). Layout and motion: work.css.
 //
 // The page is a board of flat tiles (art direction: "the well-kept board",
@@ -9,7 +9,7 @@
 //   hero board (name, jump links, portrait + facts, hero art + statement,
 //   features + action), pinned while the hero art builds on scroll
 //   -> brief (lead + four readers) -> pinned story of screens
-//   -> pipeline (optional) -> demo (optional live thing) -> timeline tabs
+//   -> pipeline (optional) -> timeline tabs
 //   -> stepped numbers -> where it landed (video, region, facts)
 //   -> the action row (#book) -> site footer.
 import React from 'react';
@@ -42,7 +42,6 @@ const FOOTER_COLS = [
 export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
   const flair = FLAIR[study.slug] ?? {};
   const Hero = flair.hero;
-  const Demo = study.demo ? flair.demo : undefined;
   const live = study.links.live;
   const liveHost = live?.replace(/^https?:\/\//, '').replace(/\/$/, '');
   const related = study.related
@@ -53,7 +52,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
   const jumps = [
     { href: '#brief', label: 'The brief' },
     { href: '#built', label: 'What we built' },
-    Demo ? { href: '#search', label: 'Try their search' } : { href: '#numbers', label: 'The numbers' },
+    { href: '#numbers', label: 'The numbers' },
     live ? { href: live, label: liveHost ?? 'The live site', external: true } : { href: '#landed', label: 'Where it landed' },
   ];
   const latest = study.timeline.weeks.length - 1;
@@ -118,17 +117,6 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
         {study.pipeline && (
           <section id="mls" className="cs-sec">
             <Pipeline pipeline={study.pipeline} />
-          </section>
-        )}
-
-        {/* the live thing */}
-        {study.demo && Demo && (
-          <section id="search" className="cs-sec cs-demo">
-            <div className="cs-demo__inner">
-              <h2 className="cs-lead cs-strong" data-enter>{study.demo.title}</h2>
-              <p className="cs-body cs-demo__body" data-enter="1">{study.demo.body}</p>
-              <div data-enter="2"><Demo hint={study.demo.hint} /></div>
-            </div>
           </section>
         )}
 

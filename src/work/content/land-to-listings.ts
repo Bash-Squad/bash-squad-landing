@@ -56,18 +56,13 @@ const landToListings: CaseStudyContent = {
       { lead: 'The brokers want', body: 'to run it themselves. They sign in with an emailed link, bring a listing in by its MLS number, drag photos into order and undo a status change from the same row. Every inquiry is saved before the email goes out.' },
     ],
   },
-  demo: {
-    title: 'Try their search',
-    body: 'This is their real inventory on a working map. Pick land or homes, a county, a price or a size, and the pins and the count follow along. The address changes too, so any search on their site can be sent as a link.',
-    hint: 'Start with Land, then pick Nash.',
-  },
   story: {
     title: 'What we built',
     intro: 'Five screens from the live site and the admin.',
     steps: [
       {
         title: 'Land for sale',
-        body: 'Filters for county, price and acreage narrow the cards and the map at once. When a seller wants privacy, the map shows a one-mile circle around the property instead of its address, and the listing says the exact spot is available on request.',
+        body: 'Filters for county, price and acreage narrow the cards and the map at once. The filters are kept in the page’s address, so a builder can send a partner the exact search. When a seller wants privacy, the map shows a one-mile circle instead of the address.',
         image: screen('land', 'The Land for sale page: a search box, filters, listing cards with aerial photos, and a map of eastern North Carolina with tree-shaped pins and soft circles.'),
       },
       {
@@ -159,7 +154,6 @@ const landToListings: CaseStudyContent = {
     lead: 'Live at landtolistings.com since October 12, on the firm’s own Cloudflare account. The brokers add listings themselves and the MLS keeps prices current overnight.',
     note: 'Their home page opens on a plat of an imaginary street that draws itself: contours, the boundary, the lane, the lots, then the houses. With motion turned off it shows the finished drawing.',
     video: {
-      webm: `${DIR}/intro.webm`,
       mp4: `${DIR}/intro.mp4`,
       poster: `${DIR}/intro-poster.webp`,
       width: 1280,

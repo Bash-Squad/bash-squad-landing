@@ -1,6 +1,6 @@
 ---
 name: case-study
-description: Adds or updates a /work/<slug> case-study page on the Bash Squad site (bash-squad-landing) from a real project: gathers facts from the project's repo and live site, captures screens and a short screen recording, writes the content file in the site's voice, optionally builds a per-study flair (hero art, live demo), and gates it with the taste-skill linter and inspector before the PR. Use when asked to add a project to "our work", write or refresh a case study, or feature a client build or product.
+description: Adds or updates a /work/<slug> case-study page on the Bash Squad site (bash-squad-landing) from a real project: gathers facts from the project's repo and live site, captures screens and a short screen recording, writes the content file in the site's voice, optionally builds per-study hero art, and gates it with the taste-skill linter and inspector before the PR. Use when asked to add a project to "our work", write or refresh a case study, or feature a client build or product.
 ---
 
 # Case study pages
@@ -18,7 +18,7 @@ src/work/CaseStudyPage.tsx   the template
 src/work/motion.tsx          pinned story, counters, looping video, timeline tabs
 src/work/Pipeline.tsx        the optional "many into one" diagram
 src/work/CloseForm.tsx       the closing lead form (#book)
-src/work/flair/              per-study hero art and live demo, keyed by slug
+src/work/flair/              per-study hero art, keyed by slug
 src/styles/work.css          layout, tokens and motion
 public/work/<slug>/          screens, recording, og.png
 .taste-skill/direction.json  the art direction this page was built from
@@ -35,10 +35,14 @@ board": flat tiles on the page ground, 8px apart, square corners, one accent
 monospace, no eyebrow labels, no 01/02/03 numbering, five type sizes. In
 order: a pinned hero board (the name huge, jump links, phone screen + facts,
 the hero art + statement, features + the action) → the brief (lead + four
-readers) → the pinned story of screens → the MLS-style pipeline → the live
-demo → timeline tabs → three stepped numbers → where it landed (video,
-region, facts) → the action row → site footer. Optional blocks (demo,
-pipeline) simply drop out.
+readers) → the pinned story of screens → the MLS-style pipeline → timeline
+tabs → three stepped numbers → where it landed (video, region, facts) → the
+action row → site footer. The pipeline is optional and simply drops out.
+
+No interactive copies of the client's product. A Land to Listings search
+demo built from a snapshot of their listings was cut: it went stale the day
+it was copied, its pins sat at county centres, and our site shouldn't hold a
+copy of a client's data. Describe a feature in the story instead.
 
 Keep: one dominant thing per screen, the client's own colours only where
 their work is shown, motion on transform/opacity/clip-path with a finished
@@ -54,7 +58,7 @@ story; keep both.
 - [ ] 3. Ask Steve the open questions (below) in one batch
 - [ ] 4. Capture screens + the phone screen, record the loop, resize, render og.png
 - [ ] 5. Write src/work/content/<slug>.ts
-- [ ] 6. Flair (optional, ask first): hero art and/or live demo
+- [ ] 6. Hero art (optional, ask first)
 - [ ] 7. Register in src/work/index.ts
 - [ ] 8. Gate: taste lint + inspect, then look at the screenshots
 - [ ] 9. Verify behaviour (build, browser, privacy grep)
@@ -95,20 +99,14 @@ name. Look at every image before using it.
 Every string follows [voice.md](voice.md). Put a comment at the top listing
 where each number came from.
 
-### 6. Flair (optional, one hero piece and one demo at most)
+### 6. Hero art (optional)
 
-Register in `src/work/flair/index.ts` under the slug:
-- `hero`: art for the hero's large tile (Land to Listings: their plat, in
-  their paper and ink, drawing on load and building on scroll while the
-  board is pinned). Without it the tile shows `cover`.
-- `demo`: the live thing, shown under `content.demo`. It uses the project's
-  real, public data and its real rules (Land to Listings: their inventory on
-  a county map with their filters, rewriting their real URL). It works on a
-  phone and keeps 44px targets. Put `data-ui` on its root so its interface
-  lines are exempt from the house rules, and keep its CSS under `[data-ui]`.
-
-Prefer the project's own assets (recoloured drawings, its markers), never
-the client's own footage. Ask Steve before building one.
+Register a `hero` component in `src/work/flair/index.ts` under the slug: art
+for the hero's large tile (Land to Listings: their plat, in their paper and
+ink, drawing on load and building on scroll while the board is pinned).
+Without it the tile shows `cover`. Use the project's own drawings or marks,
+never the client's own footage or listing data. Ask Steve before building
+one.
 
 ### 8. Gate (taste skill)
 
@@ -129,8 +127,7 @@ screenshots at 1440, 768 and 390 and critique them with
 1. `pnpm typecheck`, then `pnpm build`: `● /work/[slug]` lists the slug.
 2. In a browser at 1440x900 and 390x844: the hero art builds as you scroll
    and the board releases after it; the story screen swaps at mid-screen;
-   the demo's count, pins and URL change together and its link opens the
-   same results on the live site (spot-check one query against it); week tabs
+   week tabs
    switch with clicks and arrow keys; the video plays only on screen and its
    button pauses it; the close form shows its own errors (don't submit a
    real lead); no sideways scroll; console clean.

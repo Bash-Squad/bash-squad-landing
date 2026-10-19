@@ -80,7 +80,7 @@ it loads, forms validate, it has a sitemap.
 it twice; prices stay current overnight; a lead is saved even when the email
 fails; no passwords to leak; measured speed (Lighthouse, layout shift) with
 the date it was measured. Clever-but-niche details (a search you can send as
-a link) are fine as a supporting line or the demo, not as the headline.
+a link) get one supporting sentence in the story, not a section.
 
 ## Field guide
 
@@ -92,7 +92,6 @@ a link) are fine as a supporting line or the demo, not as the headline.
 | `facts` | Four hero facts: who for (described), live date, build time, where it runs. |
 | `features` | Four short lines for the hero's right rail, each under ~40 characters. |
 | `brief.audiences` | Four readers of the site. `lead` is the bold run-in ("Builders want"), `body` 40-60 words on what they get. |
-| `demo` | Only with a demo flair. Title says to use it ("Try their search"); body one or two sentences; `hint` is the first thing to try, shown in the accent inside the demo. It sits below the story, not near the top: it's the extra, not the pitch. |
 | `story.steps` | 3-5 screens. Title says what the screen does; body (40-55 words) says how and why it matters. |
 | `pipeline` | Optional. Three stages named in one word each; body one or two sentences with a real number. |
 | `timeline` | Two-line heading (first line soft); one tab per week, two or three dated milestones each. |
