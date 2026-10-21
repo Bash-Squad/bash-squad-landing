@@ -32,7 +32,14 @@ export const metadata: Metadata = {
   },
   description:
     'A small crew of senior engineers who build with AI. Custom software, integrations, and AI systems your business runs on. Hire us for one project or your whole team.',
-  icons: { icon: '/favicon.svg' },
+  // Google Search ignores SVG favicons; favicon.png is the same mark rendered
+  // from favicon.svg at 192px. Keep its URL stable.
+  icons: {
+    icon: [
+      { url: '/favicon.png', type: 'image/png', sizes: '192x192' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+  },
   openGraph: {
     siteName: 'bash squad',
     type: 'website',

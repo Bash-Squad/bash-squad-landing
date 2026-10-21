@@ -83,7 +83,7 @@ src/
                        action), mailer.ts (Resend delivery)
   styles/              styles.css (entry), landing.css (responsive rules),
                        tokens/ (colors, typography, spacing, effects, fonts, base)
-public/                og.png, favicon.svg, logo marks, work/ screenshots
+public/                og.png, favicon.svg + favicon.png, logo marks, work/ screenshots
 concepts/              earlier brand explorations (static HTML)
 SEO-PLAN.md            SEO strategy notes
 BRAND.md               brand and voice guidelines
@@ -137,6 +137,11 @@ mode) on the forms. Not added now to keep the site dependency-free.
   card, and an Organization JSON-LD block (disambiguates "bash squad" from
   unrelated "Squad" dev tools).
 - `app/sitemap.ts` and `app/robots.ts` generate `/sitemap.xml` and `/robots.txt`.
+  The sitemap omits `lastmod`: Google uses it only when it's accurate, and a
+  build timestamp isn't. Add per-page dates only once content tracks real edits.
+- Google Search doesn't support SVG favicons, so `public/favicon.png` (192px,
+  rendered from `favicon.svg`) is linked alongside the SVG. Re-render it when
+  the mark changes: `rsvg-convert -w 192 -h 192 public/favicon.svg -o public/favicon.png`.
 - Longer-term strategy lives in `SEO-PLAN.md`.
 
 ## Notes / placeholders
