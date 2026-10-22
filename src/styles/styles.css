@@ -10,5 +10,6 @@
 @import url('./tokens/spacing.css');
 @import url('./tokens/effects.css');
 @import url('./tokens/base.css');
+@import url('./components.css');
 @import url('./landing.css');
 @import url('./work.css');

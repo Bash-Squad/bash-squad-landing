@@ -272,7 +272,6 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
 }
 .cs-timeline__range { font-size: var(--cs-body); font-weight: 700; font-variant-numeric: tabular-nums; }
 .cs-timeline__theme { font-size: var(--cs-small); opacity: 0.8; }
-.cs-timeline__days[hidden] { display: none; }
 .cs-timeline__days { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
 .cs-timeline__day {
   display: grid;

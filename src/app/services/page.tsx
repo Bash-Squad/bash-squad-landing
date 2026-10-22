@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import { SERVICES, servicePath } from '../../services';
 import ServicesIndex from '../../services/ServicesIndex';
-
-const SITE_URL = 'https://bashsquad.com';
+import { SITE_OPEN_GRAPH, SITE_URL } from '../../lib/site';
 
 export const metadata: Metadata = {
   title: 'Software Development & AI Services',
@@ -10,6 +9,7 @@ export const metadata: Metadata = {
     'Custom software, integrations, AI & automation, legacy modernization, vibe-code rescue, and embedded senior engineers. Plain-English services from bash squad.',
   alternates: { canonical: '/services' },
   openGraph: {
+    ...SITE_OPEN_GRAPH,
     url: '/services',
     title: 'Software Development & AI Services | bash squad',
     description:

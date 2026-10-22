@@ -1,6 +1,8 @@
 // WhatWeDo: the plain-English capability grid. The whole point of variant C:
 // answer "what do you actually do?" in one scannable screen, no metaphors.
-import { Card, Badge, Pictogram, Button } from '../components';
+// Server-rendered; each card is a link to its service page.
+import { Card, Badge, Pictogram } from '../components';
+import { SectionButton } from '../components/SectionLink';
 import { Section, SectionHead } from '../sections/Section';
 
 const SERVICES = [
@@ -36,19 +38,7 @@ const SERVICES = [
   },
 ];
 
-interface WhatWeDoProps {
-  onNav: (id: string) => void;
-}
-
-// TEMPORARY: flip to true once the owner has reviewed the service pages
-// (SEO-PLAN.md Section 0.A). While false, homepage cards render without
-// links so emailed clients don't land on unreviewed copy. The pages stay
-// live and crawlable via the footer, /services, and the sitemap, so no
-// SEO paths are lost. Do not leave false long-term: homepage links are
-// the strongest internal-linking signal for the service pages.
-const LINK_CARDS = false;
-
-export function WhatWeDo({ onNav }: WhatWeDoProps) {
+export function WhatWeDo() {
   return (
     <Section id="services" tone="base">
       <SectionHead
@@ -57,9 +47,9 @@ export function WhatWeDo({ onNav }: WhatWeDoProps) {
         intro="We&rsquo;re engineers first, so our integrations hold up and our AI does real work, not demos. Here&rsquo;s the short list of what people hire us for."
       />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
-        {SERVICES.map((s) => {
-          const card = (
-            <Card pad="lg" interactive={LINK_CARDS} hoverLift style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
+        {SERVICES.map((s) => (
+          <a key={s.title} href={s.href} style={{ display: 'flex', textDecoration: 'none' }}>
+            <Card pad="lg" hoverLift style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 width: 42, height: 42, borderRadius: 'var(--r-2)',
@@ -72,19 +62,13 @@ export function WhatWeDo({ onNav }: WhatWeDoProps) {
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {s.tags.map(t => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
               </div>
-              {LINK_CARDS && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--accent)' }}>$ read more →</span>}
             </Card>
-          );
-          return LINK_CARDS ? (
-            <a key={s.title} href={s.href} style={{ display: 'flex', textDecoration: 'none' }}>{card}</a>
-          ) : (
-            <div key={s.title} style={{ display: 'flex' }}>{card}</div>
-          );
-        })}
+          </a>
+        ))}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, marginTop: 44 }}>
         <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-muted)', margin: 0, textAlign: 'center' }}>Not sure which bucket you&rsquo;re in? That&rsquo;s normal. Describe it in plain words and we&rsquo;ll sort it.</p>
-        <Button variant="primary" prompt size="lg" onClick={() => onNav('book')}>Tell us what you need</Button>
+        <SectionButton to="book" home variant="primary" prompt size="lg">Tell us what you need</SectionButton>
       </div>
     </Section>
   );

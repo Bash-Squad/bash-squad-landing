@@ -1,75 +1,40 @@
-# Bash Squad SEO — Manual TODO (owner)
+# Bash Squad SEO: owner checklist
 
-Picking this up later. These are the remaining manual/account steps to make the
-SEO foundation actually perform. Code foundation is done; this is mostly
-off-code work plus one on-site lever.
+Account and off-site steps only the owner can do. Strategy and the current technical state live in `SEO-PLAN.md`; this list does not repeat them.
 
-Status when written (2026-07-22):
-- GSC property created, sitemap submitted, site crawled. ✓
-- `sitemap.xml` lists all 8 URLs (`/`, `/services`, + 6 service pages). ✓
-- `robots.ts` allows all bots incl. AI crawlers, references sitemap. ✓
-- `sameAs` in `src/app/layout.tsx` = GitHub only (no profiles added yet).
-- LIVE REGRESSION: homepage "what we do" cards are NOT linked to service pages
-  (`LINK_CARDS = false` in `src/build/WhatWeDo.tsx`, from PR #6). Pages stay
-  crawlable via footer + `/services` + sitemap, but the strongest internal-link
-  signal is off. See item 3.
-
-Priority: do #1, #2, #4 this week · #3 is the highest on-site lever · #6 compounds, start soon.
+Known as of 2026-10-22:
+- The site runs on Cloudflare Workers. All 10 routes are prerendered, canonicalized to `https://bashsquad.com`, and listed in `/sitemap.xml`; unknown paths return 404.
+- Homepage service cards link to their service pages.
+- `sameAs` in `src/app/layout.tsx` lists GitHub only.
+- **Search Console state is unknown.** Whether a property exists, which sitemap it has, and what is indexed has not been checked in this work.
 
 ---
 
-## 1. Finish Google Search Console
-Crawled != indexed != ranking. Sitemap submission only gets pages discovered.
+## 1. Search Console
+- [ ] Confirm a property exists for `bashsquad.com` (a Domain property covers http/https/www). Create one if not.
+- [ ] Submit or confirm `https://bashsquad.com/sitemap.xml`; the Sitemaps report should show 10 discovered URLs.
+- [ ] Use URL Inspection on `/`, `/services`, `/work` and one service page. Request indexing only where a page is not yet indexed.
+- [ ] Check the Pages (Indexing) report for "Crawled/Discovered – currently not indexed". A new site can sit there for a while; Google decides timing.
+- [ ] Optional: Rich Results Test on one service page to confirm `Service` + `BreadcrumbList` parse. (No FAQ result will appear; Google retired it and the site no longer emits `FAQPage`.)
 
-- [ ] **Request indexing** per page: URL Inspection -> enter URL -> "Request indexing".
-      Order: `/`, `/services`, `/services/vibe-code-rescue` first, then the other 5 service pages.
-- [ ] **Confirm sitemap parsed all 8 URLs** in the Sitemaps report (should show 8 discovered).
-- [ ] **Check Pages (Indexing) report** after a few days for "Crawled – not indexed" /
-      "Discovered – not indexed". A week or two in this state is normal for a new site.
-- [ ] **Confirm host canonicalization.** All canonicals point to `https://bashsquad.com`
-      (non-www apex). Verify `www.bashsquad.com` 301-redirects to apex in Vercel, and that
-      the GSC property matches the served host. A www/non-www split halves your signals.
-- [ ] **Watch Enhancements / Rich results** panels (appear within days): confirm zero errors
-      on `FAQPage`, `BreadcrumbList`, `Service` structured data.
+## 2. Bing Webmaster Tools
+- [ ] Import from the Search Console property and submit the same sitemap. Bing data also feeds Copilot.
 
-## 2. Bing Webmaster Tools (AI-visibility step)
-- [ ] One-click import from the GSC property.
-- [ ] Submit the same sitemap: `https://bashsquad.com/sitemap.xml`.
-      (Bing feeds Copilot and part of ChatGPT search — this is about AI citations, not Bing share.)
+## 3. Hosts (Cloudflare settings, separate authorization)
+- [ ] Decide whether to disable the `*.workers.dev` routes for production. They serve the site but canonicalize to `bashsquad.com`, so this is tidiness, not a fix. Keep branch preview hosts working; do not solve this with an app-level redirect.
 
-## 3. Re-link homepage service cards (highest on-site lever — CODE)
-Homepage body links are the strongest internal signal to the service pages, currently off pending review.
+## 4. Contact form delivery
+- [ ] Confirm `RESEND_API_KEY` (and `HQ_LEAD_TOKEN` if used) are set as Worker secrets (`wrangler secret put …`); `LEAD_TO`/`LEAD_FROM` are in `wrangler.jsonc`.
+- [ ] Send a real test lead from the live site and confirm it arrives.
 
-- [ ] Read through the 7 pages (`/services` + 6 service pages), ~10 min each — content QA, not code review.
-      Check: nothing you wouldn't say on a sales call, tone matches BRAND.md, opening paragraph works
-      as a standalone AI-quotable answer.
-- [ ] Flip `LINK_CARDS` to `true` in `src/build/WhatWeDo.tsx` (one-line PR). Ask the agent to open it.
+## 5. Speed check
+- [ ] PageSpeed Insights on `/` and `/work/land-to-listings`. Field data appears only with enough real traffic; lab scores are a guide, not a target.
 
-## 4. Make the contact form deliver (not SEO, but makes SEO pointless if broken)
-- [ ] In Vercel set `RESEND_API_KEY`, `LEAD_TO`, `LEAD_FROM` (see `.env.example`; sender must be
-      `@mail.bashsquad.com`, NOT the apex). Redeploy.
-- [ ] Submit a real test lead on the live site and confirm it arrives.
-      (If unset, the form silently logs to the server console instead of emailing.)
+## 6. Entity and profiles
+- [ ] Create, in order: LinkedIn company page, Crunchbase, Clutch, GoodFirms. Keep name, description and URL identical.
+- [ ] Add each live profile URL to `sameAs` in `src/app/layout.tsx`.
+- [ ] Ask real clients for reviews on those platforms. Do not add `Review`/`AggregateRating` schema for testimonials on our own site; Google ignores self-serving reviews.
+- [ ] Google Business Profile only with a genuine physical presence or defined service region.
 
-## 5. Fast one-offs (~10 min each)
-- [ ] PageSpeed Insights on live homepage: confirm LCP < 2.5s, CLS < 0.1.
-- [ ] Rich Results Test (search.google.com/test/rich-results) on one service page:
-      confirm `Service` + `FAQPage` + `BreadcrumbList` validate live (instant, unlike GSC's lagging report).
-
-## 6. Entity + profiles (Phase 1 — off-site, compounding)
-- [ ] Create in order: LinkedIn company page -> Crunchbase -> Clutch -> GoodFirms.
-      Keep name, description, and URL byte-identical across all of them (reinforces one entity).
-- [ ] Add each live profile URL to the `sameAs` array in `src/app/layout.tsx` (currently GitHub only).
-      Batch into one small PR, or per profile.
-- [ ] Ask real early clients for real Clutch reviews (reviews are the ranking factor there).
-      Only surface ratings once real reviews exist — never fabricated schema.
-- [ ] Google Business Profile ONLY if there's a genuine physical presence / defined service region.
-      Fully remote -> skip, don't fake a location.
-
-## 7. Baseline + ongoing
-- [ ] Week the site goes live: screenshot GSC + Bing coverage and zero-state impressions (provable progress).
-- [ ] Monthly: run top ~15 target queries through ChatGPT, Perplexity, Google; log who gets cited; track month over month.
-
----
-
-See `SEO-PLAN.md` for the full strategy and rationale behind each of these.
+## 7. Baseline
+- [ ] Once Search Console has data, screenshot coverage and impressions so later changes can be compared.

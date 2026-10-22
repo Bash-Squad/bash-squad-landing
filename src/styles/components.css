@@ -1,0 +1,29 @@
+/* ============================================================
+   COMPONENT STATES: hover/press for the design-system primitives.
+   The components keep their resting look inline; a property that
+   changes on hover reads a custom property here, so a consumer's
+   `style` override still wins in every state. Each element resets
+   its own properties so they never inherit into nested components.
+   ============================================================ */
+
+.ds-btn { --btn-hover-bg: initial; --btn-hover-color: initial; --btn-hover-border: initial; --btn-press: initial; }
+.ds-btn--primary:hover:not(:disabled) { --btn-hover-bg: var(--accent-hover); box-shadow: var(--glow-soft); }
+.ds-btn--secondary:hover:not(:disabled) { --btn-hover-border: var(--accent); --btn-hover-color: var(--accent); }
+.ds-btn--ghost:hover:not(:disabled) { --btn-hover-bg: var(--surface-hover); --btn-hover-color: var(--text-strong); }
+.ds-btn--danger:hover:not(:disabled) { --btn-hover-bg: var(--accent-2-tint); }
+.ds-btn:active:not(:disabled) { --btn-press: translateY(1px); }
+
+.ds-icon-btn { --icon-btn-hover-bg: initial; --icon-btn-hover-color: initial; --icon-btn-hover-border: initial; }
+.ds-icon-btn:hover:not(:disabled) {
+  --icon-btn-hover-bg: var(--surface-hover);
+  --icon-btn-hover-color: var(--text-strong);
+  --icon-btn-hover-border: var(--border-strong);
+}
+
+.ds-card { --card-border: initial; --card-lift: initial; --card-shadow: initial; --card-edge: initial; }
+.ds-card[data-lift]:hover {
+  --card-border: var(--border-strong);
+  --card-lift: translateY(-2px);
+  --card-shadow: var(--shadow-2);
+  --card-edge: 1;
+}

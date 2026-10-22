@@ -14,8 +14,9 @@ const LAYERS = ['contours', 'woods', 'survey', 'street', 'lots', 'houses'] as co
 export default function Plat() {
   return (
     <div className={styles.plat} role="img" aria-label="A surveyor’s plat of an imaginary street, Listings Lane: contour lines, woods along a creek, a parcel boundary with its bearings, the lane ending in a cul-de-sac, ten lots and their houses.">
+      {/* survey.svg is the page's measured LCP element, so it alone fetches first. */}
       {LAYERS.map((name) => (
-        <img key={name} src={`${DIR}/${name}.svg`} alt="" className={`${styles.layer} ${styles[name]}`} decoding="async" />
+        <img key={name} src={`${DIR}/${name}.svg`} alt="" className={`${styles.layer} ${styles[name]}`} decoding="async" fetchPriority={name === 'survey' ? 'high' : undefined} />
       ))}
     </div>
   );

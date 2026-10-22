@@ -10,17 +10,22 @@ Next.js + TypeScript and deployed on Cloudflare Workers.
 ## Stack
 
 - **Next.js 16 (App Router)** + **React 19** + **TypeScript** (strict).
-- **Statically prerendered.** Every route is a server component rendered to HTML
-  at build time (SSG), so search and AI crawlers get full content with no client
-  JS required. Deployed on **Cloudflare Workers** via `@opennextjs/cloudflare`
-  (full Node.js runtime on workerd — no `output: 'export'`, so server actions
-  and API routes stay available).
+- **Statically prerendered, server-first.** Every route renders to full HTML at
+  build time (SSG). Pages are server components; only the interactive parts are
+  client islands (header, hero + command palette, WhoWeHelp, BuildProof, lead
+  forms, section-scroll links, case-study motion). Deployed on **Cloudflare
+  Workers** via `@opennextjs/cloudflare` (full Node.js runtime on workerd — no
+  `output: 'export'`, so server actions stay available).
 - **No CSS framework.** Design tokens are plain CSS custom properties in
-  `src/styles/tokens/`, consumed via inline styles in the components.
+  `src/styles/tokens/`, consumed via inline styles in the components. Hover and
+  press states of the shared primitives live in `src/styles/components.css`.
 - **Fonts** are self-hosted via `next/font/google` (no render-blocking request):
   Bricolage Grotesque (display), Space Grotesk (UI/body), JetBrains Mono (mono).
 
 ## Run it
+
+Requires Node.js 22 or newer (wrangler 4 and miniflare need it; see `engines`
+in `package.json`) and pnpm 11 via Corepack (`packageManager`).
 
 ```bash
 pnpm install
@@ -69,35 +74,38 @@ src/
     sitemap.ts         generated /sitemap.xml (services + case studies)
     robots.ts          generated /robots.txt
     llms.txt/          generated /llms.txt (services + case studies)
-  build/               the LIVE landing page: BuildApp composition + sections
-                       (BuildHero, WhatWeDo, WhoWeHelp, Work, TechStack,
-                       BuildProof, BuildCTA, BuildHeader)
-  sections/            shared sections + Section scaffold (Hero, Problem,
-                       Services, Symptoms, WhyUs, FitFilter, Squad, FinalCTA,
-                       Header, Footer)
+  build/               the LIVE landing page: BuildApp (server composition) +
+                       sections (BuildHero, WhatWeDo, WhoWeHelp, Work,
+                       TechStack, BuildProof, BuildCTA, BuildHeader)
+  sections/            Section scaffold + shared Footer
   services/            service pages: types.ts (content model), content/*,
-                       index.ts (registry), ServicePage, ServicesIndex
+                       index.ts (registry + SERVICE_LINKS), ServicePage,
+                       ServicesIndex
   work/                case studies: types.ts (metadata), content/*,
                        index.ts (registry), WorkIndex, Shot.tsx, motion.tsx
     land-to-listings/   Page.tsx (server composition), content.ts, Pipeline.tsx
     flair/             project art imported directly by its page
-  guide/, App.tsx      earlier landing variants, kept for reference (not routed)
-  components/          design system + shared SubpageChrome
+  components/          design system + shared SubpageChrome + SectionLink
+                       (client section-scroll links/buttons)
     core/              Button, IconButton, Badge, Tag, Card, Avatar,
                        SectionLabel, Divider, CopyEmail
     forms/             Input, TerminalInput, Textarea, Select, Checkbox, Switch
     terminal/          CommandPalette, CommandPrompt, Terminal, StatusBar,
                        MarqueeStrip, NodeGraph, WorkflowScene, pictograms
-  lib/                 lead.ts (type + validation), useLeadSubmission.ts
-                       (shared form lifecycle), leadAction.ts (server action),
-                       mailer.ts (Resend delivery)
-  styles/              styles.css (entry), landing.css (responsive rules),
-                       work.css (case-study layout + motion),
-                       tokens/ (colors, typography, spacing, effects, fonts, base)
-public/                og.png, favicon.svg + favicon.png, logo marks, work/ screenshots
-                       (work/<slug>/ holds a case study's screens + og.png)
+  lib/                 site.ts (origin + shared Open Graph), lead.ts (type +
+                       validation), useLeadSubmission.ts (shared form
+                       lifecycle), leadAction.ts (server action), mailer.ts
+                       (Resend delivery)
+  styles/              styles.css (entry), components.css (primitive states),
+                       landing.css (responsive rules), work.css (case-study
+                       layout + motion), tokens/ (colors, typography, spacing,
+                       effects, base)
+public/                og.png (2400x1260), favicon.svg + favicon.png, logo marks,
+                       work/ screenshots (work/<slug>/ holds a case study's
+                       screens + its 1200x630 og.png)
 concepts/              earlier brand explorations (static HTML)
-SEO-PLAN.md            SEO strategy notes
+SEO-PLAN.md            SEO strategy and current technical SEO state
+SEO-TODO.md            owner checklist (Search Console, profiles, hosts)
 BRAND.md               brand and voice guidelines
 ```
 
@@ -169,22 +177,26 @@ mode) on the forms. Not added now to keep the site dependency-free.
 ## SEO
 
 - Routes prerender to static HTML (verify with `pnpm build`: routes marked
-  `○ Static`).
+  `○ Static` or `● SSG`).
+- `src/lib/site.ts` holds the canonical origin and the shared Open Graph
+  fields. A page that sets `openGraph` replaces the layout's, so it spreads
+  `SITE_OPEN_GRAPH` to keep the site name and share image.
 - `app/layout.tsx` sets the title template, description, Open Graph, Twitter
   card, and an Organization JSON-LD block (disambiguates "bash squad" from
-  unrelated "Squad" dev tools).
+  unrelated "Squad" dev tools). Pages add only truthful structured data;
+  service FAQs are visible content without `FAQPage` markup (Google retired
+  FAQ rich results), and there is no review markup.
 - `app/sitemap.ts` and `app/robots.ts` generate `/sitemap.xml` and `/robots.txt`.
   The sitemap omits `lastmod`: Google uses it only when it's accurate, and a
   build timestamp isn't. Add per-page dates only once content tracks real edits.
 - Google Search doesn't support SVG favicons, so `public/favicon.png` (192px,
   rendered from `favicon.svg`) is linked alongside the SVG. Re-render it when
   the mark changes: `rsvg-convert -w 192 -h 192 public/favicon.svg -o public/favicon.png`.
-- Longer-term strategy lives in `SEO-PLAN.md`.
+- Strategy and current state: `SEO-PLAN.md`. Owner account steps: `SEO-TODO.md`.
 
-## Notes / placeholders
+## Notes
 
 - Calendly and the newsletter capture were removed deliberately: call times are
   offered in the reply email instead, and the newsletter is on hold.
-- **Result figures and team names** (Dee / Mara / Theo) are placeholder copy.
 - **Fonts** are a substitution flagged in the original design; swap if real brand
   fonts arrive.

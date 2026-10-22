@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { SERVICES, getService, servicePath } from '../../../services';
 import ServicePage from '../../../services/ServicePage';
-
-const SITE_URL = 'https://bashsquad.com';
+import { SITE_OPEN_GRAPH, SITE_URL } from '../../../lib/site';
 
 export const dynamicParams = false;
 
@@ -23,6 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: service.metaDescription,
     alternates: { canonical: path },
     openGraph: {
+      ...SITE_OPEN_GRAPH,
       url: path,
       title: `${service.metaTitle} | bash squad`,
       description: service.metaDescription,
@@ -37,9 +37,10 @@ export default async function ServiceRoute({ params }: Props) {
 
   const url = `${SITE_URL}${servicePath(slug)}`;
 
-  // Service + FAQPage + BreadcrumbList. The FAQ markup on the page mirrors
-  // mainEntity exactly. Deliberately NO AggregateRating/Review: we have no
-  // real reviews yet and fabricated ones are a penalty (and a lie).
+  // Service + BreadcrumbList. The visible FAQ stays on the page as plain
+  // content; FAQPage markup is gone because Google retired FAQ rich results.
+  // Deliberately NO AggregateRating/Review: we have no real reviews, and
+  // Google ignores self-serving reviews of your own organization anyway.
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -57,15 +58,6 @@ export default async function ServiceRoute({ params }: Props) {
           serviceUrl: url,
           availableLanguage: 'en',
         },
-      },
-      {
-        '@type': 'FAQPage',
-        '@id': `${url}#faq`,
-        mainEntity: service.faqs.map((f) => ({
-          '@type': 'Question',
-          name: f.q,
-          acceptedAnswer: { '@type': 'Answer', text: f.a },
-        })),
       },
       {
         '@type': 'BreadcrumbList',

@@ -2,7 +2,8 @@ import React from 'react';
 
 /**
  * Button: the primary action element. Acid-green primary, ghost,
- * and outline variants with a terminal-press feel.
+ * and outline variants with a terminal-press feel. Hover and press
+ * states live in styles/components.css, so it renders on the server.
  */
 type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 type ButtonSize = 'sm' | 'md' | 'lg';
@@ -29,6 +30,7 @@ export function Button({
   type = 'button',
   onClick,
   style,
+  className,
   ...rest
 }: ButtonProps) {
   const sizes: Record<ButtonSize, { padding: string; font: string; gap: string }> = {
@@ -59,37 +61,23 @@ export function Button({
     lineHeight: 1,
   };
 
+  // Resting colours; hover swaps them through components.css variables.
   const variants: Record<ButtonVariant, React.CSSProperties> = {
-    primary: { background: 'var(--accent)', color: 'var(--text-on-acid)', borderColor: 'var(--accent)' },
-    secondary: { background: 'transparent', color: 'var(--text-strong)', borderColor: 'var(--border-strong)' },
-    ghost: { background: 'transparent', color: 'var(--text-body)', borderColor: 'transparent' },
-    danger: { background: 'transparent', color: 'var(--danger)', borderColor: 'var(--danger)' },
+    primary: { background: 'var(--btn-hover-bg, var(--accent))', color: 'var(--text-on-acid)', borderColor: 'var(--accent)' },
+    secondary: { background: 'transparent', color: 'var(--btn-hover-color, var(--text-strong))', borderColor: 'var(--btn-hover-border, var(--border-strong))' },
+    ghost: { background: 'var(--btn-hover-bg, transparent)', color: 'var(--btn-hover-color, var(--text-body))', borderColor: 'transparent' },
+    danger: { background: 'var(--btn-hover-bg, transparent)', color: 'var(--danger)', borderColor: 'var(--danger)' },
   };
-
-  const [hover, setHover] = React.useState(false);
-  const [active, setActive] = React.useState(false);
-
-  const hoverStyle: React.CSSProperties = !disabled && hover ? {
-    primary: { background: 'var(--accent-hover)', boxShadow: 'var(--glow-soft)' },
-    secondary: { borderColor: 'var(--accent)', color: 'var(--accent)' },
-    ghost: { background: 'var(--surface-hover)', color: 'var(--text-strong)' },
-    danger: { background: 'var(--accent-2-tint)' },
-  }[variant] : {};
-
   return (
     <button
       type={type}
       disabled={disabled}
       onClick={onClick}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => { setHover(false); setActive(false); }}
-      onMouseDown={() => setActive(true)}
-      onMouseUp={() => setActive(false)}
+      className={`ds-btn ds-btn--${variant}${className ? ' ' + className : ''}`}
       style={{
         ...base,
         ...variants[variant],
-        ...hoverStyle,
-        transform: active && !disabled ? 'translateY(1px)' : 'none',
+        transform: 'var(--btn-press, none)',
         ...style,
       }}
       {...rest}

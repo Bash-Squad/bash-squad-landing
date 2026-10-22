@@ -2,6 +2,7 @@ import React from 'react';
 
 /**
  * IconButton: square/compact button for a single icon (lucide glyph or char).
+ * Hover lives in styles/components.css, so it renders on the server.
  */
 type IconButtonVariant = 'ghost' | 'outline' | 'solid';
 type IconButtonSize = 'sm' | 'md' | 'lg';
@@ -21,17 +22,17 @@ export function IconButton({
   disabled = false,
   onClick,
   style,
+  className,
   ...rest
 }: IconButtonProps) {
   const dims = { sm: 30, md: 38, lg: 46 }[size];
-  const [hover, setHover] = React.useState(false);
 
+  // Resting look; hover swaps it through components.css variables.
   const variants: Record<IconButtonVariant, React.CSSProperties> = {
-    ghost: { background: 'transparent', border: '1px solid transparent', color: 'var(--text-body)' },
-    outline: { background: 'transparent', border: '1px solid var(--border-strong)', color: 'var(--text-body)' },
-    solid: { background: 'var(--surface-raised)', border: '1px solid var(--border-hairline)', color: 'var(--text-strong)' },
+    ghost: { background: 'var(--icon-btn-hover-bg, transparent)', border: '1px solid var(--icon-btn-hover-border, transparent)', color: 'var(--icon-btn-hover-color, var(--text-body))' },
+    outline: { background: 'var(--icon-btn-hover-bg, transparent)', border: '1px solid var(--icon-btn-hover-border, var(--border-strong))', color: 'var(--icon-btn-hover-color, var(--text-body))' },
+    solid: { background: 'var(--icon-btn-hover-bg, var(--surface-raised))', border: '1px solid var(--icon-btn-hover-border, var(--border-hairline))', color: 'var(--icon-btn-hover-color, var(--text-strong))' },
   };
-  const hov: React.CSSProperties = !disabled && hover ? { background: 'var(--surface-hover)', color: 'var(--text-strong)', borderColor: 'var(--border-strong)' } : {};
 
   return (
     <button
@@ -40,8 +41,7 @@ export function IconButton({
       title={label}
       disabled={disabled}
       onClick={onClick}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
+      className={`ds-icon-btn${className ? ' ' + className : ''}`}
       style={{
         width: dims, height: dims,
         display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -50,7 +50,7 @@ export function IconButton({
         opacity: disabled ? 0.45 : 1,
         fontFamily: 'var(--font-mono)',
         transition: 'all var(--dur-1) var(--ease-out)',
-        ...variants[variant], ...hov, ...style,
+        ...variants[variant], ...style,
       }}
       {...rest}
     >

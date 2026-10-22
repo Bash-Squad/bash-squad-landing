@@ -1,147 +1,67 @@
 # Bash Squad SEO Plan
 
-Goal: rank in Google and get cited in AI answers (ChatGPT, Perplexity, Google AI Overviews) for the commercial queries that matter, and show up strongly alongside the incumbent competitor on the searches we share.
+Goal: be the useful, accurate result for the commercial queries that match what Bash Squad actually does, in Google and in AI answers. Search engines decide rankings, indexing and citations; nothing here guarantees any of them.
 
 Ground rules (owner's call):
-- Never fabricate anything: no invented stats, reviews, testimonials, or client counts. Omit or leave a clear TODO instead.
-- No competitor name appears anywhere in our materials, site copy, or content. We do not build "alternative" or "vs" pages naming them. We compete by being better on the queries and topics they underinvest in, not by riding their brand.
+- Never fabricate anything: no invented stats, reviews, testimonials, ratings or client counts. Omit or leave a clear TODO instead.
+- No competitor name appears anywhere in our materials, site copy, or content. No "alternative" or "vs" pages naming anyone. We compete on the depth and honesty of our own pages.
+- No promises in docs or copy about rankings, indexing dates, "day one" results or fixed performance gains.
 
-Last updated: 2026-07-22
+Owner checklist (accounts and off-site work): `SEO-TODO.md`.
 
----
-
-## 0. Today vs later (added 2026-07-22, after PR #4 merged)
-
-Owner's goal today: send the landing page to old clients. The six service pages and `/services` hub merged in PR #4 ride along on the same deploy but do NOT need review before sending: the client email points at the homepage, the new pages carry no invented claims (that was a hard rule during writing), and every route was build- and browser-verified. Review them at your leisure using the checklist below.
-
-### TODAY (before emailing old clients), all account work, no code
-
-1. **Make the contact form deliver.** In Vercel, set `RESEND_API_KEY`, `LEAD_TO`, `LEAD_FROM` (documented in `.env.example`), redeploy, then submit a test lead on the live site and confirm it arrives. A dead form is the only real failure mode for today's send.
-2. **Google Search Console.** Add a *Domain* property for `bashsquad.com` (DNS TXT record at the registrar, or in Vercel's DNS panel if DNS lives there). Submit `https://bashsquad.com/sitemap.xml` (it already lists all 8 URLs). Use URL Inspection on `/`, `/services`, and `/services/vibe-code-rescue` and hit "Request indexing" on each.
-3. **Bing Webmaster Tools.** Create the site (one-click import from the GSC property), submit the same sitemap. Bing feeds Copilot and part of ChatGPT search, so this is an AI-visibility step.
-4. **Optional, 10 minutes:** PageSpeed Insights on the live homepage; confirm LCP < 2.5s and CLS < 0.1 so the client blast lands on a fast page.
-
-### LATER, in this order
-
-**A. Read through the seven new pages** (`/services` + six service pages), ~10 minutes each. This is content QA, not code review; fixes are one-line copy PRs:
-- Facts and claims: nothing you would not stand behind on a sales call (pricing posture, process, ownership promises).
-- Tone: reads like BRAND.md, plain-spoken, zero hype; FAQ answers stay honest, including the "when we are not the right fit" notes.
-- Each page's opening paragraph works standalone as an answer an AI engine could quote.
-- Spot-check one page in Google's Rich Results Test: Service, FAQPage, and BreadcrumbList should all validate.
-
-**B. Profiles and the "good ratings" path (owner, no code):**
-- LinkedIn company page, Crunchbase, then Clutch and GoodFirms. These directories rank for nearly every "[service] agency" query and are cited constantly by AI engines.
-- Ask real early clients for real Clutch reviews; reviews are the ranking factor there. Only once real reviews exist do we surface ratings anywhere, and never as fabricated schema.
-- Add each live profile URL to the `sameAs` array in `src/app/layout.tsx` (tiny PR each time, or batch them).
-- Google Business Profile only if there is a real physical presence or defined service region; skip if fully remote.
-
-**C. Next build work (future sessions with the agent):**
-- Case-study pages for Banter and Wrangle (Section 5): problem, what we built, stack, outcome; real specifics only.
-- Buyer-intent guides (Section 5), then the two-posts-a-month blog cadence (Section 6).
-- Start the monthly AI visibility log (Section 7): run the top ~15 queries through ChatGPT, Perplexity, and Google; record who gets cited; track month over month.
-
-**D. Measurement baseline (one-off, the week the site goes live):** screenshot GSC/Bing coverage and note zero-state impressions so progress is provable (Section 8).
+Last updated: 2026-10-22
 
 ---
 
-## 1. Where we stand today
+## 1. Current technical state (verified 2026-10-22)
 
-**Bash Squad (bashsquad.com):**
+The site is a Next.js App Router app on **Cloudflare Workers** (OpenNext adapter, Workers Builds from GitHub). See `README.md` for deploy details.
 
-- New site, not yet indexed. That is expected: we are building the foundation up front so we launch already optimized.
-- Brand-collision risk on the term "squad" (unrelated dev tools rank for it). The `Organization` structured data now shipping on the site is the first step to disambiguating our entity for Google and AI engines.
+- **10 indexable routes**, all prerendered to full HTML: `/`, `/services`, six `/services/<slug>` pages, `/work`, `/work/land-to-listings`. Unknown paths return a real 404 status.
+- **Pages are server-rendered with small client islands.** Page content, links and metadata are in the HTML; JavaScript only runs the header, command palette, accordions/timelines, section scrolling and the lead forms.
+- **Canonicals:** every route has a self-referencing canonical on `https://bashsquad.com`. `http://` and `www.` 301 to the apex; trailing slashes 308 to the slashless URL.
+- **workers.dev hosts** (`bash-squad-landing.bash-squad.workers.dev` and branch preview hosts) also serve the site with a 200. They are left alone on purpose: their canonicals already point at `bashsquad.com`, and previews depend on those hosts. Disabling them or adding redirects is a Cloudflare settings change for the owner to authorize separately; do not add an app-level global redirect, which would break previews.
+- **Sitemap + robots** are generated (`src/app/sitemap.ts`, `src/app/robots.ts`). Robots allows all crawlers, including AI crawlers. The sitemap omits `lastmod` until content tracks real edit dates.
+- **Metadata:** title template, description, canonical, Open Graph and Twitter card on every route. Shared values (origin, site name, default card) live in `src/lib/site.ts`. Default card: `public/og.png`, 2400x1260. Case studies use their own 1200x630 card.
+- **Structured data, only where it is true:**
+  - Sitewide `Organization` + `WebSite` (`src/app/layout.tsx`); extend `sameAs` as real profiles go live.
+  - Service pages: `Service` + `BreadcrumbList`.
+  - Hubs: `ItemList` + `BreadcrumbList`.
+  - Case study: `Article` + `WebApplication` + `BreadcrumbList`.
+  - **No `FAQPage` markup.** Google [retired FAQ rich results](https://developers.google.com/search/updates#removing-faq-rich-result), so the markup no longer earns anything. The FAQs stay on the service pages as visible content because they answer real buyer questions.
+  - **No `Review`/`AggregateRating`.** We have no third-party reviews to mark up, and Google does not show review stars for reviews an organization publishes about itself, so a testimonial on our own site is content, never schema.
+- **`/llms.txt`** is generated from the registries. It is optional: Google's [AI features guidance](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) says no special files, markup or content formats are needed for AI search. Keep it only because it is free to maintain.
+- **Images:** retina `@2x` screenshot URLs are percent-encoded (`%402x`) because the static host 307-redirects a raw `@`. The case study's plat `survey.svg` layer, its measured LCP element, loads with `fetchpriority="high"`.
 
-**The incumbent competitor (our main overlap):**
+What we do not know: actual Search Console coverage, indexing state, impressions and real-user Core Web Vitals. Nobody has checked GSC as part of this work; treat it as unknown until the owner looks (see `SEO-TODO.md`).
 
-- A young studio (founded ~2023), so their domain authority is modest and beatable. Not an SEO fortress.
-- What they have that we don't yet: services pages, work/case-study pages, an active blog, third-party profiles (Crunchbase, LinkedIn, a local tech directory), some regional press, and a physical local presence. These are all matchable signals, not moats.
-- Where they are weak, and where we win: (a) they run one thin services page rather than deep per-service pages; (b) their newest offering, productionizing AI-generated ("vibe-coded") apps, is under-built and low-competition; (c) they are not visibly optimizing for AI-answer citation. Those three gaps are our wedge.
+## 2. Where we stand
 
-## 2. What "show up alongside them" means
+- Brand-collision risk on the term "squad" (unrelated dev tools use it). The sitewide `Organization` entity and consistent third-party profiles are how we disambiguate.
+- The incumbent we overlap with is a young studio with a thin single services page and little depth on productionizing AI-generated ("vibe-coded") apps. Our wedge is deeper, more specific service pages and honest proof, never a reference to them.
 
-Three battles, different difficulty:
+## 3. Content priorities
 
-1. **Our own brand ("bash squad").** Own the entire first page through the site plus our own profiles. Fast once indexed.
-2. **Shared commercial queries** ("custom software development", "AI development agency", "fix my vibe-coded app", "senior engineering team for hire", local variants). This is the real fight and it is winnable because both sites are young. Whoever ships the deeper, better-structured pages wins. We do this on our own merits, never by referencing them.
-3. **AI answers.** Most winnable. AI engines cite well-structured, extractable content even from low-authority domains and lean on third-party sources. The competitor is not optimizing here, so it is open ground.
+Write for people first. Google's guidance for AI features is the same as for search: helpful, original, people-first content with clear structure. No word counts, special "AI chunks", or extra schema are required.
 
-## 3. Phase 0: Technical foundation (DONE)
+- **Service pages (live):** each states plainly what the service is and who it is for, then signals, deliverables, process and real FAQs. Internal links: homepage cards, `/services`, breadcrumbs, related-service links and footers all use crawlable hrefs.
+- **Case studies:** Land to Listings is live. Add more only with real, sourced specifics (`.claude/skills/case-study/SKILL.md`). If a metric is missing, describe what shipped instead of inventing a number.
+- **Buyer-intent guides:** e.g. how to choose a custom software partner, freelancer vs agency vs embedded team, what an AI integration project involves. Publish only when there is real experience to share.
+- **Blog cadence:** steady over fast. Each post gets a named author, a visible updated date, a clear question it answers, and links to the relevant service page.
+- **Local lever (owner decision):** a Google Business Profile only with a genuine physical presence or defined service region. If fully remote, skip it.
 
-Implemented in the Next.js migration:
+## 4. Off-site signals
 
-- Static-prerendered Next.js App Router site: every page renders to plain HTML at build, so crawlers and AI bots get full content with no JS execution. (Replaces the old client-only Vite SPA that served an empty `<div>` to crawlers.)
-- `robots.txt` allowing all crawlers, deliberately including AI bots (GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot, Google-Extended, Bingbot), with a sitemap reference.
-- `sitemap.xml` generated at build from the service registry, so new service pages are picked up automatically.
-- Per-page metadata: title template, description, self-referencing canonical, Open Graph + Twitter tags, and a real 1200x630 OG image.
-- `Organization` + `WebSite` JSON-LD sitewide as an `@graph` with stable `@id`s; `Service` schema on each service page references the org node. Extend `sameAs` as profiles go live.
-- `llms.txt` generated from the service registry (llmstxt.org convention): a compact markdown site map for AI assistants.
-- Fonts self-hosted via `next/font` (no render-blocking request, minimal layout shift), so Core Web Vitals start healthy.
+- LinkedIn company page, Crunchbase, Clutch, GoodFirms. Keep name, description and URL identical everywhere and add each live URL to `sameAs` in `src/app/layout.tsx`.
+- Ask real clients for reviews on third-party platforms (Clutch etc.). Those reviews live there; we do not copy them into our own structured data.
+- Genuine participation where our buyers ask questions; no link schemes.
 
-**Still to do by the owner (accounts, not code):**
-- Create Google Search Console + Bing Webmaster Tools properties, submit the sitemap, request indexing. Bing feeds Copilot and part of ChatGPT search.
-- Set the lead-delivery env vars in the Vercel deploy (`RESEND_API_KEY`, `LEAD_TO`, `LEAD_FROM`; see `.env.example`) so the contact form delivers.
-- Run PageSpeed Insights after first deploy to confirm LCP < 2.5s and CLS < 0.1 on the live host.
+## 5. Measurement
 
-## 4. Phase 1: Entity and brand SERP (own "bash squad")
+- Search Console and Bing Webmaster Tools: coverage, impressions and clicks per page.
+- PageSpeed Insights / field data once there is traffic, for real Core Web Vitals.
+- Optional monthly spot-check of how AI assistants answer our target questions; a log, not a target.
 
-Mostly off-site; low effort, high speed.
+## 6. What we won't do
 
-- LinkedIn company page, GitHub org (already in the `Organization` `sameAs`), Crunchbase profile.
-- Clutch and GoodFirms profiles: these directories rank for nearly every "[service] agency" query and are cited by AI engines constantly. Ask early clients for real Clutch reviews (reviews are the ranking factor there) — real ones only.
-- Keep name, description, and URL identical across every profile so they reinforce one entity. Add each profile URL to the layout `sameAs` array as it goes live.
-- Target: the whole first page for "bash squad" is us within weeks of indexing.
-
-## 5. Phase 2: Money pages (win the shared commercial queries)
-
-One page per query intent, each deeper and better structured than anything ranking now. All framed around what we do and for whom — never referencing another company.
-
-- **Service pages: DONE.** Live at `/services` plus six deep pages, each with one primary query, an answer-first opening paragraph (40-60 words, AI-extractable), signals/deliverables/process sections, a 6-question FAQ block, and `Service` + `FAQPage` + `BreadcrumbList` schema:
-  - `/services/custom-software` (custom software development)
-  - `/services/integrations` (systems integration, API work, syncs)
-  - `/services/ai-automation` (AI integration and automation)
-  - `/services/legacy-modernization` (legacy software modernization)
-  - `/services/vibe-code-rescue` (the priority wedge page)
-  - `/services/fractional-engineering-team` (embedded senior team)
-  - Internal linking shipped with them: homepage cards, footer columns, breadcrumbs, and related-services links all point at the new pages with crawlable hrefs. No `AggregateRating`/`Review` schema anywhere until there are real reviews: fabricated ratings are a penalty and a lie.
-- **Case-study pages** for Banter and Wrangle (assets in `public/work/`): problem, what we built, stack, outcome. Real specifics only; if we lack a metric, describe what shipped rather than inventing a number.
-- **Buyer-intent guides** (the content type AI engines cite most): "How to choose a custom software agency", "Freelancer vs agency vs AI-augmented team", "What an AI integration project actually costs". These intercept buyers early and get cited, with no need to name anyone.
-- **Local lever (owner decision):** if Bash Squad has any physical presence or serves a specific region, a Google Business Profile plus a location-relevant page is the fastest way into the local map pack. If fully remote, skip it — do not fake a location.
-
-## 6. Phase 3: Content engine
-
-Two posts per month minimum, clustered to feed the money pages. The plain-spoken, anti-hype voice in BRAND.md is an asset: honest engineering content gets shared and cited.
-
-- **Cluster 1, AI adoption for SMBs:** "What AI can actually automate in a small business", "Build vs buy for AI tooling", "What an AI integration project costs".
-- **Cluster 2, vibe-code rescue:** teardown-style posts backed by real project experience; feeds the priority service page.
-- **Every post:** named author with a short credentials bio, visible "last updated" date, one clear target query, direct answer in the first paragraph, internal links to the relevant service page.
-
-## 7. Phase 4: AI search optimization (AEO/GEO)
-
-Layered on the above, not separate work:
-
-- **Extractable structure everywhere:** lead each section with the direct answer in 40-60 words, H2/H3s phrased as real queries, tables for comparisons, numbered lists for processes, FAQ blocks.
-- **Authority signals:** per the Princeton GEO study (KDD 2024), citing sources, adding sourced statistics, and quotable expert statements are the highest-impact levers for AI citation, and keyword stuffing actively hurts. Cite real sources; never invent numbers.
-- **Third-party presence:** Clutch/GoodFirms reviews, genuine participation in relevant subreddits (r/smallbusiness, r/SaaS, AI-tooling threads) where vibe-code-rescue questions come up, YouTube how-tos for key queries.
-- **Monthly DIY visibility check:** run our top ~15 queries through ChatGPT, Perplexity, and Google; log who gets cited; track month over month.
-
-## 8. Measurement
-
-- Google Search Console + Bing Webmaster Tools: impressions/clicks per page, indexing coverage.
-- Rank spot-checks on the target query list.
-- AI citation log (Section 7).
-- Baseline everything the week the site goes live so progress is provable.
-
-## 9. Honest expectations
-
-- Brand SERP ("bash squad"): controllable within weeks of indexing plus profile creation.
-- AI-answer citations for the vibe-code-rescue niche: plausible within 1-3 months; competition is thin and structure matters more than domain age there.
-- Winning the shared commercial queries: a 3-9 month campaign of shipping Phase 2-3 pages and earning Phase 1 signals.
-- What will NOT work and we won't do: thin doorway pages, fabricated reviews/stats, or any content built around a competitor's name.
-
-## 10. Execution order
-
-1. Phase 0 technical foundation: DONE (owner still to create Search Console/Bing + set the Resend env vars).
-2. Phase 1 profiles (parallel, low effort): NEXT, owner-driven.
-3. Service pages: DONE (all six + `/services` hub).
-4. Case-study pages for Banter and Wrangle.
-5. Blog cadence + monthly AI visibility log.
+Thin doorway pages, fabricated reviews or stats, self-serving review schema, FAQ markup for rich results that no longer exist, content built around a competitor's name, or promises of ranking dates.

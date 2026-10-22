@@ -1,8 +1,8 @@
-'use client';
 // WorkIndex: the /work hub. Case studies first (from the src/work registry),
 // then the products and open-source tools, using the same cards as the
 // homepage grid so the two never drift. JSON-LD and metadata come from the
-// server route (src/app/work/page.tsx).
+// server route (src/app/work/page.tsx). Server-rendered; the header and
+// lead form are the client islands.
 import React from 'react';
 import { Badge, SectionLabel } from '../components';
 import { Section } from '../sections/Section';

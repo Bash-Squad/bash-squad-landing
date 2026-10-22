@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import '../styles/styles.css';
+import { DEFAULT_OG_IMAGE, SITE_OPEN_GRAPH, SITE_URL } from '../lib/site';
 
 // Fonts are self-hosted via next/font: no render-blocking Google Fonts
 // request, no layout shift. typography.css maps these variables onto the
@@ -22,8 +23,6 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
-const SITE_URL = 'https://bashsquad.com';
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -40,21 +39,8 @@ export const metadata: Metadata = {
       { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
   },
-  openGraph: {
-    siteName: 'bash squad',
-    type: 'website',
-    locale: 'en_US',
-    url: SITE_URL,
-    images: [
-      {
-        url: '/og.png',
-        width: 1200,
-        height: 630,
-        alt: 'bash squad — we ship AI that works',
-      },
-    ],
-  },
-  twitter: { card: 'summary_large_image' },
+  openGraph: { ...SITE_OPEN_GRAPH, url: SITE_URL },
+  twitter: { card: 'summary_large_image', images: [DEFAULT_OG_IMAGE] },
 };
 
 export const viewport: Viewport = {

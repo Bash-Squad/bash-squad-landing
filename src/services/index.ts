@@ -26,3 +26,6 @@ export function getService(slug: string): ServiceContent | undefined {
 export function servicePath(slug: string): string {
   return `/services/${slug}`;
 }
+
+/** Every footer's service column: one path and short label per service. */
+export const SERVICE_LINKS: [string, string][] = SERVICES.map((s) => [servicePath(s.slug), s.shortLabel]);

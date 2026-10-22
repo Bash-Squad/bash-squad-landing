@@ -1,8 +1,7 @@
 'use client';
 
-// BuildCTA: variant C endpoint. Ported from the homepage FinalCTA so the
-// build page shares the same qualifying form (budget band),
-// wired to the submitLead server action (email now, HQ forward once BS-OS is live).
+// Shared qualifying lead form (#book). Form state is a client island;
+// submitLead stays on the server.
 import React from 'react';
 import { Input, Select, Textarea, Button, Badge, CopyEmail } from '../components';
 import { Section, SectionHead } from '../sections/Section';

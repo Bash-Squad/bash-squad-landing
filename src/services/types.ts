@@ -1,12 +1,13 @@
 // Service page content model. One file per service in src/services/content/,
 // registered in src/services/index.ts. Every field is rendered into static
 // HTML (and some into JSON-LD), so keep copy in BRAND.md voice: plain-spoken,
-// zero hype, no fabricated stats, no em-dashes.
+// zero hype, no fabricated stats, no em-dashes. Lengths below are editorial
+// guidance for scannable pages, not search-engine requirements.
 
 export interface ServiceFaq {
   /** Natural-language question, phrased the way a buyer would type it. */
   q: string;
-  /** Direct answer, 40-90 words, answer-first. Rendered as HTML and FAQPage JSON-LD. */
+  /** Direct answer, answer-first. Rendered as visible page content. */
   a: string;
 }
 
@@ -30,16 +31,15 @@ export interface ServiceContent {
   name: string;
   /** Mono eyebrow label, lowercase: "vibe-code rescue". */
   shortLabel: string;
-  /** SERP title WITHOUT the "| bash squad" suffix (the template adds it). <= 52 chars. */
+  /** SERP title WITHOUT the "| bash squad" suffix (the template adds it). Short enough to read in full. */
   metaTitle: string;
-  /** Meta description, 140-160 chars, primary query phrasing + value prop. */
+  /** Meta description: the primary query phrasing + value prop, one or two sentences. */
   metaDescription: string;
   /** Page H1. Contains the primary query naturally. */
   h1: string;
   /**
-   * The direct answer: 40-60 words that a search engine or AI assistant can
-   * lift verbatim to answer "what is this service / who does this". First
-   * body copy on the page.
+   * The direct answer: a short paragraph that says plainly what this service
+   * is and who does it. First body copy on the page.
    */
   answer: string;
   /** Supporting paragraph under the answer: who it's for, how we approach it. */

@@ -1,13 +1,13 @@
+'use client';
 // BuildHeader: sticky top bar for the main site ("what we actually do").
+// Client island: scroll shading and the mobile menu. The section links are
+// real hrefs: on the homepage a plain click smooth-scrolls; on subpages they
+// navigate to /#section. Modified clicks always stay native.
 import React from 'react';
 import { Button, IconButton } from '../components';
+import { isPlainClick, scrollToSection } from '../components/SectionLink';
 
-interface BuildHeaderProps {
-  onNav: (id: string) => void;
-  onOpenPalette?: () => void;
-}
-
-export function BuildHeader({ onNav }: BuildHeaderProps) {
+export function BuildHeader({ home = false }: { home?: boolean }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [menu, setMenu] = React.useState(false);
   React.useEffect(() => {
@@ -19,6 +19,13 @@ export function BuildHeader({ onNav }: BuildHeaderProps) {
     { id: 'work', label: 'our work' },
     { id: 'help', label: 'who we help' },
   ];
+  // #book is on every page; the other sections only exist on the homepage.
+  const local = (id: string) => home || id === 'book';
+  const follow = (e: React.MouseEvent, id: string) => {
+    if (!local(id) || !isPlainClick(e)) return;
+    e.preventDefault();
+    scrollToSection(id, home);
+  };
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 100 }}>
       <div style={{
@@ -33,14 +40,14 @@ export function BuildHeader({ onNav }: BuildHeaderProps) {
           </a>
           <nav style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="bg-desktop-nav">
             {links.map(l => (
-              <a key={l.id} href={'#' + l.id} onClick={(e) => { e.preventDefault(); onNav(l.id); }}
+              <a key={l.id} href={(home ? '#' : '/#') + l.id} onClick={(e) => follow(e, l.id)}
                  style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-muted)', padding: '8px 12px', borderRadius: 'var(--r-1)' }}
                  onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-strong)'; }}
                  onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--text-muted)'; }}>
                 {l.label}
               </a>
             ))}
-            <Button variant="primary" prompt size="sm" style={{ marginLeft: 8 }} onClick={() => onNav('book')}>Tell us what you need</Button>
+            <Button variant="primary" prompt size="sm" style={{ marginLeft: 8 }} onClick={() => scrollToSection('book', home)}>Tell us what you need</Button>
             <a href="https://hq.bashsquad.com" aria-label="Squad login (HQ)"
                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginLeft: 8, background: 'var(--surface-card)', border: '1px solid var(--border-strong)', borderRadius: 'var(--r-1)', padding: '7px 11px', color: 'var(--text-muted)', fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', transition: 'color var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out)' }}
                onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--text-strong)'; e.currentTarget.style.borderColor = 'var(--accent)'; }}
@@ -55,7 +62,7 @@ export function BuildHeader({ onNav }: BuildHeaderProps) {
         {menu && (
           <div className="bg-mobile-nav" style={{ flexDirection: 'column', padding: '8px var(--gutter) 18px', borderTop: '1px solid var(--border-hairline)', background: 'var(--surface-base)' }}>
             {[...links, { id: 'book', label: 'tell us what you need' }].map(l => (
-              <a key={l.id} href={'#' + l.id} onClick={(e) => { e.preventDefault(); setMenu(false); onNav(l.id); }}
+              <a key={l.id} href={(local(l.id) ? '#' : '/#') + l.id} onClick={(e) => { setMenu(false); follow(e, l.id); }}
                  style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-body)', padding: '14px 0', borderBottom: '1px solid var(--border-hairline)' }}>
                 <span style={{ color: 'var(--accent)' }}>&gt;</span> {l.label}
               </a>

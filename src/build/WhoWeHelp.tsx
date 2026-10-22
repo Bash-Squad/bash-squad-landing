@@ -1,9 +1,12 @@
+'use client';
 // WhoWeHelp: the segment section as an accordion. Each situation is a
 // full-width card; the active one expands to show its pitch plus a
 // three-beat emoji storyboard — problem → bash squad → fixed. One emoji
 // per beat, fluid widths, so the same animation works on desktop and phones.
+// Client island (accordion state) on the server-rendered homepage.
 import React from 'react';
 import { Button } from '../components';
+import { scrollToSection } from '../components/SectionLink';
 import { Section, SectionHead } from '../sections/Section';
 
 interface StoryBeat {
@@ -175,11 +178,7 @@ function StoryScene({ seg }: { seg: Segment }) {
 
 /* --- section ---------------------------------------------------------------- */
 
-interface WhoWeHelpProps {
-  onNav: (id: string) => void;
-}
-
-export function WhoWeHelp({ onNav }: WhoWeHelpProps) {
+export function WhoWeHelp() {
   // First card open by default so the storyboard shows without a click;
   // clicking the open card collapses it (active = null -> all closed).
   const [active, setActive] = React.useState<number | null>(0);
@@ -226,7 +225,7 @@ export function WhoWeHelp({ onNav }: WhoWeHelpProps) {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16, marginTop: 44 }}>
         <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-muted)', margin: 0 }}>None of these? That&rsquo;s fine. Most projects are a mix. Tell us anyway.</p>
-        <Button variant="secondary" size="lg" onClick={() => onNav('book')}>Tell us your situation</Button>
+        <Button variant="secondary" size="lg" onClick={() => scrollToSection('book', true)}>Tell us your situation</Button>
       </div>
     </Section>
   );

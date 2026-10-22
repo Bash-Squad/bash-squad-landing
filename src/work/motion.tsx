@@ -212,24 +212,26 @@ export function Timeline({ weeks, initial }: { weeks: CaseStudyWeek[]; initial: 
         ))}
       </div>
       {weeks.map((w, i) => (
-        <ol
+        // The panel wraps the list so the <ol> keeps its list semantics.
+        <div
           key={w.range}
           id={`cs-week-${i}`}
           role="tabpanel"
           aria-labelledby={`cs-week-tab-${i}`}
           hidden={i !== active}
-          className="cs-timeline__days"
         >
-          {w.milestones.map((m, j) => (
-            <li key={m.date + m.title} className="cs-timeline__day" style={{ ['--i' as string]: j } as React.CSSProperties}>
-              <span className="cs-timeline__date">{m.date}</span>
-              <span className="cs-timeline__what">
-                <span className="cs-timeline__title">{m.title}</span>
-                <span className="cs-timeline__note">{m.note}</span>
-              </span>
-            </li>
-          ))}
-        </ol>
+          <ol className="cs-timeline__days">
+            {w.milestones.map((m, j) => (
+              <li key={m.date + m.title} className="cs-timeline__day" style={{ ['--i' as string]: j } as React.CSSProperties}>
+                <span className="cs-timeline__date">{m.date}</span>
+                <span className="cs-timeline__what">
+                  <span className="cs-timeline__title">{m.title}</span>
+                  <span className="cs-timeline__note">{m.note}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
       ))}
     </div>
   );

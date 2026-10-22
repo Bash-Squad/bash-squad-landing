@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
 import WorkIndex from '../../work/WorkIndex';
 import { CASE_STUDIES, caseStudyPath } from '../../work';
-
-const SITE_URL = 'https://bashsquad.com';
+import { SITE_OPEN_GRAPH, SITE_URL } from '../../lib/site';
 
 export const metadata: Metadata = {
   title: 'Our Work: Case Studies, Products & Open Source',
@@ -10,12 +9,11 @@ export const metadata: Metadata = {
     'What Bash Squad has built: client case studies with the story behind each one, plus our own products and open-source tools. Real screenshots, real numbers.',
   alternates: { canonical: '/work' },
   openGraph: {
+    ...SITE_OPEN_GRAPH,
     url: '/work',
-    siteName: 'bash squad',
     title: 'Our Work: Case Studies, Products & Open Source | bash squad',
     description:
       'What Bash Squad has built: client case studies with the story behind each one, plus our own products and open-source tools.',
-    images: [{ url: '/og.png', width: 1200, height: 630, alt: 'bash squad — we ship AI that works' }],
   },
 };
 

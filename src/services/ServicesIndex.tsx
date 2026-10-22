@@ -1,6 +1,6 @@
-'use client';
 // ServicesIndex: the /services hub page. Links every service page with a
 // one-line description; the real depth lives on the per-service pages.
+// Server-rendered; the header and lead form are the client islands.
 import React from 'react';
 import { Badge, Card, Pictogram, SectionLabel } from '../components';
 import { Section } from '../sections/Section';
