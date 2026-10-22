@@ -21,7 +21,9 @@ The site is a Next.js App Router app on **Cloudflare Workers** (OpenNext adapter
 - **Pages are server-rendered with small client islands.** Page content, links and metadata are in the HTML; JavaScript only runs the header, command palette, accordions/timelines, section scrolling and the lead forms.
 - **Canonicals:** every route has a self-referencing canonical on `https://bashsquad.com`. `http://` and `www.` 301 to the apex; trailing slashes 308 to the slashless URL.
 - **workers.dev hosts** (`bash-squad-landing.bash-squad.workers.dev` and branch preview hosts) also serve the site with a 200. They are left alone on purpose: their canonicals already point at `bashsquad.com`, and previews depend on those hosts. Disabling them or adding redirects is a Cloudflare settings change for the owner to authorize separately; do not add an app-level global redirect, which would break previews.
-- **Sitemap + robots** are generated (`src/app/sitemap.ts`, `src/app/robots.ts`). Robots allows all crawlers, including AI crawlers. The sitemap omits `lastmod` until content tracks real edit dates.
+- **Sitemap + robots** are generated (`src/app/sitemap.ts`, `src/app/robots.ts`). `robots.txt` allows all crawlers, including AI crawlers. The sitemap omits `lastmod` until content tracks real edit dates.
+- **Cloudflare blocks AI training crawlers at the edge** (verified 2026-10-22 by fetching `/` with each user agent): `GPTBot` and `ClaudeBot` get a Cloudflare 403 ("Your request was blocked") before the app runs; `OAI-SearchBot`, `ChatGPT-User`, `Claude-SearchBot`, `Claude-User`, `PerplexityBot`, `Google-Extended`, `Googlebot`, `bingbot` and `Applebot` all get the page. That is Cloudflare's default "block AI training bots" setting, not `robots.txt`. Live answers with web search can still fetch our pages; the models' trained knowledge will not include us until the owner allows those crawlers (see `SEO-TODO.md`).
+- **Icons:** `favicon.png` (192px, the format Google Search reads), `favicon.svg`, and a 16/32/48 `favicon.ico` at the root for the bare `/favicon.ico` request.
 - **Metadata:** title template, description, canonical, Open Graph and Twitter card on every route. Shared values (origin, site name, default card) live in `src/lib/site.ts`. Default card: `public/og.png`, 2400x1260. Case studies use their own 1200x630 card.
 - **Structured data, only where it is true:**
   - Sitewide `Organization` + `WebSite` (`src/app/layout.tsx`); extend `sameAs` as real profiles go live.
@@ -33,7 +35,12 @@ The site is a Next.js App Router app on **Cloudflare Workers** (OpenNext adapter
 - **`/llms.txt`** is generated from the registries. It is optional: Google's [AI features guidance](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) says no special files, markup or content formats are needed for AI search. Keep it only because it is free to maintain.
 - **Images:** retina `@2x` screenshot URLs are percent-encoded (`%402x`) because the static host 307-redirects a raw `@`. The case study's plat `survey.svg` layer, its measured LCP element, loads with `fetchpriority="high"`.
 
-What we do not know: actual Search Console coverage, indexing state, impressions and real-user Core Web Vitals. Nobody has checked GSC as part of this work; treat it as unknown until the owner looks (see `SEO-TODO.md`).
+What we know about indexes (checked 2026-10-22; all of these change on the engines' own schedules):
+- **Bing (also DuckDuckGo, Copilot and ChatGPT search):** `/`, five service pages and `hq.bashsquad.com` are indexed. The service pages are stored under `www.bashsquad.com`, which now 301s to the apex; Bing will consolidate once it recrawls, and a Bing Webmaster Tools sitemap submission speeds that up.
+- **Brave (Claude's web search):** only `www.bashsquad.com/` with pre-#15 copy.
+- **Google:** cannot be read from outside Search Console, and nobody has opened it as part of this work. A Domain property for `bashsquad.com` has been DNS-verified (two `google-site-verification` TXT records exist), so the owner can log in and read the Pages report directly.
+
+What we do not know: Search Console coverage, impressions and real-user Core Web Vitals.
 
 ## 2. Where we stand
 

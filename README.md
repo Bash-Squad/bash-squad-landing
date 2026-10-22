@@ -101,7 +101,7 @@ src/
                        landing.css (responsive rules), work.css (case-study
                        layout + motion), tokens/ (colors, typography, spacing,
                        effects, base)
-public/                og.png (2400x1260), favicon.svg + favicon.png, logo marks,
+public/                og.png (2400x1260), favicon.svg + favicon.png + favicon.ico, logo marks,
                        work/ screenshots (work/<slug>/ holds a case study's
                        screens + its 1200x630 og.png)
 concepts/              earlier brand explorations (static HTML)
@@ -191,8 +191,12 @@ mode) on the forms. Not added now to keep the site dependency-free.
   The sitemap omits `lastmod`: Google uses it only when it's accurate, and a
   build timestamp isn't. Add per-page dates only once content tracks real edits.
 - Google Search doesn't support SVG favicons, so `public/favicon.png` (192px,
-  rendered from `favicon.svg`) is linked alongside the SVG. Re-render it when
-  the mark changes: `rsvg-convert -w 192 -h 192 public/favicon.svg -o public/favicon.png`.
+  rendered from `favicon.svg`) is linked alongside the SVG, and `favicon.ico`
+  (16/32/48, built from the PNG) answers the bare `/favicon.ico` request.
+  Re-render both when the mark changes:
+  `rsvg-convert -w 192 -h 192 public/favicon.svg -o public/favicon.png`, then
+  `magick public/favicon.png -resize 16x16 f16.png` (likewise 32 and 48) and
+  `magick f16.png f32.png f48.png public/favicon.ico`.
 - Strategy and current state: `SEO-PLAN.md`. Owner account steps: `SEO-TODO.md`.
 
 ## Notes
