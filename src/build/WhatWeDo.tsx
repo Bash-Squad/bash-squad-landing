@@ -1,23 +1,23 @@
 // WhatWeDo: the plain-English capability grid. The whole point of variant C:
 // answer "what do you actually do?" in one scannable screen, no metaphors.
-// Server-rendered; each card is a link to its service page.
+// Cards remain non-links pending owner review of the service pages.
 import { Card, Badge, Pictogram } from '../components';
 import { SectionButton } from '../components/SectionLink';
 import { Section, SectionHead } from '../sections/Section';
 
 const SERVICES = [
   {
-    icon: 'code', title: 'Custom software & websites', href: '/services/custom-software',
+    icon: 'code', title: 'Custom software & websites',
     body: 'From a marketing site to a full web or mobile app to the internal tool nobody sells off the shelf. Real engineering, built to last and easy to hand off.',
     tags: ['web', 'mobile', 'internal tools'],
   },
   {
-    icon: 'db', title: 'Integrations & syncs', href: '/services/integrations',
+    icon: 'db', title: 'Integrations & syncs',
     body: 'Make the tools you already pay for talk to each other. A clean sync between two systems, an API you need wired up, data that stops living in three places.',
     tags: ['apis', 'webhooks', 'migrations'],
   },
   {
-    icon: 'bot', title: 'AI that earns its keep', href: '/services/ai-automation',
+    icon: 'bot', title: 'AI that earns its keep',
     body: 'Agents, automation, and AI features tied to a real outcome, not a demo. Where AI generates reliably, we let it; where it quietly makes things worse, we don\'t pretend otherwise. Every line ships at the same bar as hand-written code.',
     tags: ['agents', 'automation', 'rag'],
   },
@@ -48,7 +48,7 @@ export function WhatWeDo() {
       />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
         {SERVICES.map((s) => (
-          <a key={s.title} href={s.href} style={{ display: 'flex', textDecoration: 'none' }}>
+          <div key={s.title} style={{ display: 'flex' }}>
             <Card pad="lg" hoverLift style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
@@ -63,7 +63,7 @@ export function WhatWeDo() {
                 {s.tags.map(t => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
               </div>
             </Card>
-          </a>
+          </div>
         ))}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, marginTop: 44 }}>

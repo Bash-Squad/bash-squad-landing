@@ -44,7 +44,7 @@ What we do not know: actual Search Console coverage, indexing state, impressions
 
 Write for people first. Google's guidance for AI features is the same as for search: helpful, original, people-first content with clear structure. No word counts, special "AI chunks", or extra schema are required.
 
-- **Service pages (live):** each states plainly what the service is and who it is for, then signals, deliverables, process and real FAQs. Internal links: homepage cards, `/services`, breadcrumbs, related-service links and footers all use crawlable hrefs.
+- **Service pages (live):** each states plainly what the service is and who it is for, then signals, deliverables, process and real FAQs. Internal links from `/services`, breadcrumbs, related-service links and footers use crawlable hrefs. Homepage cards remain unlinked until the owner reviews the service pages.
 - **Case studies:** Land to Listings is live. Add more only with real, sourced specifics (`.claude/skills/case-study/SKILL.md`). If a metric is missing, describe what shipped instead of inventing a number.
 - **Buyer-intent guides:** e.g. how to choose a custom software partner, freelancer vs agency vs embedded team, what an AI integration project involves. Publish only when there is real experience to share.
 - **Blog cadence:** steady over fast. Each post gets a named author, a visible updated date, a clear question it answers, and links to the relevant service page.

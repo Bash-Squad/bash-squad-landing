@@ -4,7 +4,7 @@ Account and off-site steps only the owner can do. Strategy and the current techn
 
 Known as of 2026-10-22:
 - The site runs on Cloudflare Workers. All 10 routes are prerendered, canonicalized to `https://bashsquad.com`, and listed in `/sitemap.xml`; unknown paths return 404.
-- Homepage service cards link to their service pages.
+- Homepage service cards remain unlinked pending owner review of the service pages; the footer and `/services` already link to each page.
 - `sameAs` in `src/app/layout.tsx` lists GitHub only.
 - **Search Console state is unknown.** Whether a property exists, which sitemap it has, and what is indexed has not been checked in this work.
 

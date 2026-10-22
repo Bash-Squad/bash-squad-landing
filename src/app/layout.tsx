@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Bricolage_Grotesque, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import '../styles/styles.css';
-import { DEFAULT_OG_IMAGE, SITE_OPEN_GRAPH, SITE_URL } from '../lib/site';
+import { SITE_OPEN_GRAPH, SITE_URL } from '../lib/site';
 
 // Fonts are self-hosted via next/font: no render-blocking Google Fonts
 // request, no layout shift. typography.css maps these variables onto the
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   },
   description:
     'A small crew of senior engineers who build with AI. Custom software, integrations, and AI systems your business runs on. Hire us for one project or your whole team.',
-  // Google Search ignores SVG favicons; favicon.png is the same mark rendered
-  // from favicon.svg at 192px. Keep its URL stable.
+  // Google Search's supported favicon formats exclude SVG. Use the same mark
+  // rendered at 192px for Search; keep favicon.png's URL stable.
   icons: {
     icon: [
       { url: '/favicon.png', type: 'image/png', sizes: '192x192' },
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: { ...SITE_OPEN_GRAPH, url: SITE_URL },
-  twitter: { card: 'summary_large_image', images: [DEFAULT_OG_IMAGE] },
+  twitter: { card: 'summary_large_image' },
 };
 
 export const viewport: Viewport = {
