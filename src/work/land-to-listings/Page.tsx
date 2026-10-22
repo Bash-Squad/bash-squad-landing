@@ -5,7 +5,7 @@ import { CASE_STUDIES, caseStudyPath } from '../index';
 import { LoopVideo, ScrollStory, Stats, Timeline } from '../motion';
 import { Shot } from '../Shot';
 import Pipeline from './Pipeline';
-import CloseForm from '../CloseForm';
+import { BuildCTA } from '../../build/BuildCTA';
 import Plat from '../flair/land-to-listings/Plat';
 import study from './content';
 import { LandToListingsTestimonial } from './Testimonial';
@@ -73,7 +73,9 @@ export default function LandToListingsPage() {
               </div>
               <div className="cs-rail-right">
                 {study.features.map((f) => <p key={f} className="cs-tile cs-run">{f}</p>)}
-                <a href="#book" className="cs-tile cs-run cs-run--action">Tell us what you need</a>
+                <div className="cs-hero-action">
+                  <a href="#book" className="cs-btn-link cs-btn-link--accent cs-hero-action__link">Tell us what you need<span aria-hidden="true"> →</span></a>
+                </div>
               </div>
             </div>
           </div>
@@ -146,23 +148,14 @@ export default function LandToListingsPage() {
           <LandToListingsTestimonial />
         </section>
 
-        {/* the action row: cropped from a longer row of the board */}
-        <section id="book" className="cs-close" aria-labelledby="cs-close-title">
-          <div className="cs-close__flank" aria-hidden="true" />
-          <div className="cs-close__tile">
-            <h2 id="cs-close-title" className="cs-h">{study.close.title}</h2>
-            <p className="cs-body">{study.close.body}</p>
-            <CloseForm source={`case study: ${study.slug}`} />
-          </div>
-          <div className="cs-close__flank" aria-hidden="true" />
-        </section>
         <nav className="cs-more" aria-label="More">
           <a className="cs-link" href="/work">All our work</a>
           {others.map((c) => <a key={c.slug} className="cs-link" href={caseStudyPath(c.slug)}>{c.name}</a>)}
           {related.map((r) => <a key={r.slug} className="cs-link" href={servicePath(r.slug)}>{r.name}</a>)}
         </nav>
+        <BuildCTA source={`case study: ${study.slug}`} />
       </main>
-      <SubpageFooter kind="work" />
+      <SubpageFooter />
     </React.Fragment>
   );
 }

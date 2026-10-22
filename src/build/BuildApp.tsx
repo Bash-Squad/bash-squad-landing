@@ -96,11 +96,7 @@ export default function BuildApp() {
         <BuildProof />
         <BuildCTA />
       </main>
-      <Footer onNav={onNav} cols={[
-        { h: 'navigate', items: [['services', 'what we do'], ['work', 'our work'], ['/work', 'case studies'], ['help', 'who we help'], ['how', 'how it works'], ['book', 'tell us what you need']] },
-        { h: 'services', items: [['/services/custom-software', 'custom software'], ['/services/integrations', 'integrations & syncs'], ['/services/ai-automation', 'ai & automation'], ['/services/legacy-modernization', 'legacy modernization'], ['/services/vibe-code-rescue', 'vibe-code rescue'], ['/services/fractional-engineering-team', 'your engineering team']] },
-        { h: 'family', items: [[null, 'blue ghost lab']] },
-      ]} />
+      <Footer onNav={onNav} />
       <CommandPalette open={open} onClose={() => setOpen(false)} commands={COMMANDS} onSelect={onSelect} />
     </React.Fragment>
   );

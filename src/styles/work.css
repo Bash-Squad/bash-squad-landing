@@ -3,10 +3,11 @@
 
    Art direction: "the well-kept board" (.taste-skill/direction.json).
    Flat tiles on the page ground, 8px apart, square corners, no lines,
-   no shadows, no monospace. One ground, one ink, one accent (the action
-   and one figure). The client's own paper appears only where their work
-   is shown. Five type sizes. Motion moves transform, opacity and
-   clip-path only and has a finished state under reduced motion.
+   no shadows, no monospace except shared site actions and the contact form.
+   One ground, one ink, one accent (the action and one figure). The client's
+   own paper appears only where their work is shown. Five type sizes.
+   Motion moves transform, opacity and clip-path only, with a finished
+   state under reduced motion.
    ============================================================ */
 
 .cs-page {
@@ -60,12 +61,6 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
   .cs-link:hover { text-decoration-color: currentColor; }
 }
 
-/* visually hidden, read by screen readers */
-.cs-sr {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; /* taste-skill-ignore: visually-hidden text, not a rule */
-  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
-}
-
 /* --- section rhythm: 12 columns, one pair of tight margins --- */
 .cs-sec { padding: clamp(120px, 13vw, 200px) var(--cs-m) 0; }
 .cs-head { display: grid; gap: 20px; max-width: 46rem; margin-bottom: clamp(40px, 5vw, 72px); }
@@ -87,6 +82,8 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
   display: flex;
   align-items: center;
   justify-content: center;
+  /* the name sizes against this tile's width (cqi), not the viewport's */
+  container-type: inline-size;
 }
 .cs-band__name {
   font-family: var(--font-display);
@@ -139,24 +136,45 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
   text-wrap: balance;
 }
 
-.cs-rail-right { grid-column: 11 / span 2; display: grid; grid-template-rows: repeat(5, minmax(0, 1fr)); gap: var(--cs-gap); min-height: 0; }
+.cs-rail-right { grid-column: 11 / span 2; display: grid; grid-template-rows: repeat(4, minmax(0, 1fr)) auto; gap: var(--cs-gap); min-height: 0; }
 .cs-run { padding: 16px 18px; font-size: var(--cs-small); line-height: 1.35; display: flex; align-items: flex-start; }
 .cs-run:nth-child(1) { background: var(--cs-paper); color: var(--cs-paper-ink); }
 .cs-run:nth-child(2) { background: var(--fg-2); color: var(--ink-1000); }
 .cs-run:nth-child(3) { background: var(--fg-4); color: var(--cs-ink); }
 .cs-run:nth-child(4) { background: var(--cs-mid); color: var(--cs-ink); }
-.cs-run--action {
-  background: var(--cs-accent) !important;
-  color: var(--cs-on-accent) !important;
-  font-size: var(--cs-body);
-  font-weight: 700;
+
+/* the board's one action: a button under the four tiles, not a fifth tile */
+.cs-hero-action { padding-top: var(--cs-gap); }
+.cs-hero-action .cs-hero-action__link {
+  display: flex;
+  width: 100%;
+  min-height: 48px;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  line-height: 1.25;
+  font-family: var(--font-mono);
+  font-size: var(--t-sm);
+  font-weight: var(--w-medium);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--accent);
+  border-radius: var(--r-1);
   text-decoration: none;
-  align-items: flex-end;
-  transition: transform 140ms var(--cs-ease), background-color 180ms ease;
+  transition: background-color 180ms ease, transform 140ms var(--cs-ease);
 }
-.cs-run--action:active { transform: scale(0.97); }
+.cs-hero-action__link > span { flex: none; transition: transform 180ms var(--cs-ease); }
+.cs-hero-action .cs-hero-action__link:hover { background: var(--accent); }
 @media (hover: hover) and (pointer: fine) {
-  .cs-run--action:hover { background: var(--acid-400) !important; }
+  .cs-hero-action .cs-hero-action__link:hover { background: var(--accent-hover); }
+}
+.cs-hero-action .cs-hero-action__link:active { background: var(--accent-press); }
+@media (prefers-reduced-motion: no-preference) {
+  .cs-hero-action .cs-hero-action__link:active { transform: translateY(1px); }
+  .cs-hero-action__link:focus-visible > span { transform: translateX(3px); }
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .cs-hero-action__link:hover > span { transform: translateX(3px); }
 }
 
 /* pinned, but not frozen: while the art builds (plat.module.css ranges, the
@@ -279,8 +297,10 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
    ============================================================ */
 .cs-stats { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--cs-gap); align-items: start; position: relative; }
 .cs-stats__title { grid-column: 7 / span 6; grid-row: 1; align-self: start; font-size: var(--cs-lead); line-height: 1.1; }
-.cs-stat { display: flex; flex-direction: column; justify-content: space-between; padding: 28px; clip-path: polygon(0 0, calc(100% - 44px) 0, 100% 44px, 100% 100%, 0 100%); }
+.cs-stat { display: flex; flex-direction: column; justify-content: space-between; padding: 28px; clip-path: polygon(0 0, calc(100% - 44px) 0, 100% 44px, 100% 100%, 0 100%); container-type: inline-size; }
 .cs-stat__v { margin: 0; font-variant-numeric: tabular-nums; }
+/* the widest value, 98–100, is about 3.5em: 26cqi keeps it inside a narrow card */
+.cs-stat--1 .cs-stat__v, .cs-stat--2 .cs-stat__v { font-size: min(var(--cs-h), 26cqi); }
 .cs-stat__l { margin: 0; font-size: var(--cs-body); line-height: 1.4; max-width: 22rem; }
 .cs-stat--0 { grid-column: 1 / span 6; grid-row: 1 / span 3; height: 70vh; min-height: 460px; background: var(--cs-accent); color: var(--cs-on-accent); }
 .cs-stat--0 .cs-stat__v { color: var(--cs-on-accent); }
@@ -331,62 +351,6 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
 .cs-landed__facts dt { color: var(--cs-soft); }
 .cs-landed__facts dd { margin: 0; color: var(--cs-ink); }
 
-/* ============================================================
-   CLOSE: the action tile, cropped from a longer row
-   ============================================================ */
-.cs-close {
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: clamp(120px, 13vw, 200px);
-  margin-left: -8vw;
-  margin-right: -8vw;
-  min-height: 360px;
-  scroll-margin-top: var(--cs-header);
-}
-.cs-close__flank { grid-column: span 2; background: var(--cs-mid); min-height: 360px; overflow: hidden; }
-.cs-close__tile {
-  grid-column: span 8;
-  background: var(--cs-accent);
-  color: var(--cs-on-accent);
-  padding: 40px;
-  display: grid;
-  align-content: center;
-  gap: 14px;
-}
-.cs-close__tile .cs-h,
-.cs-close__tile .cs-body { color: var(--cs-on-accent); max-width: 36rem; }
-.cs-close__form { display: grid; gap: 8px; max-width: 34rem; margin-top: 10px; }
-.cs-close__message,
-.cs-close__email {
-  font: inherit;
-  font-size: var(--cs-body);
-  color: var(--cs-paper-ink);
-  background: var(--cs-paper);
-  border: 0;
-  border-radius: 0;
-  padding: 12px 14px;
-  min-height: 48px;
-  width: 100%;
-}
-.cs-close__message { resize: vertical; }
-.cs-close__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-.cs-close__send {
-  font: inherit;
-  font-size: var(--cs-body);
-  font-weight: 700;
-  padding: 0 22px;
-  border: 0;
-  border-radius: 0;
-  background: var(--cs-on-accent);
-  color: var(--cs-accent);
-  cursor: pointer;
-  transition: transform 140ms var(--cs-ease), background-color 180ms ease;
-}
-.cs-close__send:active { transform: scale(0.97); }
-.cs-close__send:disabled { opacity: 0.7; cursor: progress; }
-.cs-close__error { margin: 0; font-size: var(--cs-small); color: var(--cs-on-accent); font-weight: 600; }
-.cs-close__done { color: var(--cs-on-accent); }
 .cs-more { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 40px var(--cs-m) clamp(80px, 9vw, 140px); font-size: var(--cs-body); color: var(--cs-soft); }
 
 /* ============================================================
@@ -424,7 +388,8 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
   .cs-rail-left { grid-column: 1 / span 2; grid-row: 2; grid-template-rows: auto; }
   .cs-portrait { display: none; }
   .cs-rail-right { grid-column: 3 / -1; grid-row: 2; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: auto; }
-  .cs-run--action { grid-column: 1 / -1; min-height: 72px; }
+  .cs-band__name { font-size: min(var(--cs-display), 13cqi); }
+  .cs-hero-action { grid-column: 1 / -1; }
   .cs-brief__cols { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
   .cs-story { grid-template-columns: 1fr; }
   .cs-story__figure { display: none; }
@@ -438,7 +403,6 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
 @media (max-width: 760px) {
   .cs-board { gap: 6px; padding: 6px; }
   .cs-band { height: 110px; }
-  .cs-band__name { font-size: 25vw; }
   .cs-jumps { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
   .cs-jump { min-height: 56px; padding: 16px; }
   .cs-board__main { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
@@ -464,7 +428,6 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
   .cs-stat--1 { grid-column: 1; grid-row: 3; height: auto; min-height: 220px; }
   .cs-stat--2 { grid-column: 2; grid-row: 3; margin-top: 32px; height: auto; min-height: 188px; }
   .cs-stat { padding: 18px; clip-path: polygon(0 0, calc(100% - 28px) 0, 100% 28px, 100% 100%, 0 100%); }
-  .cs-stat--1 .cs-stat__v, .cs-stat--2 .cs-stat__v { font-size: var(--cs-h); }
   .cs-stat { flex-direction: row; align-items: flex-end; gap: 12px; }
   .cs-stat__v { width: max-content; flex: none; }
   .cs-stat__l { max-width: 52%; }
@@ -472,9 +435,6 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
   .cs-stat--1 .cs-stat__l, .cs-stat--2 .cs-stat__l { max-width: none; }
   .cs-landed__note { position: static; width: auto; }
   .cs-landed__side { grid-template-columns: 1fr; }
-  .cs-close { margin-left: 0; margin-right: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
-  .cs-close__tile { grid-column: 1 / -1; grid-row: 1; padding: 28px 20px; }
-  .cs-close__flank { grid-column: span 1; min-height: 120px; }
 }
 
 /* ============================================================
@@ -511,5 +471,5 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
 
 /* ---------------- reduced motion ---------------- */
 @media (prefers-reduced-motion: reduce) {
-  .cs-story__frame, .cs-story__step > *, .cs-close__send, .cs-run--action { transition: none; }
+  .cs-story__frame, .cs-story__step > *, .cs-hero-action .cs-hero-action__link, .cs-hero-action__link > span { transition: none; }
 }

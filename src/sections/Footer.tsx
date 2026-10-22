@@ -16,8 +16,8 @@ interface FooterProps {
 }
 
 const DEFAULT_COLS: FooterCol[] = [
-  { h: 'navigate', items: [['services', 'services'], ['why', 'how we work'], ['team', 'team'], ['book', "tell us what's broken"]] },
-  { h: 'services', items: [['services', 'ai consulting'], ['services', 'automation'], ['services', 'integration'], ['services', 'custom software']] },
+  { h: 'navigate', items: [['services', 'what we do'], ['work', 'our work'], ['/work', 'case studies'], ['help', 'who we help'], ['how', 'how it works'], ['book', 'tell us what you need']] },
+  { h: 'services', items: [['/services/custom-software', 'custom software'], ['/services/integrations', 'integrations & syncs'], ['/services/ai-automation', 'ai & automation'], ['/services/legacy-modernization', 'legacy modernization'], ['/services/vibe-code-rescue', 'vibe-code rescue'], ['/services/fractional-engineering-team', 'your engineering team']] },
   { h: 'family', items: [[null, 'blue ghost lab']] },
 ];
 

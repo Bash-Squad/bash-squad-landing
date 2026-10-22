@@ -1,3 +1,5 @@
+'use client';
+
 // BuildCTA: variant C endpoint. Ported from the homepage FinalCTA so the
 // build page shares the same qualifying form (budget band),
 // wired to the submitLead server action (email now, HQ forward once BS-OS is live).
