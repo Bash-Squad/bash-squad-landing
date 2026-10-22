@@ -27,6 +27,13 @@ the position of the import button is not. Preserve that distinction when trimmin
 - Source every claim to the project repo or live site; record number sources
   beside metadata/detail content. Never invent traffic, revenue, conversion,
   testimonials or unmeasured speed. Without a metric, describe what shipped.
+- Use only owner-supplied or approved testimonials. Prefer a short, verbatim
+  excerpt; do not rewrite a client's words into stronger claims. Attribute
+  to the approved company name unless personal-name permission is explicit.
+  A quiet quote after the project proof can also sit beneath the homepage
+  work grid. On the homepage, follow it with one CTA to that case study,
+  not an unrelated GitHub link. Keep it static; no review stars or rating schema.
+  Check CTA hover, keyboard focus, pressed state and mobile touch size before publishing.
 - Count commits with `git -C <repo> rev-list --count main`; date milestones
   with `git -C <repo> log --reverse --date=short --format='%ad %s'`. Cite the
   date and runners of the latest recorded test gate, or a fresh suite run.
