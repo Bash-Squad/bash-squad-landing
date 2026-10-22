@@ -9,6 +9,7 @@ import { Badge } from '../components';
 import { Section, SectionHead } from '../sections/Section';
 import { CASE_STUDIES, caseStudyPath } from '../work';
 import { LandToListingsTestimonial } from '../work/land-to-listings/Testimonial';
+import testimonialStyles from '../work/land-to-listings/Testimonial.module.css';
 
 export const GITHUB_ORG = 'https://github.com/Bash-Squad';
 
@@ -206,8 +207,7 @@ export function Work() {
       </div>
       <LandToListingsTestimonial />
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
-        <a href="/work/land-to-listings" aria-label="Read the Land to Listings case study"
-           style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)', border: '1px solid var(--border-strong)', borderRadius: 'var(--r-1)', padding: '10px 16px' }}>
+        <a href="/work/land-to-listings" aria-label="Read the Land to Listings case study" className={testimonialStyles.cta}>
           Read the case study <span aria-hidden="true">→</span>
         </a>
       </div>
