@@ -26,11 +26,11 @@ const SEGMENTS: Segment[] = [
   {
     tag: 'rescue',
     who: 'You vibe-coded something and hit a wall.',
-    body: 'AI got you 70&ndash;80% of the way, then the bugs multiplied and &ldquo;fix it&rdquo; made it worse. The missing 20&ndash;30% is what survives real users. We take the repo, harden it, and get it to a launch you&rsquo;re proud of. Start with a free code audit.',
+    body: 'You built a working prototype with AI, then the bugs multiplied and &ldquo;fix it&rdquo; made it worse. We take the repo, work through what needs fixing, and get it ready for real users. Start with a free code audit.',
     aria: 'A robot builds a prototype that breaks. Bash Squad takes the repo and it launches for real.',
     note: '// no judgment, you got far',
     beats: [
-      { emoji: '\u{1F916}', caption: 'the prototype', sub: 'AI got it 80% there', mood: 'problem' },
+      { emoji: '\u{1F916}', caption: 'the prototype', sub: 'AI helped you build it', mood: 'problem' },
       { emoji: '\u{1F465}', caption: 'bash squad', sub: 'we take the repo' },
       { emoji: '\u{1F680}', caption: 'launched', sub: 'survives real users', mood: 'win' },
     ],
@@ -38,13 +38,13 @@ const SEGMENTS: Segment[] = [
   {
     tag: 'modernize',
     who: 'You&rsquo;re running on aging systems.',
-    body: 'A hospital or firm on software from three vendors and two decades ago. It works, which is exactly what makes changing it risky. We modernize it without breaking what&rsquo;s running or taking down what can&rsquo;t go down.',
-    aria: 'Old hand tools become power tools: Bash Squad modernizes the system in place and nothing goes down.',
+    body: 'A hospital or firm on software from three vendors and two decades ago. It works, which is exactly what makes changing it risky. We modernize it in stages and keep it running while the new parts prove themselves.',
+    aria: 'Old hand tools become power tools: Bash Squad modernizes the system in stages while it keeps running.',
     note: '// no big-bang rewrite',
     beats: [
       { emoji: '\u{1F528}', caption: 'hammer & nails', sub: 'aging, can\u2019t go down', mood: 'problem' },
       { emoji: '\u{1F465}', caption: 'bash squad', sub: 'we modernize in place' },
-      { emoji: '\u26A1', caption: 'power tools', sub: 'nothing went down', mood: 'win' },
+      { emoji: '\u26A1', caption: 'power tools', sub: 'still running', mood: 'win' },
     ],
   },
   {
@@ -62,9 +62,9 @@ const SEGMENTS: Segment[] = [
   {
     tag: 'embed',
     who: 'You need an engineering team, not a hire.',
-    body: 'You&rsquo;ve got the vision and the budget but no senior engineers on staff, and hiring a team takes months. Bring us in as that team. We own the work, and you get senior output with no headcount, recruiting, or ramp.',
+    body: 'You&rsquo;ve got the vision and the budget but no senior engineers on staff, and hiring a team takes months. Bring us in as that team. We own the work, and you get senior engineers without adding headcount or recruiting.',
     aria: 'An idea with no engineering team: Bash Squad embeds, ships, and you own the result.',
-    note: '// no headcount, no ramp',
+    note: '// no headcount, no recruiting',
     beats: [
       { emoji: '\u{1F4A1}', caption: 'the vision', sub: 'no eng team to build it', mood: 'problem' },
       { emoji: '\u{1F465}', caption: 'bash squad', sub: 'we embed as your team' },

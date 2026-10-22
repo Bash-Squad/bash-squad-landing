@@ -10,12 +10,12 @@ const integrations: ServiceContent = {
   shortLabel: 'integrations & syncs',
   metaTitle: 'Systems Integration: APIs, Syncs & Migrations',
   metaDescription:
-    'Systems integration services from senior engineers: CRM, billing, and support wired into one source of truth, with syncs that keep running when tools change.',
+    'Systems integration services from senior engineers: CRM, billing, and support connected around one source of truth, with monitored syncs that flag failures.',
   h1: 'Systems integration that makes the tools you pay for talk to each other.',
   answer:
-    'Integrations and syncs is a systems integration service from senior engineers: we make the tools your business already pays for talk to each other. CRM, billing, support, and spreadsheets wired into one source of truth, with APIs, webhooks, and syncs built to keep running when a tool changes underneath them.',
+    'When your CRM, billing, support desk, and spreadsheets each hold a different version of the truth, we connect them. Senior engineers build the APIs, webhooks, and syncs around one source of truth, with retries, logging, and alerts so a failure gets noticed instead of quietly corrupting your data.',
   intro:
-    'Most businesses don\'t need new software, they need the software they have to stop ignoring each other. Sales lives in the CRM, revenue lives in billing, and someone re-keys numbers into a spreadsheet every Friday. We build the connections: clean two-system syncs, API and webhook integration work, data migrations, and replacements for the no-code chains that quietly grew into critical infrastructure. And when Zapier or n8n genuinely is the right tool for a light job, we\'ll tell you that and save you the money.',
+    'Often the problem isn\'t missing software. It\'s that the software you already pay for doesn\'t share data. Sales lives in the CRM, revenue lives in billing, and someone re-keys numbers into a spreadsheet every Friday. We build two-system syncs, API and webhook integrations, data migrations, and replacements for no-code chains that have become critical. When Zapier or n8n is the right tool for a light job, we\'ll tell you and save you the money.',
   serviceType: 'Systems integration and data synchronization',
   schemaDescription:
     'Connecting business systems with custom API integrations, two-way data syncs, webhooks, and data migrations, including replacing brittle no-code automation chains.',
@@ -34,7 +34,7 @@ const integrations: ServiceContent = {
     },
     {
       title: 'Every task means six logins',
-      body: 'Work happens by copying data between browser tabs. The process lives in one person\'s head, and it breaks the week they go on holiday.',
+      body: 'Work happens by copying data between browser tabs. The process lives in one person\'s head, and it breaks the week they go on vacation.',
     },
   ],
   deliverables: [
@@ -45,24 +45,24 @@ const integrations: ServiceContent = {
     },
     {
       title: 'API and webhook integrations',
-      body: 'Custom integration work against the APIs of the tools you already use, with retries, idempotency, and logging. Those are the unglamorous parts that keep an integration honest, and the parts no-code chains skip.',
+      body: 'Custom integration work against the APIs of the tools you already use, with retries, idempotency, and logging. Those unglamorous parts are what keep an integration trustworthy, and they\'re often missing from no-code chains.',
       tags: ['apis', 'webhooks', 'reliability'],
     },
     {
       title: 'Data migrations',
-      body: 'Your data moved out of the old system and into the new one without losing history or a week of business. Mapped field by field, rehearsed on a copy, then run for real.',
+      body: 'Your data moved from the old system to the new one, mapped field by field, rehearsed on a copy, and checked against the source before the real run, so gaps get caught before cutover.',
       tags: ['migrations', 'mapping', 'validation'],
     },
     {
       title: 'Monitoring and a handoff you own',
-      body: 'Alerts when a sync fails or an upstream API misbehaves, documentation on how the pieces fit together, and everything running in your accounts. No black boxes.',
+      body: 'Alerts when a sync fails or an upstream API misbehaves, documentation on how the pieces fit together, and everything running in your accounts.',
       tags: ['alerts', 'docs', 'ownership'],
     },
   ],
   process: [
     {
       title: 'Tell us what\'s not talking',
-      body: 'List the tools involved and describe the problem in plain words: "invoices over here never match deals over there". No integration jargon required.',
+      body: 'List the tools involved and describe the problem in plain words, like "invoices over here never match deals over there". No integration jargon required.',
     },
     {
       title: 'We map the data flow',
@@ -70,7 +70,7 @@ const integrations: ServiceContent = {
     },
     {
       title: 'You get a fixed-scope plan',
-      body: 'A written proposal: what connects to what, which system is the source of truth, and what it costs. If an off-the-shelf or no-code tool honestly covers your case, we say so.',
+      body: 'A written proposal: what connects to what, which system is the source of truth, and what it costs. If an off-the-shelf or no-code tool covers your case, we say so.',
     },
     {
       title: 'We build against your real data',
@@ -78,33 +78,33 @@ const integrations: ServiceContent = {
     },
     {
       title: 'We switch it on and hand you the keys',
-      body: 'The integration runs in your accounts, monitored and alerting, with docs your team can follow. You own the code and the credentials. No retainer required.',
+      body: 'The integration runs in your accounts with monitoring and alerts, plus docs your team can follow. You own the code and the credentials, and no retainer is required.',
     },
   ],
   faqs: [
     {
       q: 'Can you integrate two tools that don\'t have an official integration?',
-      a: 'Yes, almost always. Most tools expose more than their integrations page admits: a REST API, webhooks, or at minimum scheduled exports. We work down that list in order of reliability, and in the worst case we build controlled automation that drives the tool the way a careful human would. If a system is genuinely closed, we tell you before you\'ve spent anything.',
+      a: 'Often, yes. Many tools expose more than their integrations page shows: a REST API, webhooks, or at least scheduled exports. We work down that list from most to least reliable. As a last resort we can automate the tool\'s own interface the way a careful person would, though that\'s more fragile. If a system is closed off, or its terms rule it out, we\'ll tell you before you\'ve spent anything on the build.',
     },
     {
       q: 'Should I use Zapier or n8n, or hire an API integration developer?',
-      a: 'It depends on volume and the cost of failure. For light glue (a form feeding a spreadsheet, a Slack notification) Zapier and n8n are fine, and we\'ll say so. Once a flow moves money, touches customer data, or stops the business when it stops, you want retries, idempotency, and alerting. That\'s where custom code earns its keep.',
+      a: 'It depends on volume and the cost of failure. For light glue, like a form feeding a spreadsheet or a Slack notification, Zapier and n8n are fine, and we\'ll say so. Once a flow moves money, touches customer data, or stops the business when it stops, you need retries, idempotency, and alerting. That\'s where custom code is worth paying for.',
     },
     {
       q: 'What happens when one of the connected tools changes its API?',
-      a: 'APIs change on the vendor\'s schedule, not yours, so every integration we ship monitors itself and alerts on failure. A breaking change surfaces as a notification the day it happens, not as three weeks of quietly wrong data. If you want us on call for the fix, we offer maintenance; if not, your team can handle it, because you own the code and the docs.',
+      a: 'APIs change on the vendor\'s schedule, not yours, so every integration we ship logs its runs and alerts on failure. Most breaking changes then show up as an alert instead of weeks of quietly wrong data, and where the data allows it we add checks for the quieter kind of break too. If you want us on call for fixes, we offer maintenance. If not, your team has the code and the docs to handle it.',
     },
     {
       q: 'Can you migrate data from an old system to a new one?',
-      a: 'Yes, migrations are a core part of this work. We map fields between the old and new systems, rehearse the migration on a copy of your data, validate counts and edge cases, and only then run it for real. Your history comes with you, and the old system stays untouched until you\'ve confirmed the new one is right.',
+      a: 'Yes, migrations are a core part of this work. We map fields between the old and new systems, rehearse on a copy of your data, and check counts and edge cases before running it for real. Anything that doesn\'t map cleanly gets flagged for a decision instead of dropped, and the old system stays untouched until you\'ve confirmed the new one is right.',
     },
     {
       q: 'Do we own the integration after you build it?',
-      a: 'Yes, fully. The code lives in your repository, it runs in your accounts, and the documentation explains how it works and how to change it. There\'s no proprietary platform sitting between you and your data, and no retainer required to keep it running. If you want us for ongoing maintenance, that\'s a choice, not a dependency.',
+      a: 'Yes. The code lives in your repository, it runs in your accounts, and the documentation explains how it works and how to change it. No proprietary platform sits between you and your data, and you don\'t need a retainer to keep it running. Ongoing maintenance from us is available if you want it.',
     },
     {
       q: 'How do you handle our data and security?',
-      a: 'Minimally and carefully. We use least-privilege API keys you can revoke at any time, keep secrets in a proper secrets manager instead of in code, and avoid copying data anywhere it doesn\'t need to be. Credentials live in your infrastructure, not ours. We\'re happy to sign an NDA and walk your team through exactly what touches what.',
+      a: 'Carefully, and with as little access as possible. We use least-privilege API keys you can revoke at any time, keep secrets in a secrets manager instead of in code, and avoid copying data anywhere it doesn\'t need to be. Credentials live in your infrastructure, not ours. We\'re happy to sign an NDA and walk your team through exactly what touches what.',
     },
   ],
   related: ['custom-software', 'ai-automation', 'legacy-modernization'],

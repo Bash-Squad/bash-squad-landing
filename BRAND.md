@@ -48,6 +48,12 @@ into (see Voice).
   that's what keeps us credible and readable for a CFO, not just a CTO.
 - **Anti-marketing honesty** (the t3.gg ethos): assume the reader is smart. Respect their time.
   Fewer words, more intent.
+- **Promise what we control; qualify the rest.** Service copy opens with the buyer's problem and
+  what we actually do about it, not an "X is a Y service" definition or a keyword string. Outcomes
+  that depend on other systems, vendors, or search engines (indexing, uptime, cutover downtime,
+  integration feasibility, how fast we're useful) get stated as goals or conditions, never
+  guarantees. Don't invent prices, client counts, case studies, or results, and skip slogans and
+  swipes at other agencies.
 - **The wordmark is lowercase** — `bash squad` / `bash-squad` — echoing the understated,
   engineer-coded-their-own-site tone of t3.gg.
 

@@ -21,17 +21,17 @@ const SERVICES = [
   },
   {
     icon: 'clock', title: 'Legacy modernization', href: '/services/legacy-modernization',
-    body: 'Your old system works, which is exactly what makes changing it risky. We modernize it without breaking what\'s running or taking down what can\'t go down, and leave your own people able to run it.',
-    tags: ['upgrades', 'replatforming', 'zero-downtime'],
+    body: 'Your old system works, which is exactly what makes changing it risky. We modernize it in stages, keep it running while new parts prove themselves, and leave your own people able to run it.',
+    tags: ['upgrades', 'replatforming', 'staged cutovers'],
   },
   {
     icon: 'bolt', title: 'Vibe-code rescue', href: '/services/vibe-code-rescue',
-    body: 'AI got you 70–80% of the way. The last 20–30% is the part that survives real users, real data, and real payments. We fix the bugs, close the security holes, and take it from “looks finished” to “in production.”',
+    body: 'AI got you to a working prototype. Getting it ready for real users means handling real data, payments, and the things a demo doesn\'t reveal. We fix the bugs, close the security holes, and help you launch with confidence.',
     tags: ['audit', 'harden', 'launch'],
   },
   {
     icon: 'person', title: 'Your engineering team', href: '/services/fractional-engineering-team',
-    body: 'No senior engineers on staff? Embed us. We own the work like it\'s ours (planning, building, shipping) and the context compounds instead of resetting with every new vendor. Senior output, no headcount, no ramp.',
+    body: 'No senior engineers on staff? Embed us. We own the work like it\'s ours (planning, building, shipping) and the context compounds instead of resetting with every new vendor. Senior help without adding headcount or recruiting.',
     tags: ['fractional', 'embedded', 'ongoing'],
   },
 ];
