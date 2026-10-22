@@ -38,6 +38,9 @@ export const metadata: Metadata = {
       { url: '/favicon.png', type: 'image/png', sizes: '192x192' },
       { url: '/favicon.svg', type: 'image/svg+xml' },
     ],
+    // public/favicon.ico (16/32/48) answers the bare /favicon.ico request
+    // that browsers, Bing and link previews make regardless of link tags.
+    shortcut: '/favicon.ico',
   },
   openGraph: { ...SITE_OPEN_GRAPH, url: SITE_URL },
   twitter: { card: 'summary_large_image' },
@@ -61,6 +64,12 @@ const siteJsonLd = {
       url: SITE_URL,
       logo: `${SITE_URL}/logo-mark.svg`,
       email: 'hello@bashsquad.com',
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        email: 'hello@bashsquad.com',
+        availableLanguage: 'en',
+      },
       description:
         'A small, senior crew of engineers who build with AI: custom software, integrations & syncs, AI & automation, legacy modernization, and vibe-code rescue.',
       sameAs: ['https://github.com/Bash-Squad'],
