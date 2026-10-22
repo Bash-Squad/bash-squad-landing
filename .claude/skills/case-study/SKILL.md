@@ -1,143 +1,75 @@
 ---
 name: case-study
-description: Adds or updates a /work/<slug> case-study page on the Bash Squad site (bash-squad-landing) from a real project: gathers facts from the project's repo and live site, captures screens and a short screen recording, writes the content file in the site's voice, optionally builds per-study hero art, and gates it with the taste-skill linter and inspector before the PR. Use when asked to add a project to "our work", write or refresh a case study, or feature a client build or product.
+description: Add or update a Bash Squad /work/<slug> case study using sourced project facts, privacy-safe captures, and the existing site design. Covers metadata registration, project-specific composition, copy, capture scripts, and browser verification.
 ---
 
-# Case study pages
+# Case studies
 
-The page is a fixed design; each project is one content file, its pictures,
-and optionally a little custom flair. Adding a study means writing
-`src/work/content/<slug>.ts` and capturing its pictures. It does **not** mean
-changing the template for one project.
+Keep the existing design; adding a project is not a template redesign.
+Read [voice.md](voice.md) before writing and [capture.md](capture.md) before
+capturing. `.taste-skill/direction.json` records settled design decisions,
+not a catalogue to rebuild.
 
-```
-src/work/types.ts            CaseStudyContent: every field, with length rules
-src/work/content/<slug>.ts   one project (reference shape: land-to-listings.ts)
-src/work/index.ts            registry: order = display order
-src/work/CaseStudyPage.tsx   the template
-src/work/motion.tsx          pinned story, counters, looping video, timeline tabs
-src/work/Pipeline.tsx        the optional "many into one" diagram
-src/work/CloseForm.tsx       the closing lead form (#book)
-src/work/flair/              per-study hero art, keyed by slug
-src/styles/work.css          layout, tokens and motion
-public/work/<slug>/          screens, recording, og.png
-.taste-skill/direction.json  the art direction this page was built from
-```
+## Architecture
 
-Registering in `index.ts` wires the page, `/work`, the homepage Work grid,
-the ⌘K palette, the sitemap and `llms.txt`.
-
-## The design (settled; don't redraw it per study)
-
-Built with the `design-taste-frontend` skill, direction "the well-kept
-board": flat tiles on the page ground, 8px apart, square corners, one accent
-(acid, on the action and the loud number), no lines, no shadows, no
-monospace, no eyebrow labels, no 01/02/03 numbering, five type sizes. In
-order: a pinned hero board (the name huge, jump links, phone screen + facts,
-the hero art + statement, features + the action) → the brief (lead + four
-readers) → the pinned story of screens → the MLS-style pipeline → timeline
-tabs → three stepped numbers → where it landed (video, region, facts) → the
-action row → site footer. The pipeline is optional and simply drops out.
-
-No interactive copies of the client's product. A Land to Listings search
-demo built from a snapshot of their listings was cut: it went stale the day
-it was copied, its pins sat at county centres, and our site shouldn't hold a
-copy of a client's data. Describe a feature in the story instead.
-
-Keep: one dominant thing per screen, the client's own colours only where
-their work is shown, motion on transform/opacity/clip-path with a finished
-state under reduced motion, no scrolling text, no tilted screenshots, no fake
-cursors in editable fields. Steve liked the scroll-built hero and the pinned
-story; keep both.
-
-## Workflow
-
-```
-- [ ] 1. Branch off main (feat/case-study-<slug>)
-- [ ] 2. Facts: read the project repo + live site, note sources
-- [ ] 3. Ask Steve the open questions (below) in one batch
-- [ ] 4. Capture screens + the phone screen, record the loop, resize, render og.png
-- [ ] 5. Write src/work/content/<slug>.ts
-- [ ] 6. Hero art (optional, ask first)
-- [ ] 7. Register in src/work/index.ts
-- [ ] 8. Gate: taste lint + inspect, then look at the screenshots
-- [ ] 9. Verify behaviour (build, browser, privacy grep)
-- [ ] 10. Commit, push, PR with the share card and open decisions
+```text
+src/work/types.ts                   CaseStudy: shared metadata, not a section schema
+src/work/content/<slug>.ts          project metadata
+src/work/index.ts                   metadata registry; order = display order
+src/work/land-to-listings/Page.tsx  project-specific server composition
+src/work/land-to-listings/content.ts detail data; claim sources are in metadata
+src/work/land-to-listings/Pipeline.tsx project diagram
+src/work/flair/land-to-listings/Plat.tsx hero art, imported directly by Page
+src/work/Shot.tsx                   reusable screenshot rendering
+src/work/motion.tsx                 interactive story, counters, video, timeline
+src/work/CloseForm.tsx              closing lead form (#book)
+src/components/SubpageChrome.tsx    shared subpage header/footer
+src/app/work/[slug]/page.tsx         slug-to-page mapping, metadata and JSON-LD
+public/work/<slug>/                 referenced captures and og.png
 ```
 
-**Updating an existing study:** edit the content file, recapture screens
-that changed, re-render `og.png` if the statement, stats or cover changed,
-then gate and verify as below. Before writing, re-check every existing claim
-against the project as it is now (see voice.md, "Re-check old claims").
+The metadata registry feeds `/work`, the homepage Work grid, the command
+palette, sitemap and `llms.txt`. Detail data stays in the project's folder;
+there is no generic section schema or flair registry. A new project needs
+**both** metadata registration and an explicit page mapping in the dynamic
+route. Compose its server page from shared primitives and direct imports.
 
-### 2. Facts
+## Authoring
 
-Delegate to a read-only scout when the repo is unfamiliar. Collect, with
-file or command citations:
-- what it is, who uses it (the four readers), what problem it solved
-- stack with versions; timeline from `git log --reverse --date=short`
-- counts: commits, the latest recorded test gate, measured performance
-- 4-6 screens worth showing, with live URLs; one thing that moves
-- anything that must stay private (names, pricing, contacts, fees)
+1. Read the project's repo and live site. Gather its audience, shipped
+   features, stack, dated milestones and measured results with sources.
+   Re-check existing claims on updates; do not carry launch claims forward
+   without evidence.
+2. Ask unresolved questions together: permission to name the client
+   (default no), live URL/data status, off-limits material, and approval for
+   any new project-specific hero art.
+3. Capture real screens and a muted product recording; inspect every asset.
+   Use the unchanged `scripts/resize.py` and `scripts/og.py` as documented in
+   capture.md. Re-render the share card when its cover, statement or stats change.
+4. Write metadata and project detail content, recording claim sources beside
+   the data. Register metadata and the page. Do not copy client datasets into
+   an interactive demo or reuse their brand/drone footage; describe the
+   feature with captures instead. Custom art uses the project's drawings or marks.
 
-### 3. Open questions for Steve (ask once, together)
-
-- Can the client be named? Default: no; describe them.
-- Which live URL? Is the data real yet?
-- Anything off-limits to show or say?
-- A flair idea, in one sentence, if the project has a signature to show.
-
-### 4. Capture
-
-Follow [capture.md](capture.md): sizes, hiding names before the shot, maps
-need WebGL, the screen recording, `scripts/resize.py`, and `scripts/og.py`.
-Admin screens come from a local run; hide MLS numbers, emails and anyone's
-name. Look at every image before using it.
-
-### 5. Content
-
-Every string follows [voice.md](voice.md). Put a comment at the top listing
-where each number came from.
-
-### 6. Hero art (optional)
-
-Register a `hero` component in `src/work/flair/index.ts` under the slug: art
-for the hero's large tile (Land to Listings: their plat, in their paper and
-ink, drawing on load and building on scroll while the board is pinned).
-Without it the tile shows `cover`. Use the project's own drawings or marks,
-never the client's own footage or listing data. Ask Steve before building
-one.
-
-### 8. Gate (taste skill)
+## Verify before a PR
 
 ```bash
 S=~/.agents/skills/design-taste-frontend
-node $S/scripts/lint.mjs src/work src/styles/work.css
-node $S/scripts/inspect.mjs http://localhost:<port>/work/<slug>
+node "$S/scripts/lint.mjs" src/work src/styles/work.css
+node "$S/scripts/inspect.mjs" http://localhost:<port>/work/<slug>
+pnpm typecheck
+pnpm build
 ```
 
-Fix every FAIL that comes from the case-study page. The shared site header
-and footer currently fail `mono`, `micro-label` and `hairline` (brand chrome
-outside this page); report those, don't hide them. Then open the inspector's
-screenshots at 1440, 768 and 390 and critique them with
-`$S/references/critique.md`; fix the top problems and run it again.
-
-### 9. Verify
-
-1. `pnpm typecheck`, then `pnpm build`: `● /work/[slug]` lists the slug.
-2. In a browser at 1440x900 and 390x844: the hero art builds as you scroll
-   and the board releases after it; the story screen swaps at mid-screen;
-   week tabs
-   switch with clicks and arrow keys; the video plays only on screen and its
-   button pauses it; the close form shows its own errors (don't submit a
-   real lead); no sideways scroll; console clean.
-3. Reduced motion: hero art complete, counters final, video on its poster.
-4. Privacy: search the rendered HTML for every name on the private list.
-5. `curl` the page: title, description, canonical, `og:image` 1200x630,
-   `og:type` article; sitemap and `llms.txt` list it.
-
-### 10. PR
-
-Body: what the page covers, where each number came from, the gate result
-(including the chrome FAILs), the share card (raw GitHub URL on the branch),
-and decisions left for Steve. Delete unused captures first.
+- Inspect the taste screenshots at 1440, 768 and 390; use its
+  `references/critique.md`. Fix case-study failures; report shared chrome
+  findings (`mono`, `micro-label`, `hairline`) rather than hiding them.
+- At 1440x900 and 390x844: check hero scroll/release, story screen swaps,
+  timeline clicks/arrow keys, video visibility and pause, local form errors
+  without sending a real lead, no sideways scroll and a clean console.
+- With reduced motion: complete hero art, final counters and the video poster.
+- Search rendered HTML for every private name; check alt text and JSON-LD too.
+  Check title, description, canonical, 1200x630 `og:image`, article type,
+  generated route, sitemap and `llms.txt`.
+- Remove unused captures. The PR records claim sources, exercised checks,
+  remaining findings, a share-card link and decisions still needing the owner.

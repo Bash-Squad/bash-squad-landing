@@ -1,34 +1,13 @@
-'use client';
-// CaseStudyPage: the template for every /work/<slug> page. Content comes from
-// src/work/content/* via the registry; a study can add custom hero art
-// through src/work/flair. JSON-LD and metadata come from the
-// server route (src/app/work/[slug]/page.tsx). Layout and motion: work.css.
-//
-// The page is a board of flat tiles (art direction: "the well-kept board",
-// .taste-skill/direction.json). In order:
-//   hero board (name, jump links, portrait + facts, hero art + statement,
-//   features + action), pinned while the hero art builds on scroll
-//   -> brief (lead + four readers) -> pinned story of screens
-//   -> pipeline (optional) -> timeline tabs
-//   -> stepped numbers -> where it landed (video, region, facts)
-//   -> the action row (#book) -> site footer.
 import React from 'react';
-import { Footer } from '../sections/Footer';
-import { BuildHeader } from '../build/BuildHeader';
-import { SERVICES, servicePath } from '../services';
-import { CASE_STUDIES, caseStudyPath } from './index';
-import type { CaseStudyContent } from './types';
-import { LoopVideo, ScrollStory, Shot, Stats, Timeline } from './motion';
+import { SubpageHeader, SubpageFooter } from '../../components/SubpageChrome';
+import { SERVICES, servicePath } from '../../services';
+import { CASE_STUDIES, caseStudyPath } from '../index';
+import { LoopVideo, ScrollStory, Stats, Timeline } from '../motion';
+import { Shot } from '../Shot';
 import Pipeline from './Pipeline';
-import CloseForm from './CloseForm';
-import { FLAIR } from './flair';
-
-// Header/footer nav ids live on the homepage; 'book' is this page's action row.
-function navFrom(id: string): void {
-  if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-  if (id === 'book') { document.getElementById('book')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
-  window.location.href = '/#' + id;
-}
+import CloseForm from '../CloseForm';
+import Plat from '../flair/land-to-listings/Plat';
+import study from './content';
 
 // Where copy names the live site ("Live at landtolistings.com since…"), the
 // name is a followed link to it: real attribution for the client, and a
@@ -45,18 +24,7 @@ function withLiveLink(text: string, href: string | undefined, host: string | und
   );
 }
 
-const FOOTER_COLS = [
-  { h: 'navigate', items: [['/', 'home'], ['/services', 'services'], ['/work', 'our work'], ['book', 'tell us what you need']] as [string | null, string][] },
-  {
-    h: 'work',
-    items: CASE_STUDIES.map((c) => [caseStudyPath(c.slug), c.name.toLowerCase()]) as [string | null, string][],
-  },
-  { h: 'family', items: [[null, 'blue ghost lab']] as [string | null, string][] },
-];
-
-export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
-  const flair = FLAIR[study.slug] ?? {};
-  const Hero = flair.hero;
+export default function LandToListingsPage() {
   const live = study.links.live;
   const liveHost = live?.replace(/^https?:\/\//, '').replace(/\/$/, '');
   const related = study.related
@@ -74,7 +42,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
 
   return (
     <React.Fragment>
-      <BuildHeader onNav={navFrom} />
+      <SubpageHeader />
       <main className="cs-page">
         {/* hero: one pinned board of tiles; the art builds while it holds */}
         <section className="cs-hero" aria-labelledby="cs-name">
@@ -99,7 +67,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
                 </dl>
               </div>
               <div className="cs-tile cs-art">
-                {Hero ? <Hero /> : <Shot image={study.cover} priority className="cs-art__cover" />}
+                <Plat />
                 <p className="cs-art__statement">{study.statement}</p>
               </div>
               <div className="cs-rail-right">
@@ -129,11 +97,9 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           <ScrollStory steps={study.story.steps} />
         </section>
 
-        {study.pipeline && (
-          <section id="mls" className="cs-sec">
-            <Pipeline pipeline={study.pipeline} />
-          </section>
-        )}
+        <section id="mls" className="cs-sec">
+          <Pipeline />
+        </section>
 
         {/* how it went: one tab per week */}
         <section id="timeline" className="cs-sec cs-tl">
@@ -194,7 +160,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudyContent }) {
           {related.map((r) => <a key={r.slug} className="cs-link" href={servicePath(r.slug)}>{r.name}</a>)}
         </nav>
       </main>
-      <Footer onNav={navFrom} cols={FOOTER_COLS} />
+      <SubpageFooter kind="work" />
     </React.Fragment>
   );
 }

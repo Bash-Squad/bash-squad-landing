@@ -6,32 +6,11 @@
 import React from 'react';
 import { Badge, SectionLabel } from '../components';
 import { Section } from '../sections/Section';
-import { Footer } from '../sections/Footer';
-import { BuildHeader } from '../build/BuildHeader';
+import { SubpageHeader, SubpageFooter } from '../components/SubpageChrome';
 import { BuildCTA } from '../build/BuildCTA';
 import { GITHUB_ORG, PROJECTS, ProjectCard } from '../build/Work';
 import { CASE_STUDIES, caseStudyPath } from './index';
-import { Shot } from './motion';
-
-function scrollToId(id: string): void {
-  if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-function navFrom(id: string): void {
-  if (id === 'top' || id === 'book') { scrollToId(id); return; }
-  window.location.href = '/#' + id;
-}
-
-const FOOTER_COLS = [
-  { h: 'navigate', items: [['/', 'home'], ['/services', 'services'], ['/#help', 'who we help'], ['book', 'tell us what you need']] as [string | null, string][] },
-  {
-    h: 'work',
-    items: CASE_STUDIES.map((c) => [caseStudyPath(c.slug), c.name.toLowerCase()]) as [string | null, string][],
-  },
-  { h: 'family', items: [[null, 'blue ghost lab']] as [string | null, string][] },
-];
+import { Shot } from './Shot';
 
 export default function WorkIndex() {
   const products = PROJECTS.filter((p) => !p.caseStudy);
@@ -39,7 +18,7 @@ export default function WorkIndex() {
 
   return (
     <React.Fragment>
-      <BuildHeader onNav={navFrom} />
+      <SubpageHeader />
       <main>
         <Section tone="base" style={{ borderBottom: '1px solid var(--border-hairline)' }}>
           <div style={{ maxWidth: 860 }}>
@@ -104,7 +83,7 @@ export default function WorkIndex() {
 
         <BuildCTA index="03" source="work index" />
       </main>
-      <Footer onNav={navFrom} cols={FOOTER_COLS} />
+      <SubpageFooter kind="work" hub />
     </React.Fragment>
   );
 }

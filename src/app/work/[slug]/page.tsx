@@ -1,7 +1,12 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CASE_STUDIES, getCaseStudy, caseStudyPath } from '../../../work';
-import CaseStudyPage from '../../../work/CaseStudyPage';
+import LandToListingsPage from '../../../work/land-to-listings/Page';
+import type { ComponentType } from 'react';
+
+const PAGES: Record<string, ComponentType> = {
+  'land-to-listings': LandToListingsPage,
+};
 
 const SITE_URL = 'https://bashsquad.com';
 
@@ -40,7 +45,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CaseStudyRoute({ params }: Props) {
   const { slug } = await params;
   const study = getCaseStudy(slug);
-  if (!study) notFound();
+  const Page = PAGES[slug];
+  if (!study || !Page) notFound();
 
   const url = `${SITE_URL}${caseStudyPath(slug)}`;
 
@@ -89,7 +95,7 @@ export default async function CaseStudyRoute({ params }: Props) {
 
   return (
     <>
-      <CaseStudyPage study={study} />
+      <Page />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

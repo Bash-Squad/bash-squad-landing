@@ -4,32 +4,20 @@
 // action as every other form on the site (honeypot, time trap, rate limit
 // all apply), labelled with the case study it came from.
 import React from 'react';
-import { submitLead } from '../lib/leadAction';
+import { useLeadSubmission } from '../lib/useLeadSubmission';
 import { isValidEmail } from '../lib/lead';
 
 export default function CloseForm({ source }: { source: string }) {
   const [message, setMessage] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [botcheck, setBotcheck] = React.useState('');
-  const [status, setStatus] = React.useState<'idle' | 'sending' | 'sent'>('idle');
-  const [error, setError] = React.useState('');
-  const mountedAt = React.useRef(Date.now());
+  const { status, error, setError, sendLead } = useLeadSubmission('That didn’t send. Email us at hello@bashsquad.com instead.');
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) { setError('Tell us what you need built or fixed.'); return; }
     if (!isValidEmail(email)) { setError('We need an email address to reply to.'); return; }
-    setError('');
-    setStatus('sending');
-    try {
-      const res = await submitLead({ source, email, message, botcheck, elapsedMs: Date.now() - mountedAt.current });
-      if (res.ok) { setStatus('sent'); setMessage(''); setEmail(''); return; }
-      setStatus('idle');
-      setError('That didn’t send. Email us at hello@bashsquad.com instead.');
-    } catch {
-      setStatus('idle');
-      setError('That didn’t send. Email us at hello@bashsquad.com instead.');
-    }
+    await sendLead({ source, email, message, botcheck }, () => { setMessage(''); setEmail(''); });
   };
 
   if (status === 'sent') {

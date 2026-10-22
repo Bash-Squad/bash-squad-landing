@@ -77,18 +77,20 @@ src/
                        Header, Footer)
   services/            service pages: types.ts (content model), content/*,
                        index.ts (registry), ServicePage, ServicesIndex
-  work/                case studies: types.ts (content model), content/*,
-                       index.ts (registry), CaseStudyPage, WorkIndex,
-                       motion.tsx (scroll rail, story, compare, counters)
+  work/                case studies: types.ts (metadata), content/*,
+                       index.ts (registry), WorkIndex, Shot.tsx, motion.tsx
+    land-to-listings/   Page.tsx (server composition), content.ts, Pipeline.tsx
+    flair/             project art imported directly by its page
   guide/, App.tsx      earlier landing variants, kept for reference (not routed)
-  components/          design system, imported via the src/components barrel
+  components/          design system + shared SubpageChrome
     core/              Button, IconButton, Badge, Tag, Card, Avatar,
                        SectionLabel, Divider, CopyEmail
     forms/             Input, TerminalInput, Textarea, Select, Checkbox, Switch
     terminal/          CommandPalette, CommandPrompt, Terminal, StatusBar,
                        MarqueeStrip, NodeGraph, WorkflowScene, pictograms
-  lib/                 lead.ts (type + validation), leadAction.ts (server
-                       action), mailer.ts (Resend delivery)
+  lib/                 lead.ts (type + validation), useLeadSubmission.ts
+                       (shared form lifecycle), leadAction.ts (server action),
+                       mailer.ts (Resend delivery)
   styles/              styles.css (entry), landing.css (responsive rules),
                        work.css (case-study layout + motion),
                        tokens/ (colors, typography, spacing, effects, fonts, base)
@@ -101,40 +103,36 @@ BRAND.md               brand and voice guidelines
 
 ## Case studies
 
-`/work/<slug>` pages are content-driven. The full workflow (fact-gathering,
-capture, copy rules, the design gate, verification) is the `case-study`
-agent skill in `.claude/skills/case-study/`. A study can add custom hero
-art (`src/work/flair/`, registered by slug). In short:
+Case studies use shared `CaseStudy` metadata (`src/work/types.ts`) and
+project-specific server pages, not a generic section schema. The authoring
+guide is [the case-study skill](.claude/skills/case-study/SKILL.md), with
+capture scripts, privacy/source rules and desktop/mobile/reduced-motion checks.
 
-1. Capture the real product into `public/work/<slug>/`: desktop screens at
-   1440x900 (`name.webp` plus a `name@2x.webp` sibling), one phone screen at
-   780 wide (`m-name.webp`), a short muted screen recording (`intro.mp4`,
-   `intro-poster.webp`) and a 1200x630 `og.png` share card.
-2. Write `src/work/content/<slug>.ts` against `CaseStudyContent`
-   (`src/work/types.ts`). Real specifics only; if there is no metric,
-   describe what shipped. Plain sentences, no em-dashes, and no client
-   names unless they have agreed to be named.
-3. Register it in `src/work/index.ts`. That alone adds it to `/work`, the
-   homepage Work grid, the ⌘K palette, the sitemap, and `llms.txt`.
-4. Gate it with the taste skill's `lint.mjs` and `inspect.mjs`, then check
-   it in a browser at desktop and phone widths, and with reduced motion on.
+1. Capture the product into `public/work/<slug>/`. The guide documents
+   desktop/retina and phone WebP sizes, H.264 recording and 1200x630 share card.
+2. Add metadata in `src/work/content/<slug>.ts` and register it in
+   `src/work/index.ts` for the Work hub, homepage grid, command palette,
+   sitemap and `llms.txt`.
+3. Compose `src/work/<slug>/Page.tsx` with local detail data in `content.ts`,
+   shared `Shot.tsx`/`motion.tsx`, and direct project-art imports. Land to
+   Listings also owns its `Pipeline.tsx` and imports its `Plat` directly from
+   `flair/land-to-listings/Plat.tsx`.
+4. Map the slug to that page in `src/app/work/[slug]/page.tsx`; metadata
+   registration alone does not create a page. Follow the guide's checks.
 
-The page's art direction ("the well-kept board": flat tiles, square
-corners, one accent, no lines or monospace) is recorded in
-`.taste-skill/direction.json`. Motion: the hero board pins while its art
-builds with the scroll (CSS scroll-driven animation), section parts rise in
-as they scroll in (also CSS, no script), the story pins one screen while its
-steps pass, the numbers count up once, and the recording plays only while
-it's on screen. Everything renders in its final state with
-`prefers-reduced-motion`.
+The existing design is recorded compactly in `.taste-skill/direction.json`:
+flat square tiles, brand type/palette, scroll-built hero, pinned story,
+counters and visibility-controlled video. Preserve its reduced-motion
+fallbacks. Use sourced claims and no private client details without permission.
 
 ## Contact form
 
-Every CTA form calls the `submitLead` server action (`src/lib/leadAction.ts`),
-which runs on the server (Cloudflare Workers): it validates, emails the lead to
-`hello@bashsquad.com` via Resend (`src/lib/mailer.ts`, with Reply-To set to the
-lead), and forwards the lead to Bash Squad OS (HQ) when configured. No
-client-side form service and no public key in the browser.
+CTA forms share `useLeadSubmission` (`src/lib/useLeadSubmission.ts`) for
+submission state, timing and delivery errors; each form keeps its fields,
+validation and presentation. The hook calls the `submitLead` server action,
+which validates, emails `hello@bashsquad.com` via Resend (`src/lib/mailer.ts`,
+with Reply-To set to the lead), and forwards to HQ when configured.
+No client-side form service and no public key in the browser.
 
 Env (server-only, in `.env.local`; see `.env.example`):
 

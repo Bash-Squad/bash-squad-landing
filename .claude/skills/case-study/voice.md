@@ -1,103 +1,50 @@
-# Case-study copy: voice and vetting
-
-Steve reads every line. Copy that sounds generated, brags about table stakes,
-or leaks a client detail gets thrown back. Check each field against this
-before showing anything. The page's design rules (no eyebrows, no
-monospace, no numbering) are enforced by the taste-skill linter; these are
-the word rules it can't check.
+# Case-study copy
 
 ## Voice
 
-- **Write like the rest of the site**: plain, confident, specific. Read
-  `src/build/BuildHero.tsx`, `src/build/BuildCTA.tsx` and one file in
-  `src/services/content/` first and match them.
-- **Full sentences** with contractions. "Two minutes." is not a sentence.
-- **No em dashes.** Use a period, comma, colon or parentheses.
-- **No AI tells:** no "not X, not Y, just Z", no triplets for rhythm, no
-  slogan fragments, no lines that describe themselves ("here's the story"),
-  no "seamless", "robust", "leverage", "elevate", "powerful", "cutting-edge",
-  no "unlock", "empower", "streamline". Ask of every sentence whether another
-  agency could print it unchanged about another project; if so, sharpen it.
-- **Explain like a person would.** A reader should understand a heading
-  without the section around it. "Two heads. They picked the plat." failed;
-  "Two versions of the home page. They picked the map." passed.
-- **Headings are titles, not sentences:** two to five words, two lines at
-  most at every width (about 32 characters is safe on a phone).
-- **American spelling, curly quotes and apostrophes.**
+Match `src/build/BuildHero.tsx`, `src/build/BuildCTA.tsx` and the service
+content: plain, confident, specific American English, with contractions and
+curly quotes. Use full sentences in body copy, not slogan fragments. No em
+dashes, rhythmic triplets, “not X, not Y, just Z,” or stock agency promises
+(“seamless,” “robust,” “leverage,” “elevate,” “unlock,” “empower,” “streamline”).
+If another agency could print a sentence unchanged, make it specific.
 
-## Facts
+Headings are titles: two to five words, understandable alone, at most two
+lines at every width (about 32 characters is safe on phones). Name screens
+by what they are, such as “Land for sale,” not claims such as “The map and
+the list agree.” Explain what the product does in a buyer's words. Mention
+outcomes people feel, not table stakes like HTTPS or working back buttons.
 
-- **Every claim traces to a source:** the project repo (README, plans, docs,
-  tests, `git log`) or the live site. List where each number came from in a
-  comment at the top of the content file.
-- **Real numbers only.** If there is no metric, describe what shipped. Never
-  estimate traffic, revenue, conversion, or speed you didn't measure.
-- **Count, don't guess.** Commits: `git -C <repo> rev-list --count main`.
-  Dates: `git -C <repo> log --reverse --date=short --format='%ad %s'`.
-  Tests: quote the latest recorded release gate (with its date) or run the
-  suite on a fresh build; say which runners.
-- **Re-check old claims on every update.** Features get switched off (video
-  uploads), rules change (sold listings went private), costs change. A claim
-  that was true at launch can be false a week later.
-- **Timeline milestones are real dates from the history**, two or three a
-  week, at the level of what shipped ("MLS import", "Communities"). Title in
-  two to five words; the note one short sentence. Leave out the process:
-  calls, fixes, copy passes, how many changes went out when. Steve: "too
-  much detail".
-- **Name a screen by what it is** ("Land for sale", "A home listing", "The
-  admin"), never by a claim about it. "A form landowners finish", "The map
-  and the list agree", "Every photo, full size" and "An admin they run" all
-  read as AI marketing. Bodies say what's on the screen and what it does,
-  in words a buyer would use: no "one table", no "without a sales pitch",
-  no "always show the same set".
-- **Describe what the system does, not what it leaves alone.** "Prices and
-  status update on their own" lands; "the brokers' descriptions are never
-  touched" reads oddly to a buyer.
+## Claims and privacy
 
-## Privacy
+- Source every claim to the project repo or live site; record number sources
+  beside metadata/detail content. Never invent traffic, revenue, conversion,
+  testimonials or unmeasured speed. Without a metric, describe what shipped.
+- Count commits with `git -C <repo> rev-list --count main`; date milestones
+  with `git -C <repo> log --reverse --date=short --format='%ad %s'`. Cite the
+  date and runners of the latest recorded test gate, or a fresh suite run.
+  Date performance measurements too. Re-check all claims on every update.
+- Timeline entries describe shipped work, two or three per week, with real
+  dates, short titles and a one-sentence note. Omit calls, fixes, copy passes
+  and change counts.
+- No client/staff names in copy, metadata, alt text, JSON-LD, command palette
+  or captures without permission. Describe the client instead.
+- Never publish private pricing, discounts, fees, acquisition details,
+  emails, call notes, contract terms, analytics sample sizes, lead counts or
+  private planning information not visible on the live site.
+- Remove private elements before capturing (MLS numbers, emails, contacts),
+  rather than blurring or leaving blank holes. Search rendered HTML for the
+  private-name list before the PR. Demo data must not pass as client data.
 
-- **No client or staff names** in copy, metadata, alt text, JSON-LD, the ⌘K
-  palette or screenshots unless the client agreed to be named. Describe
-  them: "a brokerage in eastern North Carolina".
-- **Never publish:** pricing, discounts, fees, how the client found us,
-  private emails or call notes, contract terms, analytics sample sizes, lead
-  counts, or anything from a private planning doc that isn't visible on the
-  live site. Leave out process detail entirely (calls, change counts).
-- **Remove, don't blank.** When a screenshot holds something private (an MLS
-  number, an email), delete the element before the shot so the layout closes
-  up; a hidden element leaves a hole that looks broken.
-- Search the rendered page for every name on the private list before the PR.
+## Length checks
 
-## What's worth bragging about
+Shared metadata: `statement` at most 60 characters; `answer` 30–40 words
+covering product, audience and work; `cardDescription` one sentence;
+`metaTitle` at most 52 characters without the site suffix;
+`metaDescription` 140–160 characters.
 
-Keep a claim only if a buyer, a client's customer, or the client's staff
-would feel it, and a competitor's site plausibly wouldn't do it.
-
-**Cut** (table stakes): the back button works, it's responsive, it has HTTPS,
-it loads, forms validate, it has a sitemap.
-
-**Keep** (outcomes): staff bring a listing in from the MLS instead of typing
-it twice; prices stay current overnight; a lead is saved even when the email
-fails; no passwords to leak; measured speed (Lighthouse, layout shift) with
-the date it was measured. Clever-but-niche details (a search you can send as
-a link) get one supporting sentence in the story, not a section.
-
-## Field guide
-
-| Field | Shape |
-|---|---|
-| `name` | The project's name, set huge in the hero band. |
-| `statement` | One sentence over the hero art, <= 60 characters: what it is and the headline number. |
-| `answer` | 30-40 words, answer-first: what it is, who it's for (no names), what we did. Opens the brief; search engines and AI quote it. |
-| `facts` | Four hero facts: who for (described), live date, build time, where it runs. |
-| `features` | Four short lines for the hero's right rail, each under ~40 characters. |
-| `brief.audiences` | Four readers of the site. `lead` is the bold run-in ("Builders want"), `body` 40-60 words on what they get. |
-| `story.steps` | 3-5 screens. Title says what the screen does; body (40-55 words) says how and why it matters. |
-| `pipeline` | Optional. Three stages named in one word each; body one or two sentences with a real number. |
-| `timeline` | Two-line heading (first line soft); one tab per week, two or three dated milestones each. |
-| `stats` | Exactly three real numbers; the first is the loud one. Labels in plain words. |
-| `landed` | Where it stands now, honestly. `lead` under ~30 words; `note` over the video under 35 words; four facts. |
-| `close` | The site's own CTA voice. Its flank tiles stay plain: a cropped client photo there looked random. |
-| `cardDescription` | One sentence for the Work grid and llms.txt: product, audience, stack. |
-| `metaTitle` | <= 52 chars, no "| bash squad" suffix. |
-| `metaDescription` | 140-160 chars. |
+The existing Land to Listings composition uses four facts, four short
+features, four audiences, three to five screens and exactly three sourced
+stats. Keep screen bodies around 40–55 words, audience bodies 40–60 words,
+landed lead under 30 words and video note under 35. These are project layout
+constraints, not a shared schema for every future case study.

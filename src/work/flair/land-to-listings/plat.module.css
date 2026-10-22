@@ -1,6 +1,6 @@
 /* The plat fills its tile (the client's paper). Three layers draw on load;
    three more build with the page's scroll while the hero board is pinned
-   (CaseStudyPage pins it; the ranges below are scroll offsets from the top of
+   (work.css pins it; the ranges below are scroll offsets from the top of
    the page, so they line up with the pinned stretch). Without scroll-driven
    animation, with reduced motion, or below 1100px, the finished drawing
    shows. Only opacity, transform and clip-path move. */

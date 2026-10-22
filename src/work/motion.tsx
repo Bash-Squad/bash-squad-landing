@@ -5,7 +5,8 @@
 // timeline tabs. Only transform and opacity move. Under reduced motion every
 // piece shows its finished state.
 import React from 'react';
-import type { CaseStudyImage, CaseStudyStat, CaseStudyStep, CaseStudyVideo, CaseStudyWeek } from './types';
+import type { CaseStudyStat, CaseStudyStep, CaseStudyVideo, CaseStudyWeek } from './types';
+import { Shot } from './Shot';
 
 export function useReducedMotion(): boolean {
   const [reduced, setReduced] = React.useState(false);
@@ -17,25 +18,6 @@ export function useReducedMotion(): boolean {
     return () => mq.removeEventListener('change', update);
   }, []);
   return reduced;
-}
-
-/* --- a screen, plain: square, uncropped, with its retina sibling ---------- */
-
-export function Shot({ image, priority = false, className }: { image: CaseStudyImage; priority?: boolean; className?: string }) {
-  const srcSet = image.retina ? `${image.src} 1x, ${image.src.replace(/\.webp$/, '@2x.webp')} 2x` : undefined;
-  return (
-    <img
-      className={className}
-      src={image.src}
-      srcSet={srcSet}
-      alt={image.alt}
-      width={image.width}
-      height={image.height}
-      loading={priority ? 'eager' : 'lazy'}
-      decoding="async"
-      fetchPriority={priority ? 'high' : 'auto'}
-    />
-  );
 }
 
 /* --- counters: the first run of digits counts up once, on entry ---------- */
@@ -81,7 +63,7 @@ function Counter({ value }: { value: string }) {
 }
 
 /** Three stepped tiles: the first tall in the accent, then ink, then a mid tone. */
-export function Stats({ title, items }: { title: string; items: [CaseStudyStat, CaseStudyStat, CaseStudyStat] }) {
+export function Stats({ title, items }: { title: string; items: CaseStudyStat[] }) {
   return (
     <div className="cs-stats">
       <h2 className="cs-h cs-stats__title" data-enter>{title}</h2>

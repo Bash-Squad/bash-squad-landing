@@ -4,7 +4,7 @@
 import React from 'react';
 import { Input, Select, Textarea, Button, Badge, CopyEmail } from '../components';
 import { Section, SectionHead } from '../sections/Section';
-import { submitLead } from '../lib/leadAction';
+import { useLeadSubmission } from '../lib/useLeadSubmission';
 import { isValidEmail } from '../lib/lead';
 
 const EMPTY_FORM = { name: '', company: '', broken: '', budget: '', email: '', botcheck: '' };
@@ -14,10 +14,7 @@ type FormState = typeof EMPTY_FORM;
 
 export function BuildCTA({ index = '06', source = 'build page — tell us the hard thing' }: { index?: string; source?: string } = {}) {
   const [form, setForm] = React.useState(EMPTY_FORM);
-  const [status, setStatus] = React.useState('idle'); // idle | sending | sent
-  const [error, setError] = React.useState('');
-  // Time trap: bots submit near-instantly; the server drops too-fast leads.
-  const mountedAt = React.useRef(Date.now());
+  const { status, setStatus, error, setError, sendLead } = useLeadSubmission();
   const set = (k: keyof FormState) => (v: unknown) =>
     setForm(f => {
       const value =
@@ -32,25 +29,15 @@ export function BuildCTA({ index = '06', source = 'build page — tell us the ha
   const submit = async () => {
     if (!isValidEmail(form.email)) { setError('[err] need a valid work email so we can reply.'); return; }
     if (!form.broken.trim()) { setError('[err] tell us what you need.'); return; }
-    setStatus('sending');
-    setError('');
-    try {
-      const res = await submitLead({
-        source,
-        name: form.name,
-        email: form.email,
-        company: form.company,
-        budget: form.budget,
-        message: form.broken,
-        botcheck: form.botcheck,
-        elapsedMs: Date.now() - mountedAt.current,
-      });
-      if (res.ok) { setStatus('sent'); setForm(EMPTY_FORM); }
-      else { setStatus('idle'); setError('[err] delivery failed. email us directly: hello@bashsquad.com'); }
-    } catch {
-      setStatus('idle');
-      setError('[err] delivery failed. email us directly: hello@bashsquad.com');
-    }
+    await sendLead({
+      source,
+      name: form.name,
+      email: form.email,
+      company: form.company,
+      budget: form.budget,
+      message: form.broken,
+      botcheck: form.botcheck,
+    }, () => setForm(EMPTY_FORM));
   };
 
   return (

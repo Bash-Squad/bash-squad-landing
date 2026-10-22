@@ -4,7 +4,7 @@
 // site's own map pins in the accent (listings on the site). Positions are
 // seeded, so the server and the browser draw the same picture. Each third
 // settles in as it scrolls into view (work.css, .cs-pipe__zone).
-import type { CaseStudyContent } from './types';
+import study from './content';
 
 const W = 900;
 const H = 200;
@@ -22,7 +22,8 @@ function seeded(seed: number) {
 const TREE = 'M12 3 7 10h3l-4 6h12l-4-6h3Z M12 16v4 M5 20h14';
 const HOUSE = 'M4 10.5 12 4l8 6.5V20H4Z M10 20v-5h4v5';
 
-export default function Pipeline({ pipeline }: { pipeline: NonNullable<CaseStudyContent['pipeline']> }) {
+export default function Pipeline() {
+  const { pipeline } = study;
   const rand = seeded(20261019);
   const loose = Array.from({ length: 54 }, (_, i) => ({
     x: 8 + rand() * (W / 3 - 40),
