@@ -46,6 +46,10 @@ outputs are 1440x900 plus a 2880x1800 `@2x` sibling. Phone names start with
 files are left alone. Set `retina: true` only for desktop images with an
 `@2x` sibling. Run resizing before adding the video poster.
 
+`Shot` uses width-based `srcset` and automatic sizing for lazy images, with
+a viewport-width fallback. Keep that selection based on rendered width:
+`1x`/`2x` alone sends oversized desktop captures to high-density phones.
+
 ## Encode the recording
 
 Record the site's characteristic behavior, not the client's own brand film
