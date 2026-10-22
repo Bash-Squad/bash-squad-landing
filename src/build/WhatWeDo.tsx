@@ -7,17 +7,17 @@ import { Section, SectionHead } from '../sections/Section';
 
 const SERVICES = [
   {
-    icon: 'code', title: 'Custom software & websites',
+    icon: 'code', title: 'Custom software & websites', href: '/services/custom-software',
     body: 'From a marketing site to a full web or mobile app to the internal tool nobody sells off the shelf. Real engineering, built to last and easy to hand off.',
     tags: ['web', 'mobile', 'internal tools'],
   },
   {
-    icon: 'db', title: 'Integrations & syncs',
+    icon: 'db', title: 'Integrations & syncs', href: '/services/integrations',
     body: 'Make the tools you already pay for talk to each other. A clean sync between two systems, an API you need wired up, data that stops living in three places.',
     tags: ['apis', 'webhooks', 'migrations'],
   },
   {
-    icon: 'bot', title: 'AI that earns its keep',
+    icon: 'bot', title: 'AI that earns its keep', href: '/services/ai-automation',
     body: 'Agents, automation, and AI features tied to a real outcome, not a demo. Where AI generates reliably, we let it; where it quietly makes things worse, we don\'t pretend otherwise. Every line ships at the same bar as hand-written code.',
     tags: ['agents', 'automation', 'rag'],
   },
@@ -48,7 +48,7 @@ export function WhatWeDo() {
       />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
         {SERVICES.map((s) => (
-          <div key={s.title} style={{ display: 'flex' }}>
+          <div key={s.href} style={{ display: 'flex' }}>
             <Card pad="lg" hoverLift style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',

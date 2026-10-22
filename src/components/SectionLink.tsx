@@ -3,9 +3,8 @@
 // href, so modified clicks (new tab, new window, download) stay native; only a
 // plain primary click is turned into the smooth scroll.
 //
-// `home` picks the scroll: homepage sections sit just under the sticky
-// header; a subpage's own #book form uses scrollIntoView so it honours the
-// section's scroll-margin.
+// Homepage sections use the existing header offset; subpage forms retain
+// their native scrollIntoView alignment (and any CSS scroll-margin).
 import type React from 'react';
 import { Button } from './core/Button';
 
