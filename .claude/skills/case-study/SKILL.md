@@ -50,6 +50,12 @@ route. Compose its server page from shared primitives and direct imports.
    the data. Register metadata and the page. Do not copy client datasets into
    an interactive demo or reuse their brand/drone footage; describe the
    feature with captures instead. Custom art uses the project's drawings or marks.
+5. Read the rendered narrative as a prospective client. Lead with what the
+   client and their customers can accomplish, not a screen-by-screen manual.
+   “The brokers can manage their own listings” belongs in the story; the
+   position of Save or Undo does not. Keep technical specifics when they
+   explain a meaningful capability, not to inventory implementation work.
+   Keep alt text descriptive and claims grounded; never invent business results.
 
 ## Verify before a PR
 

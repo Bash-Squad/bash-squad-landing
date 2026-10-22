@@ -20,54 +20,54 @@ const study = {
     'Land and homes on one map',
     'Listings imported from their MLS',
     'Prices and status synced every night',
-    'Brokers sign in with an email link',
+    'The team manages its own listings',
   ],
   brief: {
     audiences: [
-      { lead: 'Builders want', body: 'acreage, lot counts and the county, on a map. Land gets a tree-shaped pin and homes get a house, so a builder can see a county’s land at a glance and filter it by price and size.' },
-      { lead: 'Home buyers want', body: 'photos, beds, baths and a price. Each home shows its price first, with the facts under it, then every photo in a strip that opens full screen. The inquiry form on the page tells the brokers which home it’s about.' },
-      { lead: 'Landowners want', body: 'an idea of what their land is worth. The form asks where it is and how to reach them, and nothing else is required. The page says the reply is the brokers’ opinion, not an appraisal.' },
-      { lead: 'The brokers want', body: 'to run it themselves. They sign in with an emailed link, bring a listing in by its MLS number, drag photos into order and undo a status change from the same row. Every inquiry is saved before the email goes out.' },
+      { lead: 'Builders want', body: 'land that fits what they’re planning to build. They can compare acreage and asking prices across eastern North Carolina, see where each property sits and share promising searches with a partner.' },
+      { lead: 'Home buyers want', body: 'to know whether a property is worth a closer look. They can explore the home through its photos, check it against their budget and needs, and contact the brokers about the place that caught their attention.' },
+      { lead: 'Landowners want', body: 'help understanding what they own and whether to sell. The site gives them a way to introduce their property to the brokerage and start a conversation with someone who knows the local market.' },
+      { lead: 'The brokers want', body: 'a website they can keep current themselves. They can bring properties to market and manage the inquiries that come in, with the MLS connection taking much of the repeat data entry off their hands.' },
     ],
   },
   story: {
     title: 'What we built',
-    intro: 'Five screens from the live site and the admin.',
+    intro: 'The public site helps people find a property and get in touch. Behind it, the brokerage has the tools to manage its listings and inquiries.',
     steps: [
       {
         title: 'Land for sale',
-        body: 'Filters for county, price and acreage narrow the cards and the map at once. The filters are kept in the page’s address, so a builder can send a partner the exact search. When a seller wants privacy, the map shows a one-mile circle instead of the address.',
+        body: 'Builders can explore land by location, acreage and price to find opportunities that fit their plans. A search can be shared with a partner for a second opinion. For sellers who need discretion, the brokerage can market a property without publishing its exact location.',
         image: screen('land', 'The Land for sale page: a search box, filters, listing cards with aerial photos, and a map of eastern North Carolina with tree-shaped pins and soft circles.'),
       },
       {
         title: 'A home listing',
-        body: 'The price comes first, with beds, baths, square feet and year built under it. Below that is every photo; open one to go full screen, then swipe or zoom. Photos are resized when they’re uploaded, so a thumbnail loads a thumbnail-sized file.',
+        body: 'Buyers can get a feel for a home before arranging a visit, with a full photo gallery and the details they need to weigh it against their budget. When they’re ready to ask more, their inquiry tells the brokerage which property they’re interested in.',
         image: screen('listing', 'A new home in Cary: the price with beds, baths, interior square feet and year built, an “Ask about this home” button, and a strip of large photos.'),
       },
       {
         title: 'A community page',
-        body: 'Each development has one page with its aerial photos, its site plan and every home or lot in it. In search results it appears once, with its price range, instead of as a dozen near-identical homes.',
+        body: 'Buyers can look at a whole development before choosing an individual home or lot. Its community page brings together the site plan, aerial photography and available properties, so they can get to know the place and explore what’s for sale within it.',
         image: screen('community', 'A community page: an aerial photo of the development with its entrance sign, a site plan listing each lot and its acreage, and the community’s name and address.'),
       },
       {
         title: 'The admin',
-        body: 'Listings sort by status, with the address first. Publish, Sold and Hide each have an Undo in the same row. The editor holds the photos, the map pin, the MLS link and the community, with a Save button that stays on screen.',
+        body: 'The team can look after its listings without handing every update to a developer. Brokers decide how each property is presented and when it goes on the market, then manage availability and inquiries as the sale progresses. MLS imports spare them much of the initial data entry.',
         image: screen('admin-listings', 'The admin listings table: Current and Sold tabs, a search box and a sort, and rows with each listing’s photo, address, type, price, status and actions.'),
       },
       {
         title: 'The land value form',
-        body: 'It asks where the land is and how to reach them, and nothing else is required. Their own drone footage plays beside it on a slow loop. Each lead is saved before the email goes out, so a mail outage can’t lose one.',
+        body: 'A landowner doesn’t need to be ready to sell to start a conversation. They can share what they know about their property and ask the brokerage what it could be worth. It’s a request for a local broker’s opinion, not a formal appraisal.',
         image: screen('land-value', 'The “Tell us about your land” page: an aerial video of a road through green fields beside a numbered form.'),
       },
     ],
   },
   pipeline: {
     title: 'Listings arrive from the MLS',
-    body: 'Their listings already live in the MLS. We connected the site to it through the Spark API, so a listing is entered once, in the MLS, and not typed in again.',
+    body: 'The brokerage already maintains its listings in the MLS. We connected that work to the website, so bringing a property online doesn’t mean entering it all again.',
     stages: [
-      { name: 'Feed', body: 'Each listing arrives with its facts, its agents and every photo. The site takes only the team’s own listings and follows each listing’s MLS display settings.' },
-      { name: 'Import', body: 'A broker types an MLS number and gets a draft to review. The first batch brought in 25 listings and 802 photos.' },
-      { name: 'Nightly', body: 'At 4 a.m. the site checks every linked listing against the MLS. Prices and status update on their own, a pending sale shows Under Contract, and a sold or withdrawn listing comes off the site.' },
+      { name: 'Feed', body: 'The connection brings in the brokerage’s own inventory, including property details and photos, while respecting each seller’s choices about what can appear online.' },
+      { name: 'Import', body: 'The team reviews each imported property and decides when it’s ready to publish. The first batch brought in 25 listings and 802 photos.' },
+      { name: 'Nightly', body: 'Prices and availability refresh overnight as deals move forward. Buyers see when a home goes under contract, and sold or withdrawn properties come off the site.' },
     ],
   },
   timeline: {
@@ -93,7 +93,7 @@ const study = {
         range: 'Sep 29–Oct 5',
         theme: 'The MLS',
         milestones: [
-          { date: 'Oct 2', title: 'MLS import', note: 'Listings come in by their MLS number.' },
+          { date: 'Oct 2', title: 'MLS import', note: 'The team can bring existing MLS listings onto the site.' },
           { date: 'Oct 3', title: 'Their own account', note: 'The site moves to the client’s Cloudflare account.' },
         ],
       },
@@ -119,14 +119,14 @@ const study = {
     title: 'The numbers',
     items: [
       { value: '27', label: 'days from the first commit to launch' },
-      { value: '853', label: 'automated tests run before every release' },
+      { value: '853', label: 'automated tests in the October 19 release checks' },
       { value: '98–100', label: 'desktop Lighthouse scores, measured October 19' },
     ],
   },
   landed: {
     title: 'Where it landed',
-    lead: 'Live at landtolistings.com since October 12, on the firm’s own Cloudflare account. The brokers add listings themselves and the MLS keeps prices current overnight.',
-    note: 'Their home page opens on a plat of an imaginary street that draws itself: contours, the boundary, the lane, the lots, then the houses. With motion turned off it shows the finished drawing.',
+    lead: 'Live at landtolistings.com since October 12. The brokerage owns the hosting account, manages the listings and receives inquiries from buyers and landowners through the site.',
+    note: 'A survey drawing introduces a business that works from raw land through to finished homes. We carried that idea into the site’s identity, using the plat as its opening animation.',
     video: {
       mp4: `${DIR}/intro.mp4`,
       poster: `${DIR}/intro-poster.webp`,

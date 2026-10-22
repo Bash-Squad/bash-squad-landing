@@ -15,6 +15,11 @@ by what they are, such as “Land for sale,” not claims such as “The map and
 the list agree.” Explain what the product does in a buyer's words. Mention
 outcomes people feel, not table stakes like HTTPS or working back buttons.
 
+Lead with what the client or their customers can accomplish, not a tour of
+controls. Describe managing a property through a sale, not where Save or
+Undo sits. Keep implementation details only when they explain a meaningful
+capability or constraint; alt text should still describe the pictured screen.
+
 ## Claims and privacy
 
 - Source every claim to the project repo or live site; record number sources

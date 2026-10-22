@@ -24,9 +24,9 @@ const landToListings = {
     'How we designed and built a map-first land and homes site for a North Carolina brokerage, with listings imported from their MLS. Live in 27 days.',
   statement: 'A brokerage’s website, map and MLS import, live in 27 days.',
   answer:
-    'Land to Listings sells raw land to builders and new homes to the families who buy them. We designed and built one site for both, with a map, an admin the brokers run and listings that arrive from their MLS.',
+    'Land to Listings helps builders find land and families find a home in eastern North Carolina. We built a website the brokerage can run itself, with map-based search and an MLS connection that keeps its listings current.',
   cardDescription:
-    'A map-first land and homes site for a North Carolina brokerage: Astro on Cloudflare Workers, an MLS import over the Spark API, and an admin with no passwords.',
+    'A North Carolina brokerage’s website for selling land and homes, with map-based search and MLS-connected listings the team manages itself.',
   links: { live: 'https://landtolistings.com' },
   tags: ['astro', 'cloudflare', 'mls', 'maps', 'design'],
   cover: { src: `${DIR}/home.webp`, alt: 'The Land to Listings home page: the headline “From land to listings” over a surveyor’s plat of a street with its lots and houses, and a panel with live counts of land, acres, homes and towns.', width: 1440, height: 900, retina: true },
