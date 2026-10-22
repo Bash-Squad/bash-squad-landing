@@ -8,6 +8,7 @@ import React from 'react';
 import { Badge } from '../components';
 import { Section, SectionHead } from '../sections/Section';
 import { CASE_STUDIES, caseStudyPath } from '../work';
+import { LandToListingsTestimonial } from '../work/land-to-listings/Testimonial';
 
 export const GITHUB_ORG = 'https://github.com/Bash-Squad';
 
@@ -203,6 +204,7 @@ export function Work() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>
         {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
       </div>
+      <LandToListingsTestimonial linkToCaseStudy />
       <div style={{ display: 'flex', justifyContent: 'center', marginTop: 40 }}>
         <a href={GITHUB_ORG} target="_blank" rel="noreferrer"
            style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)', border: '1px solid var(--border-strong)', borderRadius: 'var(--r-1)', padding: '10px 16px' }}>

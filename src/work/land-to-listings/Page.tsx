@@ -8,6 +8,7 @@ import Pipeline from './Pipeline';
 import CloseForm from '../CloseForm';
 import Plat from '../flair/land-to-listings/Plat';
 import study from './content';
+import { LandToListingsTestimonial } from './Testimonial';
 
 // Where copy names the live site ("Live at landtolistings.com since…"), the
 // name is a followed link to it: real attribution for the client, and a
@@ -142,6 +143,7 @@ export default function LandToListingsPage() {
               </dl>
             </div>
           </div>
+          <LandToListingsTestimonial />
         </section>
 
         {/* the action row: cropped from a longer row of the board */}
