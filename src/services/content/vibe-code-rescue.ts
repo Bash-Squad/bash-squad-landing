@@ -100,7 +100,7 @@ const vibeCodeRescue: ServiceContent = {
     },
     {
       q: 'Will you judge the code, or me, for vibe coding it?',
-      a: 'No. Getting a working prototype in front of real users without an engineering team is an achievement, and it\'s a good way to prove an idea. Our job starts where the AI stops, and we\'d rather help with a product people already use than build one nobody has tested.',
+      a: 'No. A working prototype gives us something concrete to build on, whether you\'ve shown it to customers yet or not. We review the code to understand what can stay and what needs work. The goal is to help you launch a product you can trust, not judge how you got started.',
     },
     {
       q: 'What do you need from me to get started?',

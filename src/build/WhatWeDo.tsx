@@ -26,7 +26,7 @@ const SERVICES = [
   },
   {
     icon: 'bolt', title: 'Vibe-code rescue', href: '/services/vibe-code-rescue',
-    body: 'AI got you 70–80% of the way. The last 20–30% is the part that survives real users, real data, and real payments. We fix the bugs, close the security holes, and take it from “looks finished” to “in production.”',
+    body: 'AI got you to a working prototype. Getting it ready for real users means handling real data, payments, and the things a demo doesn\'t reveal. We fix the bugs, close the security holes, and help you launch with confidence.',
     tags: ['audit', 'harden', 'launch'],
   },
   {

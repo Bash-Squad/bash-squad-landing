@@ -13,7 +13,7 @@ const legacyModernization: ServiceContent = {
     'Legacy software modernization that keeps your business running: we map the system, migrate it in stages, plan cutovers around downtime limits, and hand off.',
   h1: 'Modernize the legacy software your business can\'t afford to break.',
   answer:
-    'If your business runs on an old system nobody wants to touch, we can upgrade it, move it to a new platform, or replace it piece by piece. We map how it actually works, keep it running while new parts are checked against it, plan each cutover around how much downtime you can accept, and leave your team able to run the result.',
+    'If your business runs on an old system nobody wants to touch, we can upgrade it or replace it piece by piece. We map how it works, keep it running while new parts are checked against it, and plan each cutover around your downtime limits. Your team gets a system they understand and can run themselves.',
   intro:
     'For the system everyone depends on and nobody wants to touch: the one a retired developer built, with no docs, that can\'t go down. It works, and that\'s exactly what makes changing it risky. We treat "it currently works" as the main constraint, so the plan is built around keeping the business running, and at the end your own team understands the system.',
   serviceType: 'Legacy software modernization',

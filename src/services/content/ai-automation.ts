@@ -15,7 +15,7 @@ const aiAutomation: ServiceContent = {
   answer:
     'We help businesses put AI to work where the results can be measured: agents, RAG, workflow automation, and AI features inside the products you already run. Each project is tied to a number you already track. Where AI handles a task reliably, we use it. Where it would quietly make things worse, we say so.',
   intro:
-    'For businesses that have heard plenty of AI pitches and want to know what will hold up in their own operations. We treat a model as one component in a system, with tests, monitoring, and human review around it, and AI-assisted code gets the same review as code we write by hand.',
+    'For businesses that have heard plenty of AI pitches and want to know what will hold up in their own operations. We treat a model as one component in a system, with tests, monitoring, and human review where mistakes are costly. AI-assisted code gets the same review as code we write by hand.',
   serviceType: 'AI integration and automation consulting',
   schemaDescription:
     'Building AI agents, RAG systems, workflow automation, and AI features inside existing products, each scoped against a business metric and shipped with evals and guardrails.',

@@ -26,11 +26,11 @@ const SEGMENTS: Segment[] = [
   {
     tag: 'rescue',
     who: 'You vibe-coded something and hit a wall.',
-    body: 'AI got you 70&ndash;80% of the way, then the bugs multiplied and &ldquo;fix it&rdquo; made it worse. The missing 20&ndash;30% is what survives real users. We take the repo, harden it, and get it to a launch you&rsquo;re proud of. Start with a free code audit.',
+    body: 'You built a working prototype with AI, then the bugs multiplied and &ldquo;fix it&rdquo; made it worse. We take the repo, work through what needs fixing, and get it ready for real users. Start with a free code audit.',
     aria: 'A robot builds a prototype that breaks. Bash Squad takes the repo and it launches for real.',
     note: '// no judgment, you got far',
     beats: [
-      { emoji: '\u{1F916}', caption: 'the prototype', sub: 'AI got it 80% there', mood: 'problem' },
+      { emoji: '\u{1F916}', caption: 'the prototype', sub: 'AI helped you build it', mood: 'problem' },
       { emoji: '\u{1F465}', caption: 'bash squad', sub: 'we take the repo' },
       { emoji: '\u{1F680}', caption: 'launched', sub: 'survives real users', mood: 'win' },
     ],
