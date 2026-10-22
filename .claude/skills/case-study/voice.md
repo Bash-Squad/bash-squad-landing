@@ -19,6 +19,8 @@ Lead with what the client or their customers can accomplish, not a tour of
 controls. Describe managing a property through a sale, not where Save or
 Undo sits. Keep implementation details only when they explain a meaningful
 capability or constraint; alt text should still describe the pictured screen.
+For example, adding a listing by MLS number is a meaningful capability;
+the position of the import button is not. Preserve that distinction when trimming.
 
 ## Claims and privacy
 

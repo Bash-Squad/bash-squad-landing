@@ -63,10 +63,10 @@ const study = {
   },
   pipeline: {
     title: 'Listings arrive from the MLS',
-    body: 'The brokerage already maintains its listings in the MLS. We connected that work to the website, so bringing a property online doesn’t mean entering it all again.',
+    body: 'We connected the brokerage’s existing MLS inventory to its website. An initial bulk import brought in 25 listings and 802 photos, so the team didn’t have to rebuild its catalog by hand.',
     stages: [
       { name: 'Feed', body: 'The connection brings in the brokerage’s own inventory, including property details and photos, while respecting each seller’s choices about what can appear online.' },
-      { name: 'Import', body: 'The team reviews each imported property and decides when it’s ready to publish. The first batch brought in 25 listings and 802 photos.' },
+      { name: 'Import', body: 'After that initial import, the brokers can add another of their listings by MLS number, with property details and photos brought in for review. They decide when it’s ready to publish.' },
       { name: 'Nightly', body: 'Prices and availability refresh overnight as deals move forward. Buyers see when a home goes under contract, and sold or withdrawn properties come off the site.' },
     ],
   },
