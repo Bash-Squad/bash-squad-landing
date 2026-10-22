@@ -1,3 +1,4 @@
+'use client';
 // BuildProof: "how it works." Reassures every buyer, from a one-off
 // integration to a hospital-wide modernization, that the process matches the
 // work: lightweight when it can be, thorough when it has to be. Rendered as a

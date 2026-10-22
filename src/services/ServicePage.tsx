@@ -1,15 +1,16 @@
-'use client';
 // ServicePage: shared template for every /services/<slug> page. Content
 // comes from src/services/content/* via the registry; JSON-LD and metadata
 // are emitted by the server route (src/app/services/[slug]/page.tsx).
+// Server-rendered; the only client islands are the header, the hero's
+// scroll-to-form button and the lead form.
 //
-// SEO structure, deliberate:
-// - breadcrumb + H1 + a 40-60 word answer-first paragraph (AI-extractable)
+// Structure, deliberate:
+// - breadcrumb + H1 + a short answer-first paragraph
 // - H2 sections: when you need this / what you get / how it works / FAQ
-// - FAQ markup mirrors the FAQPage JSON-LD emitted by the route
 // - real <a href> internal links (breadcrumbs, related services, footer)
 import React from 'react';
-import { Badge, Button, Card, Pictogram, SectionLabel } from '../components';
+import { Badge, Card, Pictogram, SectionLabel } from '../components';
+import { SectionButton } from '../components/SectionLink';
 import { Section, SectionHead } from '../sections/Section';
 import { SubpageHeader, SubpageFooter } from '../components/SubpageChrome';
 import { BuildCTA } from '../build/BuildCTA';
@@ -55,7 +56,7 @@ export default function ServicePage({ service }: { service: ServiceContent }) {
               {service.intro}
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32 }}>
-              <Button variant="primary" prompt size="lg" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Tell us what you need</Button>
+              <SectionButton to="book" variant="primary" prompt size="lg">Tell us what you need</SectionButton>
               <a href="/services" style={{ display: 'inline-flex', alignItems: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-muted)', padding: '15px 10px' }}>
                 all services →
               </a>

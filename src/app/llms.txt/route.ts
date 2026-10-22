@@ -1,12 +1,11 @@
 import { SERVICES, servicePath } from '../../services';
 import { CASE_STUDIES, caseStudyPath } from '../../work';
+import { SITE_URL } from '../../lib/site';
 
-// llms.txt: the emerging convention for giving AI assistants a compact,
-// plain-markdown map of the site (llmstxt.org). Generated from the service
-// registry so it never drifts from the real pages. Statically rendered.
+// llms.txt: an optional plain-markdown map of the site (llmstxt.org) for
+// tools that read it. Search engines don't need it; it is generated from the
+// registries so it never drifts from the real pages. Statically rendered.
 export const dynamic = 'force-static';
-
-const SITE_URL = 'https://bashsquad.com';
 
 export function GET(): Response {
   const services = SERVICES.map(

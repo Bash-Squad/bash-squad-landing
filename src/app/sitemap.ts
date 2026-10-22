@@ -1,10 +1,9 @@
 import type { MetadataRoute } from 'next';
 import { SERVICES, servicePath } from '../services';
 import { CASE_STUDIES, caseStudyPath } from '../work';
+import { SITE_URL } from '../lib/site';
 
 export const dynamic = 'force-static';
-
-const SITE_URL = 'https://bashsquad.com';
 
 // Service and case-study routes come from their registries, so new pages
 // are picked up automatically. Add other routes (blog) here as they ship.

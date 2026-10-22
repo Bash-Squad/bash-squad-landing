@@ -1,27 +1,30 @@
 // Footer: terminal-styled. Nav, contact, the venture family nod.
-// `cols` is overridable per page so links always target real section ids
-// (the live build page and the legacy variants have different sections).
+// Server-rendered. Shared site columns by default; hub/service pages can
+// supply their own.
 import { Divider } from '../components';
+import { SectionLink } from '../components/SectionLink';
+import { SERVICE_LINKS } from '../services';
 
-interface FooterCol {
+export interface FooterCol {
   h: string;
-  /** Items: [target, label]. Targets starting with '/' render as real links
-   *  (crawlable hrefs); anything else is a same-page section id via onNav. */
+  /** Items: [target, label]. Targets starting with '/' render as real links;
+   *  other targets are homepage section ids, except the local book form. Null is plain text. */
   items: [string | null, string][];
 }
 
 interface FooterProps {
-  onNav: (id: string) => void;
   cols?: FooterCol[];
+  /** Homepage sections scroll under the sticky header (see SectionLink). */
+  home?: boolean;
 }
 
 const DEFAULT_COLS: FooterCol[] = [
   { h: 'navigate', items: [['services', 'what we do'], ['work', 'our work'], ['/work', 'case studies'], ['help', 'who we help'], ['how', 'how it works'], ['book', 'tell us what you need']] },
-  { h: 'services', items: [['/services/custom-software', 'custom software'], ['/services/integrations', 'integrations & syncs'], ['/services/ai-automation', 'ai & automation'], ['/services/legacy-modernization', 'legacy modernization'], ['/services/vibe-code-rescue', 'vibe-code rescue'], ['/services/fractional-engineering-team', 'your engineering team']] },
+  { h: 'services', items: SERVICE_LINKS },
   { h: 'family', items: [[null, 'blue ghost lab']] },
 ];
 
-export function Footer({ onNav, cols = DEFAULT_COLS }: FooterProps) {
+export function Footer({ cols = DEFAULT_COLS, home = false }: FooterProps) {
   return (
     <footer style={{ background: 'var(--surface-inset)', borderTop: '1px solid var(--border-strong)' }}>
       <div style={{ maxWidth: 'var(--container)', margin: '0 auto', padding: 'var(--space-16) var(--gutter) var(--space-8)' }}>
@@ -46,18 +49,20 @@ export function Footer({ onNav, cols = DEFAULT_COLS }: FooterProps) {
             <div key={c.h}>
               <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-2xs)', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: 16 }}>{c.h}</div>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 11 }}>
-                {c.items.map(([id, label], i) => (
-                  <li key={i}>
-                    {id?.startsWith('/') ? (
-                      <a href={id} style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)' }}>{label}</a>
-                    ) : (
-                      <a href={id ? '#' + id : undefined} onClick={(e) => { if (id) { e.preventDefault(); onNav(id); } }}
-                         style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)', cursor: id ? 'pointer' : 'default' }}>
-                        {label}
-                      </a>
-                    )}
-                  </li>
-                ))}
+                {c.items.map(([id, label], i) => {
+                  const item = { fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-body)' };
+                  return (
+                    <li key={i}>
+                      {id === null ? (
+                        <span style={item}>{label}</span>
+                      ) : id.startsWith('/') || (!home && id !== 'book') ? (
+                        <a href={id.startsWith('/') ? id : `/#${id}`} style={item}>{label}</a>
+                      ) : (
+                        <SectionLink to={id} home={home} style={{ ...item, cursor: 'pointer' }}>{label}</SectionLink>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

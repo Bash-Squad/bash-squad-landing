@@ -1,10 +1,10 @@
-'use client';
 // BuildApp: the live landing page ("what we do, by segment"), rendered at /
-// by src/app/page.tsx.
-import React from 'react';
-import { CommandPalette, MarqueeStrip } from '../components';
+// by src/app/page.tsx. Server-rendered composition; the interactive parts
+// are their own client islands (BuildHeader, BuildHero with the command
+// palette, WhoWeHelp, BuildProof, BuildCTA, section links/buttons).
+import { MarqueeStrip } from '../components';
 import { BuildHeader } from './BuildHeader';
-import { BuildHero } from './BuildHero';
+import { BuildHero, type HomeCommand } from './BuildHero';
 import { WhatWeDo } from './WhatWeDo';
 import { TechStack } from './TechStack';
 import { Work } from './Work';
@@ -14,31 +14,11 @@ import { CASE_STUDIES, caseStudyPath } from '../work';
 import { BuildCTA } from './BuildCTA';
 import { Footer } from '../sections/Footer';
 
-function scrollToId(id: string): void {
-  if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-  const el = document.getElementById(id);
-  if (el) {
-    const y = el.getBoundingClientRect().top + window.scrollY - 60;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }
-}
-
-interface Command {
-  id: string;
-  label: string;
-  group: string;
-  icon: string;
-  hint: string;
-  keywords?: string;
-  /** Real page to open; without it, `id` is a homepage section to scroll to. */
-  href?: string;
-}
-
-const COMMANDS: Command[] = [
+const COMMANDS: HomeCommand[] = [
   { id: 'services', label: 'what we do', group: 'navigate', icon: '#', hint: '/services', keywords: 'services build software integration ai legacy rescue team' },
   { id: 'stack', label: 'own your stack', group: 'navigate', icon: '#', hint: '/stack', keywords: 'react next.js node typescript react native swift rust python postgres aws cloudflare convex neo4j n8n zapier self-hosted own your data tech stack tools languages frameworks build with' },
   { id: 'work', label: 'our work', group: 'navigate', icon: '#', hint: '/work', keywords: 'portfolio projects proof wrangle banter land to listings github repos open source case studies' },
-  ...CASE_STUDIES.map((c): Command => ({
+  ...CASE_STUDIES.map((c): HomeCommand => ({
     id: `case-${c.slug}`, label: `case study: ${c.name.toLowerCase()}`, group: 'navigate', icon: '#', hint: caseStudyPath(c.slug),
     href: caseStudyPath(c.slug), keywords: `case study client build ${c.tags.join(' ')} ${c.client.toLowerCase()}`,
   })),
@@ -49,55 +29,25 @@ const COMMANDS: Command[] = [
 ];
 
 export default function BuildApp() {
-  const [open, setOpen] = React.useState(false);
-
-  React.useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); setOpen(o => !o); }
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, []);
-
-  const onNav = (id: string) => scrollToId(id);
-  const onCommand = (cmd: string) => {
-    const c = cmd.toLowerCase().replace(/^[>\s/]+/, '').trim();
-    const map: Record<string, string> = {
-      services: 'services', 'what we do': 'services', build: 'services',
-      stack: 'stack', 'tech stack': 'stack', tech: 'stack', 'own your stack': 'stack', data: 'stack',
-      work: 'work', 'our work': 'work', portfolio: 'work', projects: 'work',
-      help: 'help', 'who we help': 'help', segments: 'help',
-      how: 'how', 'how it works': 'how', process: 'how',
-      book: 'book', 'book a call': 'book', contact: 'book', hire: 'book',
-    };
-    scrollToId(map[c] || 'book');
-  };
-  const onSelect = (command: { id: string; href?: string }) => {
-    if (command.id === 'email') { window.location.href = 'mailto:hello@bashsquad.com'; return; }
-    if (command.href) { window.location.href = command.href; return; }
-    scrollToId(command.id);
-  };
-
   return (
-    <React.Fragment>
-      <BuildHeader onNav={onNav} onOpenPalette={() => setOpen(true)} />
+    <>
+      <BuildHeader home />
       <main>
-        <BuildHero onNav={onNav} onOpenPalette={() => setOpen(true)} onCommand={onCommand} />
+        <BuildHero commands={COMMANDS} />
         {/* separator between hero and first section */}
         <MarqueeStrip
           items={['BRING US THE HARD THING', 'SENIOR ENGINEERS ONLY', 'AI ON THE RAILS', 'BUILT TO HAND OFF', 'YOU OWN IT', 'ONE PROJECT OR A WHOLE TEAM']}
           speed={34}
           style={{ background: 'var(--surface-inset)' }}
         />
-        <WhatWeDo onNav={onNav} />
+        <WhatWeDo />
         <TechStack />
         <Work />
-        <WhoWeHelp onNav={onNav} />
+        <WhoWeHelp />
         <BuildProof />
         <BuildCTA />
       </main>
-      <Footer onNav={onNav} />
-      <CommandPalette open={open} onClose={() => setOpen(false)} commands={COMMANDS} onSelect={onSelect} />
-    </React.Fragment>
+      <Footer home />
+    </>
   );
 }

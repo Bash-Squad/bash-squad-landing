@@ -2,7 +2,7 @@ import type { ServiceContent } from '../types';
 
 // Priority money page: growing query volume ("fix vibe coded app",
 // "AI-generated app broken", "make vibe-coded app production ready"),
-// thin competition. Source voice: src/guide/VibeCoded.tsx + homepage card.
+// thin competition. Source voice: the homepage card.
 const vibeCodeRescue: ServiceContent = {
   slug: 'vibe-code-rescue',
   icon: 'bolt',

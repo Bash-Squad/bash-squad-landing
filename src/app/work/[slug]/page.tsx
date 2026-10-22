@@ -3,12 +3,11 @@ import { notFound } from 'next/navigation';
 import { CASE_STUDIES, getCaseStudy, caseStudyPath } from '../../../work';
 import LandToListingsPage from '../../../work/land-to-listings/Page';
 import type { ComponentType } from 'react';
+import { SITE_OPEN_GRAPH, SITE_URL } from '../../../lib/site';
 
 const PAGES: Record<string, ComponentType> = {
   'land-to-listings': LandToListingsPage,
 };
-
-const SITE_URL = 'https://bashsquad.com';
 
 export const dynamicParams = false;
 
@@ -23,8 +22,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const study = getCaseStudy(slug);
   if (!study) return {};
   const path = caseStudyPath(slug);
-  // openGraph is replaced, not merged, with the layout's, so the share image
-  // and siteName are repeated here.
+  // openGraph replaces the layout's, so the shared fields are spread in and
+  // the study's own 1200x630 card replaces the default image.
   return {
     title: study.metaTitle,
     description: study.metaDescription,
@@ -32,9 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Stat ranges such as 98–100 must not become tel: links on iOS Safari.
     formatDetection: { telephone: false },
     openGraph: {
+      ...SITE_OPEN_GRAPH,
       url: path,
       type: 'article',
-      siteName: 'bash squad',
       title: `${study.metaTitle} | bash squad`,
       description: study.metaDescription,
       publishedTime: study.published,
