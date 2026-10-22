@@ -31,7 +31,8 @@ the position of the import button is not. Preserve that distinction when trimmin
   excerpt; do not rewrite a client's words into stronger claims. Attribute
   to the approved company name unless personal-name permission is explicit.
   A quiet quote after the project proof can also sit beneath the homepage
-  work grid. Keep it static; do not add review stars or rating schema.
+  work grid. On the homepage, follow it with one CTA to that case study,
+  not an unrelated GitHub link. Keep it static; no review stars or rating schema.
 - Count commits with `git -C <repo> rev-list --count main`; date milestones
   with `git -C <repo> log --reverse --date=short --format='%ad %s'`. Cite the
   date and runners of the latest recorded test gate, or a fresh suite run.
