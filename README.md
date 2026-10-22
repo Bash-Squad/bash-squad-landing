@@ -24,8 +24,9 @@ Next.js + TypeScript and deployed on Cloudflare Workers.
 
 ## Run it
 
-Requires Node.js 22 or newer (wrangler 4 and miniflare need it; see `engines`
-in `package.json`) and pnpm 11 via Corepack (`packageManager`).
+Requires Node.js 22.13 or newer (the pinned pnpm 11 refuses older 22.x, and
+wrangler 4 / miniflare need 22; see `engines` in `package.json`) and pnpm 11
+via Corepack (`packageManager`).
 
 ```bash
 pnpm install

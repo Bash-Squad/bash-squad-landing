@@ -4,6 +4,7 @@
 // real hrefs: on the homepage a plain click smooth-scrolls; on subpages they
 // navigate to /#section. Modified clicks always stay native.
 import React from 'react';
+import { flushSync } from 'react-dom';
 import { Button, IconButton } from '../components';
 import { isPlainClick, scrollToSection } from '../components/SectionLink';
 
@@ -62,7 +63,11 @@ export function BuildHeader({ home = false }: { home?: boolean }) {
         {menu && (
           <div className="bg-mobile-nav" style={{ flexDirection: 'column', padding: '8px var(--gutter) 18px', borderTop: '1px solid var(--border-hairline)', background: 'var(--surface-base)' }}>
             {[...links, { id: 'book', label: 'tell us what you need' }].map(l => (
-              <a key={l.id} href={(local(l.id) ? '#' : '/#') + l.id} onClick={(e) => { setMenu(false); follow(e, l.id); }}
+              <a key={l.id} href={(local(l.id) ? '#' : '/#') + l.id}
+                 // The open panel sits in the sticky header's flow, so collapse it
+                 // before the scroll target is measured or the page lands a panel
+                 // height past the section.
+                 onClick={(e) => { flushSync(() => setMenu(false)); follow(e, l.id); }}
                  style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--text-body)', padding: '14px 0', borderBottom: '1px solid var(--border-hairline)' }}>
                 <span style={{ color: 'var(--accent)' }}>&gt;</span> {l.label}
               </a>

@@ -1,6 +1,7 @@
 // WhatWeDo: the plain-English capability grid. The whole point of variant C:
 // answer "what do you actually do?" in one scannable screen, no metaphors.
-// Cards remain non-links pending owner review of the service pages.
+// Each card links to its service page: the strongest internal-linking signal
+// those pages get, and the copy there has been through owner review (#15).
 import { Card, Badge, Pictogram } from '../components';
 import { SectionButton } from '../components/SectionLink';
 import { Section, SectionHead } from '../sections/Section';
@@ -48,8 +49,8 @@ export function WhatWeDo() {
       />
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
         {SERVICES.map((s) => (
-          <div key={s.href} style={{ display: 'flex' }}>
-            <Card pad="lg" hoverLift style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
+          <a key={s.href} href={s.href} style={{ display: 'flex', textDecoration: 'none' }}>
+            <Card pad="lg" interactive style={{ display: 'flex', flexDirection: 'column', gap: 14, width: '100%' }}>
               <span style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 width: 42, height: 42, borderRadius: 'var(--r-2)',
@@ -62,8 +63,9 @@ export function WhatWeDo() {
               <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                 {s.tags.map(t => <Badge key={t} tone="neutral" variant="outline">{t}</Badge>)}
               </div>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--accent)' }}>$ read more →</span>
             </Card>
-          </div>
+          </a>
         ))}
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14, marginTop: 44 }}>
