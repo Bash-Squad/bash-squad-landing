@@ -21,8 +21,8 @@ const SERVICES = [
   },
   {
     icon: 'clock', title: 'Legacy modernization', href: '/services/legacy-modernization',
-    body: 'Your old system works, which is exactly what makes changing it risky. We modernize it without breaking what\'s running or taking down what can\'t go down, and leave your own people able to run it.',
-    tags: ['upgrades', 'replatforming', 'zero-downtime'],
+    body: 'Your old system works, which is exactly what makes changing it risky. We modernize it in stages, keep it running while new parts prove themselves, and leave your own people able to run it.',
+    tags: ['upgrades', 'replatforming', 'staged cutovers'],
   },
   {
     icon: 'bolt', title: 'Vibe-code rescue', href: '/services/vibe-code-rescue',
@@ -31,7 +31,7 @@ const SERVICES = [
   },
   {
     icon: 'person', title: 'Your engineering team', href: '/services/fractional-engineering-team',
-    body: 'No senior engineers on staff? Embed us. We own the work like it\'s ours (planning, building, shipping) and the context compounds instead of resetting with every new vendor. Senior output, no headcount, no ramp.',
+    body: 'No senior engineers on staff? Embed us. We own the work like it\'s ours (planning, building, shipping) and the context compounds instead of resetting with every new vendor. Senior help without adding headcount or recruiting.',
     tags: ['fractional', 'embedded', 'ongoing'],
   },
 ];

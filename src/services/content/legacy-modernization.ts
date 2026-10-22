@@ -8,17 +8,17 @@ const legacyModernization: ServiceContent = {
   icon: 'clock',
   name: 'Legacy modernization',
   shortLabel: 'legacy modernization',
-  metaTitle: 'Legacy Software Modernization Without Downtime',
+  metaTitle: 'Legacy Software Modernization, One Piece at a Time',
   metaDescription:
-    'We modernize legacy software without breaking what runs: system mapping, incremental migration, zero-downtime cutovers, and a handoff your team can own.',
-  h1: 'Legacy software modernization, without breaking what works.',
+    'Legacy software modernization that keeps your business running: we map the system, migrate it in stages, plan cutovers around downtime limits, and hand off.',
+  h1: 'Modernize the legacy software your business can\'t afford to break.',
   answer:
-    'Legacy modernization is a small senior engineering crew upgrading, replatforming, or incrementally replacing the old system your business runs on, without breaking it. We map how it actually works, migrate it piece by piece with working software at every step, cut over without downtime, and leave your own people able to run it.',
+    'If your business runs on an old system nobody wants to touch, we can upgrade it, move it to a new platform, or replace it piece by piece. We map how it actually works, keep it running while new parts are checked against it, plan each cutover around how much downtime you can accept, and leave your team able to run the result.',
   intro:
-    'This is for the system everyone depends on and nobody wants to touch: the one the retired developer built, the one with no docs, the one that cannot go down. Your old system works, and that is exactly what makes changing it risky. We treat "it currently works" as the constraint it is: the business keeps running the whole time, and at the end your team, not ours, is the one who understands it.',
+    'For the system everyone depends on and nobody wants to touch: the one a retired developer built, with no docs, that can\'t go down. It works, and that\'s exactly what makes changing it risky. We treat "it currently works" as the main constraint, so the plan is built around keeping the business running, and at the end your own team understands the system.',
   serviceType: 'Legacy software modernization',
   schemaDescription:
-    'Upgrading, replatforming, and incrementally replacing legacy software systems: system mapping, strangler-style migration, zero-downtime cutovers, and full team handoff.',
+    'Upgrading, replatforming, and incrementally replacing legacy software systems: system mapping, strangler-style migration, staged and reversible cutovers, and full team handoff.',
   signals: [
     {
       title: 'The person who built it is gone',
@@ -34,7 +34,7 @@ const legacyModernization: ServiceContent = {
     },
     {
       title: 'It can\'t go down',
-      body: 'The system is load-bearing: orders, billing, operations. A rewrite weekend is not an option, so the safe-feeling choice has been to change nothing, forever.',
+      body: 'The system runs orders, billing, or operations. A rewrite weekend isn\'t an option, so the safe-feeling choice has been to change nothing.',
     },
   ],
   deliverables: [
@@ -45,17 +45,17 @@ const legacyModernization: ServiceContent = {
     },
     {
       title: 'Incremental migration',
-      body: 'Strangler-style replacement, one piece at a time. The old and new systems run side by side, every step ships working software, and you can pause without being stranded halfway.',
+      body: 'Strangler-style replacement, one piece at a time. The old and new systems run side by side, each step ships working software, and the order of work means pausing doesn\'t strand you halfway.',
       tags: ['strangler pattern', 'replatforming', 'upgrades'],
     },
     {
-      title: 'Zero-downtime cutover',
-      body: 'Parallel runs, staged rollouts, and rehearsed, reversible cutovers. The business keeps operating through the whole migration; nobody arrives Monday to a system that is down.',
-      tags: ['parallel run', 'staged cutover', 'zero-downtime'],
+      title: 'Staged, reversible cutovers',
+      body: 'Parallel runs, staged rollouts, and rehearsed cutovers you can roll back. Zero downtime is the goal wherever the system allows it; if a step needs a maintenance window, you hear about it during planning and we schedule it with you.',
+      tags: ['parallel run', 'staged cutover', 'rollback plans'],
     },
     {
       title: 'A system your team can run',
-      body: 'Mainstream technology, current documentation, and a handoff with training built into the scope. You own the code, the infrastructure, and the knowledge. No lock-in.',
+      body: 'Mainstream technology, current documentation, and a handoff with training built into the scope. You own the code, the infrastructure, and the knowledge.',
       tags: ['handoff', 'training', 'ownership'],
     },
   ],
@@ -70,41 +70,41 @@ const legacyModernization: ServiceContent = {
     },
     {
       title: 'You get a plan in slices',
-      body: 'A fixed-scope proposal that breaks the modernization into increments, each one shippable on its own, ordered by risk and value. If modernization is not worth it, we say that too.',
+      body: 'A fixed-scope proposal that breaks the work into increments, each one shippable on its own and ordered by risk and value. If modernization isn\'t worth it, we say that too.',
     },
     {
       title: 'We migrate piece by piece',
-      body: 'New parts run in parallel with the old system and get verified against real behavior before they take over. At every step, the whole thing still works.',
+      body: 'New parts run in parallel with the old system and are checked against its real behavior before they take over. The old system keeps doing its job until each piece is ready.',
     },
     {
       title: 'Cutover and handoff',
-      body: 'Staged, reversible cutovers with the old system as a safety net until you sign off. Then docs, training, and the keys: your team runs it, and understands it, without us.',
+      body: 'Staged, reversible cutovers, with the old system kept as a fallback until you sign off. Then docs, training, and the keys, so your team can run and understand it without us.',
     },
   ],
   faqs: [
     {
       q: 'Should we rewrite our legacy system from scratch or modernize it incrementally?',
-      a: 'Incrementally, almost always. Big-bang rewrites have a long history of running late, going over budget, and getting cancelled before the new system ever ships. We prefer strangler-style migration: replace the system one piece at a time, with working software at every step and the option to stop at any point better off than you started. We only recommend a full rewrite when the system is small enough that the risk genuinely disappears.',
+      a: 'Usually incrementally. Big-bang rewrites are known for running late, going over budget, and sometimes getting cancelled before the new system ships. We prefer strangler-style migration: replace the system one piece at a time, with working software at each step, so pausing still leaves you with something that runs. A full rewrite makes sense when the system is small enough that the risk is genuinely low.',
     },
     {
       q: 'Our original developer retired and nobody understands the system. Can you still modernize it?',
-      a: 'Yes, and this is one of the most common situations we walk into. We start by mapping the system: reading the code, tracing the data, and interviewing whoever operates it day to day. The knowledge is not gone, it is locked in the code, and code can be read. You get that map as a written deliverable before we change anything, so the single-point-of-failure problem is solved even if the modernization stops there.',
+      a: 'Usually, yes. It\'s a common situation with older systems. We start by mapping the system: reading the code, tracing the data, and interviewing whoever operates it day to day. Most of the knowledge is still there in the code, and code can be read. You get that map as a written document before we change anything, so you\'re less dependent on one person even if the work stops there.',
     },
     {
       q: 'Can you replace a legacy system without downtime?',
-      a: 'Yes. We run the new system in parallel with the old one, compare outputs on real traffic until they agree, and cut over in stages you can reverse. Downtime windows are reserved for the rare steps that genuinely need one: scheduled with you, measured in minutes, and rehearsed beforehand. If your system truly cannot go down, that constraint shapes the whole migration plan, not just the last weekend.',
+      a: 'Often, or with very little. We run new parts in parallel with the old system, compare outputs on real traffic, and cut over in stages you can reverse. Some steps, like a final database switch, can need a short maintenance window. We identify those during planning, schedule them with you, and rehearse them first. If the system truly can\'t go down, that requirement shapes the whole plan from the start.',
     },
     {
       q: 'What if there is no documentation for our legacy application?',
-      a: 'That is the normal case, not the exception. We reconstruct documentation by reading the code, the schema, the configs, and the deployment, then verifying our understanding against how the system actually behaves. Documentation is a deliverable of every modernization we do: a system map, runbooks, and an architecture overview your team keeps regardless of what happens next.',
+      a: 'That\'s the normal case. We reconstruct documentation by reading the code, the schema, the configs, and the deployment, then checking our understanding against how the system actually behaves. Every modernization includes documentation: a system map, runbooks, and an architecture overview your team keeps whatever happens next.',
     },
     {
       q: 'How do you keep our data safe during a migration?',
-      a: 'By never putting the system of record at risk. We migrate from copies and backups rather than live-editing the source, verify migrated data against the original with automated checks, and keep the old system intact and restorable until you have signed off on the new one. Access is scoped to what the work needs, and you own every environment and credential involved.',
+      a: 'We keep the system of record out of harm\'s way. We migrate from copies and backups rather than editing the source live, check migrated data against the original with automated comparisons, and keep the old system intact and restorable until you\'ve signed off on the new one. Access is scoped to what the work needs, and you own every environment and credential involved.',
     },
     {
       q: 'Will our team be able to maintain the modernized system?',
-      a: 'Yes, that is part of the scope, not an add-on. We build with mainstream, hireable technology, write documentation as we go, and finish with a structured handoff: walkthroughs, runbooks, and working sessions with the people who will run it. You own the code, the infrastructure, and the knowledge. If you need us afterwards we are around, but the system should not need us.',
+      a: 'That\'s part of the scope, not an add-on. We build with mainstream, hireable technology, write documentation as we go, and finish with a structured handoff: walkthroughs, runbooks, and working sessions with the people who will run it. You own the code, the infrastructure, and the knowledge. We\'re around if you need us later, but the goal is a system your team can run on its own.',
     },
   ],
   related: ['integrations', 'custom-software', 'fractional-engineering-team'],

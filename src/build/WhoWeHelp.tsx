@@ -38,13 +38,13 @@ const SEGMENTS: Segment[] = [
   {
     tag: 'modernize',
     who: 'You&rsquo;re running on aging systems.',
-    body: 'A hospital or firm on software from three vendors and two decades ago. It works, which is exactly what makes changing it risky. We modernize it without breaking what&rsquo;s running or taking down what can&rsquo;t go down.',
-    aria: 'Old hand tools become power tools: Bash Squad modernizes the system in place and nothing goes down.',
+    body: 'A hospital or firm on software from three vendors and two decades ago. It works, which is exactly what makes changing it risky. We modernize it in stages and keep it running while the new parts prove themselves.',
+    aria: 'Old hand tools become power tools: Bash Squad modernizes the system in stages while it keeps running.',
     note: '// no big-bang rewrite',
     beats: [
       { emoji: '\u{1F528}', caption: 'hammer & nails', sub: 'aging, can\u2019t go down', mood: 'problem' },
       { emoji: '\u{1F465}', caption: 'bash squad', sub: 'we modernize in place' },
-      { emoji: '\u26A1', caption: 'power tools', sub: 'nothing went down', mood: 'win' },
+      { emoji: '\u26A1', caption: 'power tools', sub: 'still running', mood: 'win' },
     ],
   },
   {
@@ -62,9 +62,9 @@ const SEGMENTS: Segment[] = [
   {
     tag: 'embed',
     who: 'You need an engineering team, not a hire.',
-    body: 'You&rsquo;ve got the vision and the budget but no senior engineers on staff, and hiring a team takes months. Bring us in as that team. We own the work, and you get senior output with no headcount, recruiting, or ramp.',
+    body: 'You&rsquo;ve got the vision and the budget but no senior engineers on staff, and hiring a team takes months. Bring us in as that team. We own the work, and you get senior engineers without adding headcount or recruiting.',
     aria: 'An idea with no engineering team: Bash Squad embeds, ships, and you own the result.',
-    note: '// no headcount, no ramp',
+    note: '// no headcount, no recruiting',
     beats: [
       { emoji: '\u{1F4A1}', caption: 'the vision', sub: 'no eng team to build it', mood: 'problem' },
       { emoji: '\u{1F465}', caption: 'bash squad', sub: 'we embed as your team' },
