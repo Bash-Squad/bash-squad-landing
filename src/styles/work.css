@@ -354,15 +354,15 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
 .cs-more { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 40px var(--cs-m) clamp(80px, 9vw, 140px); font-size: var(--cs-body); color: var(--cs-soft); }
 
 /* ============================================================
-   ENTRANCES: each part arrives as it scrolls in, staggered by
-   position in its row. Scroll-driven, so nothing waits on script
-   and browsers without support simply show everything.
+   ENTRANCES: desktop scroll-driven reveals. Mobile stays fully visible;
+   these timelines caused downward-scroll stalls on Pixel/DuckDuckGo.
+   Browsers without support also show the finished state.
    ============================================================ */
 @keyframes cs-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 @keyframes cs-settle { from { opacity: 0; transform: translateY(18px) scale(0.985); } to { opacity: 1; transform: none; } }
 @keyframes cs-gather { from { opacity: 0; transform: translateX(-28px); } to { opacity: 1; transform: none; } }
 @supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
+  @media (prefers-reduced-motion: no-preference) and (min-width: 1100px) {
     [data-enter] { animation: cs-rise linear both; animation-timeline: view(); animation-range: entry 4% entry 46%; }
     [data-enter='1'] { animation-range: entry 10% entry 54%; }
     [data-enter='2'] { animation-range: entry 16% entry 62%; }
