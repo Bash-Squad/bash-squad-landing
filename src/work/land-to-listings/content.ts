@@ -148,10 +148,6 @@ const study = {
       { label: 'Built with', value: 'Astro, MapLibre, Better Auth, Spark API' },
     ],
   },
-  close: {
-    title: 'Tell us the hard thing',
-    body: 'An engineer reads every message. Tell us what’s broken, half-built or still an idea, and we’ll say if we’re the right fit.',
-  },
   related: ['custom-software', 'fractional-engineering-team'],
 };
 

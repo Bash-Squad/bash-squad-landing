@@ -22,7 +22,7 @@ src/work/land-to-listings/Pipeline.tsx project diagram
 src/work/flair/land-to-listings/Plat.tsx hero art, imported directly by Page
 src/work/Shot.tsx                   reusable screenshot rendering
 src/work/motion.tsx                 interactive story, counters, video, timeline
-src/work/CloseForm.tsx              closing lead form (#book)
+src/build/BuildCTA.tsx              shared homepage contact form (#book)
 src/components/SubpageChrome.tsx    shared subpage header/footer
 src/app/work/[slug]/page.tsx         slug-to-page mapping, metadata and JSON-LD
 public/work/<slug>/                 referenced captures and og.png
@@ -33,6 +33,9 @@ palette, sitemap and `llms.txt`. Detail data stays in the project's folder;
 there is no generic section schema or flair registry. A new project needs
 **both** metadata registration and an explicit page mapping in the dynamic
 route. Compose its server page from shared primitives and direct imports.
+
+Reuse `BuildCTA` and the default `SubpageFooter`; do not fork the contact
+form, its styles or the site's footer links for a case study.
 
 ## Authoring
 
@@ -60,20 +63,19 @@ route. Compose its server page from shared primitives and direct imports.
 ## Verify before a PR
 
 ```bash
-S=~/.agents/skills/design-taste-frontend
-node "$S/scripts/lint.mjs" src/work src/styles/work.css
-node "$S/scripts/inspect.mjs" http://localhost:<port>/work/<slug>
 pnpm typecheck
 pnpm build
 ```
 
-- Inspect the taste screenshots at 1440, 768 and 390; use its
-  `references/critique.md`. Fix case-study failures; report shared chrome
-  findings (`mono`, `micro-label`, `hairline`) rather than hiding them.
-- At 1440x900 and 390x844: check hero scroll/release, story screen swaps,
-  timeline clicks/arrow keys, video visibility and pause, local form errors
-  without sending a real lead, no sideways scroll and a clean console.
+- Browser-smoke the page at 320, 390, 768 and 1440px. Check title and stat
+  text fits its tiles, no sideways scroll and a clean console.
+- Exercise changed interactions: hero scroll/release, story screen swaps,
+  timeline clicks/arrow keys and video playback. New or changed actions need
+  visible hover, keyboard-focus and pressed states and a usable touch target.
+- Keep ranges such as `98–100` as one static text value; animate only scalar
+  counts. The case-study route disables automatic phone-number detection.
 - With reduced motion: complete hero art, final counters and the video poster.
+- Smoke-check shared form/footer integration, not their unchanged internals.
 - Search rendered HTML for every private name; check alt text and JSON-LD too.
   Check title, description, canonical, 1200x630 `og:image`, article type,
   generated route, sitemap and `llms.txt`.

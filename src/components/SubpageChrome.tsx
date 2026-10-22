@@ -33,6 +33,6 @@ export function SubpageHeader() {
   return <BuildHeader onNav={navFrom} />;
 }
 
-export function SubpageFooter({ kind, hub = false }: { kind: 'work' | 'services'; hub?: boolean }) {
-  return <Footer onNav={navFrom} cols={[NAV_COLS[hub ? kind : 'detail'], CONTENT_COLS[kind], FAMILY_COL]} />;
+export function SubpageFooter({ kind, hub = false }: { kind?: 'work' | 'services'; hub?: boolean } = {}) {
+  return <Footer onNav={navFrom} cols={kind ? [NAV_COLS[hub ? kind : 'detail'], CONTENT_COLS[kind], FAMILY_COL] : undefined} />;
 }

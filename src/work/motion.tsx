@@ -20,12 +20,11 @@ export function useReducedMotion(): boolean {
   return reduced;
 }
 
-/* --- counters: the first run of digits counts up once, on entry ---------- */
+/* --- counters: a whole number counts up once, on entry; anything else, such
+   as the range 98–100, is plain text and never counts ---------------------- */
 
 function Counter({ value }: { value: string }) {
-  // "853" -> "", "853", ""; "98–100" -> "", "98", "–100"; "$5" -> "$", "5", ""
-  const match = value.match(/^([^0-9]*)(\d[\d,]*)(.*)$/);
-  const target = match ? Number(match[2].replace(/,/g, '')) : NaN;
+  const target = /^\d+$/.test(value) ? Number(value) : NaN;
   const reduced = useReducedMotion();
   const ref = React.useRef<HTMLSpanElement>(null);
   const [shown, setShown] = React.useState<number | null>(null);
@@ -50,16 +49,10 @@ function Counter({ value }: { value: string }) {
     return () => { io.disconnect(); cancelAnimationFrame(raf); };
   }, [target, reduced]);
 
-  if (!match) return <span>{value}</span>;
-  const [, prefix, , suffix] = match;
-  // Before the count starts the real value shows, so no-JS and crawlers read it.
-  const digits = shown === null ? match[2] : shown.toLocaleString('en-US');
-  return (
-    <span ref={ref}>
-      <span aria-hidden="true">{prefix}{digits}{suffix}</span>
-      <span className="cs-sr">{value}</span>
-    </span>
-  );
+  if (!Number.isFinite(target)) return value;
+  // One text node. The server render (so no-JS and crawlers), reduced motion
+  // and the end of the count all show the real value.
+  return <span ref={ref}>{reduced || shown === null ? value : shown}</span>;
 }
 
 /** Three stepped tiles: the first tall in the accent, then ink, then a mid tone. */

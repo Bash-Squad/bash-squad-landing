@@ -29,6 +29,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: study.metaTitle,
     description: study.metaDescription,
     alternates: { canonical: path },
+    // Stat ranges such as 98–100 must not become tel: links on iOS Safari.
+    formatDetection: { telephone: false },
     openGraph: {
       url: path,
       type: 'article',
