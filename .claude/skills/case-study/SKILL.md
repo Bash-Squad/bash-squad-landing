@@ -74,6 +74,8 @@ pnpm build
   visible hover, keyboard-focus and pressed states and a usable touch target.
 - Keep ranges such as `98–100` as one static text value; animate only scalar
   counts. The case-study route disables automatic phone-number detection.
+- Keep scroll-linked entrances desktop-only (1100px+). Mobile uses the final
+  visible state; verify scrolling on a real phone before reintroducing them.
 - With reduced motion: complete hero art, final counters and the video poster.
 - Smoke-check shared form/footer integration, not their unchanged internals.
 - Search rendered HTML for every private name; check alt text and JSON-LD too.

@@ -354,9 +354,9 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
 .cs-more { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 40px var(--cs-m) clamp(80px, 9vw, 140px); font-size: var(--cs-body); color: var(--cs-soft); }
 
 /* ============================================================
-   ENTRANCES: each part arrives as it scrolls in, staggered by
-   position in its row. Scroll-driven, so nothing waits on script
-   and browsers without support simply show everything.
+   ENTRANCES: desktop scroll-driven reveals. Mobile stays fully visible;
+   these timelines caused downward-scroll stalls on Pixel/DuckDuckGo.
+   Browsers without support also show the finished state.
    ============================================================ */
 @keyframes cs-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
 @keyframes cs-settle { from { opacity: 0; transform: translateY(18px) scale(0.985); } to { opacity: 1; transform: none; } }
