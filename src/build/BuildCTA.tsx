@@ -4,7 +4,7 @@
 import React from 'react';
 import { Input, Select, Textarea, Button, Badge, CopyEmail } from '../components';
 import { Section, SectionHead } from '../sections/Section';
-import { submitLead } from '../lib/leadAction';
+import { useLeadSubmission } from '../lib/useLeadSubmission';
 import { isValidEmail } from '../lib/lead';
 
 const EMPTY_FORM = { name: '', company: '', broken: '', budget: '', email: '', botcheck: '' };
@@ -12,12 +12,9 @@ const EMPTY_FORM = { name: '', company: '', broken: '', budget: '', email: '', b
 type FormState = typeof EMPTY_FORM;
 
 
-export function BuildCTA({ index = '06' }: { index?: string } = {}) {
+export function BuildCTA({ index = '06', source = 'build page — tell us the hard thing' }: { index?: string; source?: string } = {}) {
   const [form, setForm] = React.useState(EMPTY_FORM);
-  const [status, setStatus] = React.useState('idle'); // idle | sending | sent
-  const [error, setError] = React.useState('');
-  // Time trap: bots submit near-instantly; the server drops too-fast leads.
-  const mountedAt = React.useRef(Date.now());
+  const { status, setStatus, error, setError, sendLead } = useLeadSubmission();
   const set = (k: keyof FormState) => (v: unknown) =>
     setForm(f => {
       const value =
@@ -32,30 +29,20 @@ export function BuildCTA({ index = '06' }: { index?: string } = {}) {
   const submit = async () => {
     if (!isValidEmail(form.email)) { setError('[err] need a valid work email so we can reply.'); return; }
     if (!form.broken.trim()) { setError('[err] tell us what you need.'); return; }
-    setStatus('sending');
-    setError('');
-    try {
-      const res = await submitLead({
-        source: 'build page — tell us the hard thing',
-        name: form.name,
-        email: form.email,
-        company: form.company,
-        budget: form.budget,
-        message: form.broken,
-        botcheck: form.botcheck,
-        elapsedMs: Date.now() - mountedAt.current,
-      });
-      if (res.ok) { setStatus('sent'); setForm(EMPTY_FORM); }
-      else { setStatus('idle'); setError('[err] delivery failed. email us directly: hello@bashsquad.com'); }
-    } catch {
-      setStatus('idle');
-      setError('[err] delivery failed. email us directly: hello@bashsquad.com');
-    }
+    await sendLead({
+      source,
+      name: form.name,
+      email: form.email,
+      company: form.company,
+      budget: form.budget,
+      message: form.broken,
+      botcheck: form.botcheck,
+    }, () => setForm(EMPTY_FORM));
   };
 
   return (
     <Section id="book" style={{ borderBottom: 'none' }}>
-      <SectionHead index={index} label="book" title="Tell us the hard thing." intro="Two minutes. An engineer reads every one of these. No bots, no SDR cadence. Whether it's broken, half-built, or just an idea, if we're not the right fit we'll say so." align="center" />
+      <SectionHead index={index} label="book" title="Tell us the hard thing." intro="It takes about two minutes. An engineer reads every one of these, not a bot and not a sales sequence. Whether it's broken, half-built, or still just an idea, tell us what it is. If we're not the right fit, we'll say so." align="center" />
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.15fr) minmax(0,0.85fr)', gap: 16, alignItems: 'start' }} className="bg-cta-grid">
         {/* terminal form */}
         <div style={{ background: 'var(--surface-inset)', border: '1px solid var(--border-strong)', borderRadius: 'var(--r-2)', overflow: 'hidden' }}>

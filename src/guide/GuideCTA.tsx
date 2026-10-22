@@ -4,45 +4,31 @@
 import React from 'react';
 import { Input, Textarea, TerminalInput, Button, Badge, CopyEmail } from '../components';
 import { Section, SectionHead } from '../sections/Section';
-import { submitLead } from '../lib/leadAction';
+import { useLeadSubmission } from '../lib/useLeadSubmission';
 import { isValidEmail } from '../lib/lead';
 
 const EMPTY_FORM = { name: '', email: '', question: '', context: '', botcheck: '' };
 
 type FormKey = keyof typeof EMPTY_FORM;
-type Status = 'idle' | 'sending' | 'sent';
 
 
 export function GuideCTA() {
   const [form, setForm] = React.useState(EMPTY_FORM);
-  const [status, setStatus] = React.useState<Status>('idle'); // idle | sending | sent
-  const [error, setError] = React.useState('');
-  // Time trap: bots submit near-instantly; the server drops too-fast leads.
-  const mountedAt = React.useRef(Date.now());
+  const { status, setStatus, error, setError, sendLead } = useLeadSubmission();
   const set = (k: FormKey) => (v: string | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setForm(f => ({ ...f, [k]: typeof v === 'string' ? v : v.target.value }));
 
   const submit = async () => {
     if (!isValidEmail(form.email)) { setError('[err] need a valid email so a guide can reply.'); return; }
     if (!form.question.trim() && !form.context.trim()) { setError('[err] give us at least the one-line version of the question.'); return; }
-    setStatus('sending');
-    setError('');
-    try {
-      const res = await submitLead({
-        source: 'guide page — ask a guide',
-        name: form.name,
-        email: form.email,
-        message: form.question.trim() || form.context,
-        detail: form.question.trim() ? form.context : undefined,
-        botcheck: form.botcheck,
-        elapsedMs: Date.now() - mountedAt.current,
-      });
-      if (res.ok) { setStatus('sent'); setForm(EMPTY_FORM); }
-      else { setStatus('idle'); setError('[err] delivery failed. email us directly: hello@bashsquad.com'); }
-    } catch {
-      setStatus('idle');
-      setError('[err] delivery failed. email us directly: hello@bashsquad.com');
-    }
+    await sendLead({
+      source: 'guide page — ask a guide',
+      name: form.name,
+      email: form.email,
+      message: form.question.trim() || form.context,
+      detail: form.question.trim() ? form.context : undefined,
+      botcheck: form.botcheck,
+    }, () => setForm(EMPTY_FORM));
   };
 
   return (

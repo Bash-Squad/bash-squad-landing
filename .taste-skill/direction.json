@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "at": "2026-10-19T20:09:41.677Z",
+  "seed": 305266880,
+  "redraws": 0,
+  "input": {
+    "brief": "Land to Listings case study: real product screens and the project's surveyor plat, composed in the existing Bash Squad brand.",
+    "sector": "agency",
+    "tone": "technical",
+    "have": ["product-ui"],
+    "keep": ["palette", "type"],
+    "avoid": [],
+    "sections": ["intro", "showcase", "how-it-works", "list", "stats", "about", "cta", "footer"],
+    "direction": "dense-tiles"
+  },
+  "imagery": "own",
+  "allow": [],
+  "direction": {
+    "id": "dense-tiles",
+    "name": "The well-kept board",
+    "idea": "The project's plat and real screens fill a board of flat tiles.",
+    "composition": "Keep the existing layout: square tiles, 8px gaps, one dominant thing per screen and an independently composed phone layout.",
+    "typography": "Keep brand faces and five type sizes; no monospace, eyebrows or index numbering in case-study content.",
+    "colour": "Keep brand tokens; acid accent on the action and leading number. Client colours appear only within their work.",
+    "imagery": "Real product captures and the project's plat. No stock-photo substitutions, copied client datasets or reused client footage.",
+    "pitfalls": "No tile outlines, resting shadows, scrolling text, tilted screenshots or fake cursors in editable fields. Preserve shared site chrome."
+  },
+  "hero": {
+    "id": "name-band-and-rails",
+    "name": "Name band and rails",
+    "blueprint": "Large name band, jump links, phone capture and facts, plat with statement, features and action. Preserve the existing scroll-built board and its release.",
+    "mobile": "Use the existing stacked phone composition, with readable content and complete art without desktop pinning.",
+    "headline": "Project name and a statement of at most 60 characters."
+  },
+  "type": null,
+  "palette": null,
+  "photos": null,
+  "motion": {
+    "name": "Scroll-built plat and pinned story",
+    "description": "Keep the hero drawing, CSS section reveals, pinned screen story, one-time counters and visibility-controlled video with a pause control. Animate transform, opacity and clip-path. Reduced motion shows complete art, final counters and the video poster."
+  },
+  "sections": [
+    { "id": "intro-lead-over-four-columns", "role": "intro", "name": "Brief", "shape": "grid", "blueprint": "Answer-first lead and four reader columns." },
+    { "id": null, "role": "showcase", "name": "Screen story", "shape": "split", "blueprint": "Pinned product screen alongside its scrolling explanation; no live copy of the client's product." },
+    { "id": "how-it-works-many-into-one", "role": "how-it-works", "name": "Pipeline", "shape": "band", "blueprint": "Project-specific MLS diagram with three named stages." },
+    { "id": "list-day-tabs-banded-agenda", "role": "list", "name": "Timeline", "shape": "list", "blueprint": "Week tabs with dated shipped milestones, operable by click and arrow keys." },
+    { "id": "stats-stepped-figure-tiles", "role": "stats", "name": "Results", "shape": "grid", "blueprint": "Three sourced numbers in stepped tiles; the first is the accent tile." },
+    { "id": "about-photo-tile-facts", "role": "about", "name": "Where it landed", "shape": "mosaic", "blueprint": "Product recording, regional outline and current facts." },
+    { "id": "cta-action-tile-row", "role": "cta", "name": "Contact", "shape": "grid", "blueprint": "Lead form in the accent tile, plain flank tiles." },
+    { "id": null, "role": "footer", "name": "Site footer", "shape": "band", "blueprint": "Existing shared work-page footer; retain its brand conventions." }
+  ],
+  "references": []
+}

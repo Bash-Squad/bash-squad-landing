@@ -11,32 +11,10 @@
 import React from 'react';
 import { Badge, Button, Card, Pictogram, SectionLabel } from '../components';
 import { Section, SectionHead } from '../sections/Section';
-import { Footer } from '../sections/Footer';
-import { BuildHeader } from '../build/BuildHeader';
+import { SubpageHeader, SubpageFooter } from '../components/SubpageChrome';
 import { BuildCTA } from '../build/BuildCTA';
 import { SERVICES, servicePath } from './index';
 import type { ServiceContent } from './types';
-
-function scrollToId(id: string): void {
-  if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-  const el = document.getElementById(id);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-
-// Header/footer nav ids live on the homepage; 'book' is the local CTA form.
-function navFrom(id: string): void {
-  if (id === 'top' || id === 'book') { scrollToId(id); return; }
-  window.location.href = '/#' + id;
-}
-
-const FOOTER_COLS = [
-  { h: 'navigate', items: [['/', 'home'], ['/services', 'services'], ['/#work', 'our work'], ['book', 'tell us what you need']] as [string | null, string][] },
-  {
-    h: 'services',
-    items: SERVICES.map((s) => [servicePath(s.slug), s.shortLabel]) as [string | null, string][],
-  },
-  { h: 'family', items: [[null, 'blue ghost lab']] as [string | null, string][] },
-];
 
 function Crumbs({ service }: { service: ServiceContent }) {
   const link: React.CSSProperties = { fontFamily: 'var(--font-mono)', fontSize: 'var(--t-xs)', color: 'var(--text-muted)' };
@@ -60,7 +38,7 @@ export default function ServicePage({ service }: { service: ServiceContent }) {
 
   return (
     <React.Fragment>
-      <BuildHeader onNav={navFrom} />
+      <SubpageHeader />
       <main>
         {/* hero: breadcrumb, H1, the extractable answer, supporting intro */}
         <Section tone="base" style={{ borderBottom: '1px solid var(--border-hairline)' }}>
@@ -77,7 +55,7 @@ export default function ServicePage({ service }: { service: ServiceContent }) {
               {service.intro}
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, marginTop: 32 }}>
-              <Button variant="primary" prompt size="lg" onClick={() => scrollToId('book')}>Tell us what you need</Button>
+              <Button variant="primary" prompt size="lg" onClick={() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}>Tell us what you need</Button>
               <a href="/services" style={{ display: 'inline-flex', alignItems: 'center', fontFamily: 'var(--font-mono)', fontSize: 'var(--t-sm)', color: 'var(--text-muted)', padding: '15px 10px' }}>
                 all services →
               </a>
@@ -159,7 +137,7 @@ export default function ServicePage({ service }: { service: ServiceContent }) {
 
         <BuildCTA index="05" />
       </main>
-      <Footer onNav={navFrom} cols={FOOTER_COLS} />
+      <SubpageFooter kind="services" />
     </React.Fragment>
   );
 }

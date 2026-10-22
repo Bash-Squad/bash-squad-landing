@@ -4,31 +4,14 @@
 import React from 'react';
 import { Badge, Card, Pictogram, SectionLabel } from '../components';
 import { Section } from '../sections/Section';
-import { Footer } from '../sections/Footer';
-import { BuildHeader } from '../build/BuildHeader';
+import { SubpageHeader, SubpageFooter } from '../components/SubpageChrome';
 import { BuildCTA } from '../build/BuildCTA';
 import { SERVICES, servicePath } from './index';
-
-function navFrom(id: string): void {
-  if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
-  if (id === 'book') {
-    const el = document.getElementById('book');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    return;
-  }
-  window.location.href = '/#' + id;
-}
-
-const FOOTER_COLS = [
-  { h: 'navigate', items: [['/', 'home'], ['/#work', 'our work'], ['/#help', 'who we help'], ['book', 'tell us what you need']] as [string | null, string][] },
-  { h: 'services', items: SERVICES.map((s) => [servicePath(s.slug), s.shortLabel]) as [string | null, string][] },
-  { h: 'family', items: [[null, 'blue ghost lab']] as [string | null, string][] },
-];
 
 export default function ServicesIndex() {
   return (
     <React.Fragment>
-      <BuildHeader onNav={navFrom} />
+      <SubpageHeader />
       <main>
         <Section tone="base">
           <div style={{ maxWidth: 860 }}>
@@ -72,7 +55,7 @@ export default function ServicesIndex() {
 
         <BuildCTA index="02" />
       </main>
-      <Footer onNav={navFrom} cols={FOOTER_COLS} />
+      <SubpageFooter kind="services" hub />
     </React.Fragment>
   );
 }

@@ -64,38 +64,75 @@ src/
   app/                 Next.js App Router
     layout.tsx         root layout: fonts, metadata, Organization JSON-LD
     page.tsx           home route (renders build/BuildApp)
-    sitemap.ts         generated /sitemap.xml
+    services/          /services hub + /services/[slug] (static params)
+    work/              /work hub + /work/[slug] case studies (static params)
+    sitemap.ts         generated /sitemap.xml (services + case studies)
     robots.ts          generated /robots.txt
+    llms.txt/          generated /llms.txt (services + case studies)
   build/               the LIVE landing page: BuildApp composition + sections
                        (BuildHero, WhatWeDo, WhoWeHelp, Work, TechStack,
                        BuildProof, BuildCTA, BuildHeader)
   sections/            shared sections + Section scaffold (Hero, Problem,
                        Services, Symptoms, WhyUs, FitFilter, Squad, FinalCTA,
                        Header, Footer)
+  services/            service pages: types.ts (content model), content/*,
+                       index.ts (registry), ServicePage, ServicesIndex
+  work/                case studies: types.ts (metadata), content/*,
+                       index.ts (registry), WorkIndex, Shot.tsx, motion.tsx
+    land-to-listings/   Page.tsx (server composition), content.ts, Pipeline.tsx
+    flair/             project art imported directly by its page
   guide/, App.tsx      earlier landing variants, kept for reference (not routed)
-  components/          design system, imported via the src/components barrel
+  components/          design system + shared SubpageChrome
     core/              Button, IconButton, Badge, Tag, Card, Avatar,
                        SectionLabel, Divider, CopyEmail
     forms/             Input, TerminalInput, Textarea, Select, Checkbox, Switch
     terminal/          CommandPalette, CommandPrompt, Terminal, StatusBar,
                        MarqueeStrip, NodeGraph, WorkflowScene, pictograms
-  lib/                 lead.ts (type + validation), leadAction.ts (server
-                       action), mailer.ts (Resend delivery)
+  lib/                 lead.ts (type + validation), useLeadSubmission.ts
+                       (shared form lifecycle), leadAction.ts (server action),
+                       mailer.ts (Resend delivery)
   styles/              styles.css (entry), landing.css (responsive rules),
+                       work.css (case-study layout + motion),
                        tokens/ (colors, typography, spacing, effects, fonts, base)
 public/                og.png, favicon.svg + favicon.png, logo marks, work/ screenshots
+                       (work/<slug>/ holds a case study's screens + og.png)
 concepts/              earlier brand explorations (static HTML)
 SEO-PLAN.md            SEO strategy notes
 BRAND.md               brand and voice guidelines
 ```
 
+## Case studies
+
+Case studies use shared `CaseStudy` metadata (`src/work/types.ts`) and
+project-specific server pages, not a generic section schema. The authoring
+guide is [the case-study skill](.claude/skills/case-study/SKILL.md), with
+capture scripts, privacy/source rules and desktop/mobile/reduced-motion checks.
+
+1. Capture the product into `public/work/<slug>/`. The guide documents
+   desktop/retina and phone WebP sizes, H.264 recording and 1200x630 share card.
+2. Add metadata in `src/work/content/<slug>.ts` and register it in
+   `src/work/index.ts` for the Work hub, homepage grid, command palette,
+   sitemap and `llms.txt`.
+3. Compose `src/work/<slug>/Page.tsx` with local detail data in `content.ts`,
+   shared `Shot.tsx`/`motion.tsx`, and direct project-art imports. Land to
+   Listings also owns its `Pipeline.tsx` and imports its `Plat` directly from
+   `flair/land-to-listings/Plat.tsx`.
+4. Map the slug to that page in `src/app/work/[slug]/page.tsx`; metadata
+   registration alone does not create a page. Follow the guide's checks.
+
+The existing design is recorded compactly in `.taste-skill/direction.json`:
+flat square tiles, brand type/palette, scroll-built hero, pinned story,
+counters and visibility-controlled video. Preserve its reduced-motion
+fallbacks. Use sourced claims and no private client details without permission.
+
 ## Contact form
 
-Every CTA form calls the `submitLead` server action (`src/lib/leadAction.ts`),
-which runs on the server (Cloudflare Workers): it validates, emails the lead to
-`hello@bashsquad.com` via Resend (`src/lib/mailer.ts`, with Reply-To set to the
-lead), and forwards the lead to Bash Squad OS (HQ) when configured. No
-client-side form service and no public key in the browser.
+CTA forms share `useLeadSubmission` (`src/lib/useLeadSubmission.ts`) for
+submission state, timing and delivery errors; each form keeps its fields,
+validation and presentation. The hook calls the `submitLead` server action,
+which validates, emails `hello@bashsquad.com` via Resend (`src/lib/mailer.ts`,
+with Reply-To set to the lead), and forwards to HQ when configured.
+No client-side form service and no public key in the browser.
 
 Env (server-only, in `.env.local`; see `.env.example`):
 
