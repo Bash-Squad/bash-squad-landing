@@ -1,24 +1,25 @@
 import type { ServiceContent } from '../types';
 
-// Priority money page: growing query volume ("fix vibe coded app",
-// "AI-generated app broken", "make vibe-coded app production ready"),
-// thin competition. Source voice: the homepage card.
+// Priority money page. Search Console (Jul–Oct 2026) showed impressions only
+// for our own label ("vibe code rescue", page 6–8) and none for the tool names
+// buyers actually type, so the title, H1, description and answer name the
+// builders. Source voice: the homepage card.
 const vibeCodeRescue: ServiceContent = {
   slug: 'vibe-code-rescue',
   icon: 'bolt',
   name: 'Vibe-code rescue',
   shortLabel: 'vibe-code rescue',
-  metaTitle: 'Vibe-Code Rescue: We Fix AI-Generated Apps',
+  metaTitle: 'Vibe-Code Rescue: Fix Lovable, Bolt, Replit & v0 Apps',
   metaDescription:
-    'Your AI-built app runs but isn\'t ready for real users. We audit the code, fix the bugs, close security holes, and get your vibe-coded app to production.',
-  h1: 'We fix vibe-coded apps and get them to production.',
+    'Your Lovable, Bolt, Replit or v0 app runs but isn\'t ready for real users. Senior engineers audit it, fix the bugs, close security holes and ship it.',
+  h1: 'We fix Lovable, Bolt, Replit and v0 apps and get them to production.',
   answer:
-    'If AI got your app most of the way and you\'re stuck on the rest, senior engineers can finish the job. We audit the code, fix the bugs the AI keeps circling, close the security holes it left behind, and set up deploys, payments, and monitoring so real users can rely on it.',
+    'If Lovable, Bolt, Replit, v0 or Cursor got your app most of the way and you\'re stuck on the rest, senior engineers can finish the job. We audit the code, fix the bugs the AI keeps circling, close the security holes it left behind, and set up deploys, payments, and monitoring so real users can rely on it.',
   intro:
     'No judgment. Building it yourself with Claude, Cursor, Lovable, Bolt, or v0 was a reasonable way to prove the idea. But there\'s a gap between "it runs" and "it\'s ready for customers", and that\'s the part we handle. You keep the product you built; we make it hold up.',
   serviceType: 'AI-generated application remediation',
   schemaDescription:
-    'Auditing, fixing, hardening, and launching AI-generated (vibe-coded) applications: bug fixes, security review, deployment, and production handoff.',
+    'Auditing, fixing, hardening, and launching AI-generated (vibe-coded) applications built with Lovable, Bolt, Replit, v0 or Cursor: bug fixes, security review, deployment, and production handoff.',
   signals: [
     {
       title: 'Every fix breaks two other things',

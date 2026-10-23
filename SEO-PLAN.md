@@ -45,13 +45,16 @@ What we know about indexes (checked 2026-10-22; all of these change on the engin
   - *Page with redirect* (4) and *Alternate page with proper canonical* (1): `www.`/`http` variants and a `workers.dev` host. Expected.
   - Sitemap: submitted Jul 22, last read Oct 14 with 8 URLs (before `/work` and the case study existed); resubmitted Oct 23.
   - Impressions/day: ~5 (late Jul), ~8 (early Aug), ~10 with a peak of 19 (Aug 17 – Sep 16), ~3 (late Sep), ~1 (Oct 1–15). Nothing deployed between Aug 31 and Oct 19, so the mid-September drop is Google's doing, not ours.
+  - **The 9 indexed URLs** are `bashsquad.com/` (crawled Sep 21), `bashsquad.com/services/ai-automation` (Sep 25), `hq.bashsquad.com/`, and six `www.bashsquad.com/services...` URLs last crawled **Jul 23 – Aug 19**, i.e. the Vercel-era host with the July copy. The `www.` → apex 301 (since the Cloudflare move) consolidates them once Google recrawls; indexing was requested for every apex URL on Oct 23.
+  - **Queries (Performance export, last 3 months, 462 impressions, 1 click):** "vibe code rescue" and four variants, 377 impressions at positions 58–83; "hire bash developers/engineer", 44 (the Bash shell, a collision, not pursued); "fractional engineering team/services", 39 at 56–76. No impressions for any tool name (Lovable, Bolt, Replit, v0) or buyer phrasing ("fix my app"). The homepage sits at position 3.6 for the few brand queries. Conclusion: Google matched us only on our own labels, which is why the vibe-code page now names the builders in its title, H1, description and answer.
 
-What we do not know: which 9 URLs are the indexed ones (the "indexed pages" drilldown has not been exported), and real-user Core Web Vitals.
+What we do not know: real-user Core Web Vitals.
 
 ## 2. Where we stand
 
-- Brand-collision risk on the term "squad" (unrelated dev tools use it). The sitewide `Organization` entity and consistent third-party profiles are how we disambiguate.
-- The incumbent we overlap with is a young studio with a thin single services page and little depth on productionizing AI-generated ("vibe-coded") apps. Our wedge is deeper, more specific service pages and honest proof, never a reference to them.
+- Brand-collision risk on "bash" and "squad": Search Console shows impressions for "hire bash developers" (the shell), and unrelated "Squad" dev tools exist. The sitewide `Organization` entity and consistent third-party profiles are how we disambiguate.
+- Our wedge is depth on productionizing AI-generated ("vibe-coded") apps. The competition for "fix my Lovable app" queries is solo developers and two-person shops that lead with the tool names; we compete on specificity and honest proof, never a reference to anyone.
+- No business address is published (owner decision, 2026-10-23). Local qualifiers ("software developer Asheville") are therefore off the table for now; revisit if that changes.
 
 ## 3. Content priorities
 
