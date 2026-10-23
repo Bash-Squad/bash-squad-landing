@@ -14,8 +14,8 @@ Next.js + TypeScript and deployed on Cloudflare Workers.
   build time (SSG). Pages are server components; only the interactive parts are
   client islands (header, hero + command palette, WhoWeHelp, BuildProof, lead
   forms, section-scroll links, case-study motion). Deployed on **Cloudflare
-  Workers** via `@opennextjs/cloudflare` (full Node.js runtime on workerd — no
-  `output: 'export'`, so server actions stay available).
+  Workers** via `@opennextjs/cloudflare` (workerd with Node.js compatibility APIs —
+  no `output: 'export'`, so server actions stay available).
 - **No CSS framework.** Design tokens are plain CSS custom properties in
   `src/styles/tokens/`, consumed via inline styles in the components. Hover and
   press states of the shared primitives live in `src/styles/components.css`.
@@ -49,6 +49,12 @@ Deployed with the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudfla
 (`wrangler.jsonc` + `open-next.config.ts`). Pages are prerendered and served as
 static assets (free/unmetered); only the `submitLead` server action executes in
 the worker.
+
+Workers Builds uses Node.js 24.22.1 from `.node-version`, the security baseline
+for the October 2026 Node/Brotli advisory. If a `NODE_VERSION` build variable is
+set in the dashboard, keep it aligned with this pin and verify the resolved
+version in the build log. This patches the build runtime, not Cloudflare's
+managed production workerd runtime.
 
 One-time setup:
 
