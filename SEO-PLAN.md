@@ -22,7 +22,7 @@ The site is a Next.js App Router app on **Cloudflare Workers** (OpenNext adapter
 - **Canonicals:** every route has a self-referencing canonical on `https://bashsquad.com`. `http://` and `www.` 301 to the apex; trailing slashes 308 to the slashless URL.
 - **workers.dev hosts** (`bash-squad-landing.bash-squad.workers.dev` and branch preview hosts) also serve the site with a 200. They are left alone on purpose: their canonicals already point at `bashsquad.com`, and previews depend on those hosts. Disabling them or adding redirects is a Cloudflare settings change for the owner to authorize separately; do not add an app-level global redirect, which would break previews.
 - **Sitemap + robots** are generated (`src/app/sitemap.ts`, `src/app/robots.ts`). `robots.txt` allows all crawlers, including AI crawlers. The sitemap omits `lastmod` until content tracks real edit dates.
-- **Cloudflare blocks AI training crawlers at the edge** (verified 2026-10-22 by fetching `/` with each user agent): `GPTBot` and `ClaudeBot` get a Cloudflare 403 ("Your request was blocked") before the app runs; `OAI-SearchBot`, `ChatGPT-User`, `Claude-SearchBot`, `Claude-User`, `PerplexityBot`, `Google-Extended`, `Googlebot`, `bingbot` and `Applebot` all get the page. That is Cloudflare's default "block AI training bots" setting, not `robots.txt`. Live answers with web search can still fetch our pages; the models' trained knowledge will not include us until the owner allows those crawlers (see `SEO-TODO.md`).
+- **Cloudflare AI crawler policy: all allowed** (owner changed it 2026-10-23; the zone's `bot_management` reads `ai_training`, `ai_search`, `ai_user` all `disabled` = not blocked). Before that, `GPTBot` and `ClaudeBot` got a Cloudflare 403 while `OAI-SearchBot`, `ChatGPT-User`, `Claude-SearchBot`, `Claude-User`, `PerplexityBot`, `Google-Extended`, `Googlebot`, `bingbot` and `Applebot` passed. Verify any time with `curl -A "GPTBot/1.2" -o /dev/null -w '%{http_code}\n' https://bashsquad.com/` (expect `200`).
 - **Icons:** `favicon.png` (192px, the format Google Search reads), `favicon.svg`, and a 16/32/48 `favicon.ico` at the root for the bare `/favicon.ico` request.
 - **Metadata:** title template, description, canonical, Open Graph and Twitter card on every route. Shared values (origin, site name, default card) live in `src/lib/site.ts`. Default card: `public/og.png`, 2400x1260. Case studies use their own 1200x630 card.
 - **Structured data, only where it is true:**
@@ -38,9 +38,15 @@ The site is a Next.js App Router app on **Cloudflare Workers** (OpenNext adapter
 What we know about indexes (checked 2026-10-22; all of these change on the engines' own schedules):
 - **Bing (also DuckDuckGo, Copilot and ChatGPT search):** `/`, five service pages and `hq.bashsquad.com` are indexed. The service pages are stored under `www.bashsquad.com`, which now 301s to the apex; Bing will consolidate once it recrawls, and a Bing Webmaster Tools sitemap submission speeds that up.
 - **Brave (Claude's web search):** only `www.bashsquad.com/` with pre-#15 copy.
-- **Google:** cannot be read from outside Search Console, and nobody has opened it as part of this work. A Domain property for `bashsquad.com` has been DNS-verified (two `google-site-verification` TXT records exist), so the owner can log in and read the Pages report directly.
+- **Google (Search Console export, 2026-10-23, data through Oct 15):** the Domain property `sc-domain:bashsquad.com` covers every subdomain, so `hq.bashsquad.com` (the HQ app) is mixed in. 30 known URLs: **9 indexed**, 21 not.
+  - *Crawled – currently not indexed* (10): all `hq.bashsquad.com/_next/static/...` JS/CSS/font files. Noise from the HQ app, not a judgment on any marketing page.
+  - *Discovered – currently not indexed* (5): `custom-software`, `fractional-engineering-team`, `integrations`, `legacy-modernization`, `vibe-code-rescue`, each with last crawl "never". Google knows them from the sitemap and has not fetched them yet.
+  - *Duplicate without user-selected canonical* (1): `hq.bashsquad.com/sign-in`.
+  - *Page with redirect* (4) and *Alternate page with proper canonical* (1): `www.`/`http` variants and a `workers.dev` host. Expected.
+  - Sitemap: submitted Jul 22, last read Oct 14 with 8 URLs (before `/work` and the case study existed); resubmitted Oct 23.
+  - Impressions/day: ~5 (late Jul), ~8 (early Aug), ~10 with a peak of 19 (Aug 17 – Sep 16), ~3 (late Sep), ~1 (Oct 1–15). Nothing deployed between Aug 31 and Oct 19, so the mid-September drop is Google's doing, not ours.
 
-What we do not know: Search Console coverage, impressions and real-user Core Web Vitals.
+What we do not know: which 9 URLs are the indexed ones (the "indexed pages" drilldown has not been exported), and real-user Core Web Vitals.
 
 ## 2. Where we stand
 
