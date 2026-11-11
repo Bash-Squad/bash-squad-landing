@@ -9,6 +9,13 @@ const PAGES: Record<string, ComponentType> = {
   'land-to-listings': LandToListingsPage,
 };
 
+// The registry feeds the sitemap, llms.txt and every work link, so a study
+// registered without a page would ship as a linked 404. Fail the build instead.
+const unmapped = CASE_STUDIES.filter((c) => !(c.slug in PAGES)).map((c) => c.slug);
+if (unmapped.length > 0) {
+  throw new Error(`Case study registered without a page in PAGES: ${unmapped.join(', ')}`);
+}
+
 export const dynamicParams = false;
 
 export function generateStaticParams() {

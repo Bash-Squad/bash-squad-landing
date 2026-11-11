@@ -20,13 +20,17 @@ live product; use local runs for admin/authenticated or unpublished screens.
   Label demo data honestly; client naming requires permission.
 - Wait for intros, lazy images and maps to finish; inspect every image and
   recording frame used. A half-built hero or blank map is not usable.
-- Use current browser tool documentation for capture/record APIs. Puppeteer
-  captures use `page.setViewport`, `page.goto`, then `page.screenshot` with
-  `type: 'webp', quality: 92`. Hide local framework chrome with
+- Use the browser tool named in SKILL.md and check its current documentation
+  for the screenshot and recording calls. In omp's `browser`, Puppeteer's
+  `page` is available inside `tab.run`: `page.setViewport`, `page.goto`, then
+  `page.screenshot` with `type: 'webp', quality: 92`. Record with
+  `tab.recordStart('/tmp/<slug>-intro.mp4')` and `tab.recordStop()`; the file
+  comes out at the viewport size. Hide local framework chrome with
   `astro-dev-toolbar, nextjs-portal { display: none !important }`.
 - A clipped admin table may use 1600x1000 at scale 1.8 (still 2880x1800).
-  For local Better Auth access, use `better-auth-d1-magic-link-mint` with
-  `--local` and the local URL; never mint against production for a capture.
+  For admin or signed-in screens, run the project locally and sign in with a
+  local test account as its README describes. Never create accounts,
+  sessions or sign-in links on production for a capture.
 - If the shared browser stalls, use a dedicated Chrome for Testing with
   `--headless=new --window-size=1440,900 --hide-scrollbars --disable-gpu-vsync
   --disable-frame-rate-limit --disable-renderer-backgrounding
@@ -69,7 +73,8 @@ python3 -c "from PIL import Image; Image.open('/tmp/poster.png').convert('RGB').
 ```
 
 Require H.264, `yuv420p,tv` from ffprobe, BT.709, no audio and fast-start.
-Aim for under 1 MB per file. The poster is the reduced-motion fallback.
+Aim for under 1 MB per file. Set the video's `width` and `height` in the
+page content from the encoded file. The poster is the reduced-motion fallback.
 
 ## Share card
 

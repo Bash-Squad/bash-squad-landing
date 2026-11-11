@@ -131,9 +131,11 @@ capture scripts, privacy/source rules and desktop/mobile/reduced-motion checks.
 3. Compose `src/work/<slug>/Page.tsx` with local detail data in `content.ts`,
    shared `Shot.tsx`/`motion.tsx`, and direct project-art imports. Land to
    Listings also owns its `Pipeline.tsx` and imports its `Plat` directly from
-   `flair/land-to-listings/Plat.tsx`.
+   `flair/land-to-listings/Plat.tsx`. Without project art, the hero shows the
+   cover capture and takes `cs-hero--still`, which drops the scroll pin.
 4. Map the slug to that page in `src/app/work/[slug]/page.tsx`; metadata
-   registration alone does not create a page. Follow the guide's checks.
+   registration alone does not create a page, and the build fails until the
+   slug is mapped. Follow the guide's checks.
 
 The existing design is recorded compactly in `.taste-skill/direction.json`:
 flat square tiles, brand type/palette, scroll-built hero, pinned story,

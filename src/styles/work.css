@@ -193,6 +193,9 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
       animation-timeline: scroll(root);
       animation-range: 0 100svh;
     }
+    /* a hero whose art is a still capture has nothing to build, so no pin */
+    .cs-hero--still { height: auto; margin-bottom: 0; }
+    .cs-hero--still .cs-board { position: static; animation: none; }
   }
 }
 
