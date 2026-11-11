@@ -55,6 +55,8 @@ def main() -> None:
     a = p.parse_args()
     if len(a.stat) != 3:
         p.error('exactly three stats; the card has three slots')
+    if any('|' not in s for s in a.stat):
+        p.error('each --stat is "value|label", for example "27|days to launch"')
     stats = ''.join(
         f'<div class="tile stat"><div class="v">{html.escape(v)}</div><div class="l">{html.escape(l)}</div></div>'
         for v, l in (s.split('|', 1) for s in a.stat)

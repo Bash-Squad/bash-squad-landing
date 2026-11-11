@@ -10,6 +10,17 @@ Read [voice.md](voice.md) before writing and [capture.md](capture.md) before
 capturing. `.taste-skill/direction.json` records settled design decisions,
 not a catalogue to rebuild.
 
+## Before you start
+
+- The project's repo cloned locally, plus its live URL if it has one.
+- A browser tool that can set viewport and device scale, save WebP
+  screenshots, record video and read the console; in omp, the built-in
+  `browser`. Captures, the recording and every browser check below depend on
+  it. Without one, stop and say so; do not add a browser package to this repo.
+- `python3` with Pillow, `ffmpeg`/`ffprobe`, and network access (`og.py`
+  loads the brand fonts from Google Fonts).
+- Node and pnpm as pinned in the README.
+
 ## Architecture
 
 ```text
@@ -22,6 +33,7 @@ src/work/land-to-listings/Pipeline.tsx project diagram
 src/work/flair/land-to-listings/Plat.tsx hero art, imported directly by Page
 src/work/Shot.tsx                   reusable screenshot rendering
 src/work/motion.tsx                 interactive story, counters, video, timeline
+src/styles/work.css                 shared cs-* case-study layout and motion
 src/build/BuildCTA.tsx              shared homepage contact form (#book)
 src/components/SubpageChrome.tsx    shared subpage header/footer
 src/app/work/[slug]/page.tsx         slug-to-page mapping, metadata and JSON-LD
@@ -29,10 +41,24 @@ public/work/<slug>/                 referenced captures and og.png
 ```
 
 The metadata registry feeds `/work`, the homepage Work grid, the command
-palette, sitemap and `llms.txt`. Detail data stays in the project's folder;
-there is no generic section schema or flair registry. A new project needs
-**both** metadata registration and an explicit page mapping in the dynamic
-route. Compose its server page from shared primitives and direct imports.
+palette, subpage footer, sitemap and `llms.txt`. Detail data stays in the
+project's folder; there is no generic section schema or flair registry. A
+new project needs **both** metadata registration and an explicit page
+mapping in the dynamic route; `pnpm build` fails while a registered slug
+has no page.
+
+Start a new page from `src/work/land-to-listings/Page.tsx` and its
+`content.ts`. The `cs-*` layout is shared, so keep the hero board and the
+brief, story, timeline, numbers and landed sections with their class names,
+composed from `Shot`, `motion.tsx` and direct imports. Leave out what
+belongs to that project: `Pipeline`, `Plat`, the testimonial and the
+regional outline.
+
+The hero's art tile defaults to the cover capture,
+`<Shot image={study.cover} className="cs-art__cover" priority />`, with
+`cs-hero--still` on the hero section so the board does not pin with nothing
+to build. Scroll-built art such as the plat is project-specific and needs
+the owner's approval first.
 
 Reuse `BuildCTA` and the default `SubpageFooter`; do not fork the contact
 form, its styles or the site's footer links for a case study.
@@ -53,12 +79,10 @@ form, its styles or the site's footer links for a case study.
    the data. Register metadata and the page. Do not copy client datasets into
    an interactive demo or reuse their brand/drone footage; describe the
    feature with captures instead. Custom art uses the project's drawings or marks.
-5. Read the rendered narrative as a prospective client. Lead with what the
-   client and their customers can accomplish, not a screen-by-screen manual.
-   “The brokers can manage their own listings” belongs in the story; the
-   position of Save or Undo does not. Keep technical specifics when they
-   explain a meaningful capability, not to inventory implementation work.
-   Keep alt text descriptive and claims grounded; never invent business results.
+5. Read the rendered narrative as a prospective client and check it against
+   voice.md: what the client and their customers can accomplish, not a tour
+   of controls. Keep alt text descriptive and claims grounded; never invent
+   business results.
 
 ## Verify before a PR
 
@@ -69,9 +93,10 @@ pnpm build
 
 - Browser-smoke the page at 320, 390, 768 and 1440px. Check title and stat
   text fits its tiles, no sideways scroll and a clean console.
-- Exercise changed interactions: hero scroll/release, story screen swaps,
-  timeline clicks/arrow keys and video playback. New or changed actions need
-  visible hover, keyboard-focus and pressed states and a usable touch target.
+- Exercise changed interactions: hero scroll/release (a `cs-hero--still`
+  hero scrolls away without pinning), story screen swaps, timeline
+  clicks/arrow keys and video playback. New or changed actions need visible
+  hover, keyboard-focus and pressed states and a usable touch target.
 - Keep ranges such as `98–100` as one static text value; animate only scalar
   counts. The case-study route disables automatic phone-number detection.
 - Keep scroll-linked entrances desktop-only (1100px+). Mobile uses the final
