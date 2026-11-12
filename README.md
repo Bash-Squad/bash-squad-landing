@@ -91,6 +91,7 @@ src/
   work/                case studies: types.ts (metadata), content/*,
                        index.ts (registry), WorkIndex, Shot.tsx, motion.tsx
     land-to-listings/   Page.tsx (server composition), content.ts, Pipeline.tsx
+    bash-squad-hq/      Page.tsx (cover-capture hero), content.ts, Flow.tsx
     flair/             project art imported directly by its page
   components/          design system + shared SubpageChrome + SectionLink
                        (client section-scroll links/buttons)

@@ -60,7 +60,7 @@ const PRODUCTS: Project[] = [
   },
 ];
 
-// Case studies lead, newest first, so the card and the write-up never drift.
+// Case studies lead, in registry order, so the card and the write-up never drift.
 export const PROJECTS: Project[] = [
   ...CASE_STUDIES.map((c): Project => ({
     name: c.name,
@@ -134,7 +134,8 @@ export function Work() {
         title="Things we've built."
         intro="Client builds, our own products, and open-source tools."
       />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>
+      {/* Two columns at most, so four cards sit 2 x 2 with no orphan; one column below 620px. */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(max(300px, calc((100% - 20px) / 2)), 1fr))', gap: 20 }}>
         {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
       </div>
       <LandToListingsTestimonial />

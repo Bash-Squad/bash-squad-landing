@@ -1,9 +1,11 @@
 // Metadata only: safe to import from client cards without pulling in page content.
 import type { CaseStudy } from './types';
 import landToListings from './content/land-to-listings';
+import bashSquadHq from './content/bash-squad-hq';
 
 export const CASE_STUDIES: readonly CaseStudy[] = [
   landToListings,
+  bashSquadHq,
 ];
 
 export function getCaseStudy(slug: string): CaseStudy | undefined {

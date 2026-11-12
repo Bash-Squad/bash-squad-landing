@@ -176,9 +176,10 @@ export function LoopVideo({ video, className }: { video: CaseStudyVideo; classNa
   );
 }
 
-/* --- the build timeline: one tab per week, its days as banded rows ------- */
+/* --- the build timeline: one tab per week (or longer stretch, named by
+   `label`), its days as banded rows -------------------------------------- */
 
-export function Timeline({ weeks, initial }: { weeks: CaseStudyWeek[]; initial: number }) {
+export function Timeline({ weeks, initial, label = 'Weeks' }: { weeks: CaseStudyWeek[]; initial: number; label?: string }) {
   const [active, setActive] = React.useState(initial);
   const tabs = React.useRef<(HTMLButtonElement | null)[]>([]);
   const select = (i: number) => {
@@ -188,7 +189,7 @@ export function Timeline({ weeks, initial }: { weeks: CaseStudyWeek[]; initial: 
   };
   return (
     <div className="cs-timeline">
-      <div className="cs-timeline__tabs" role="tablist" aria-label="Weeks">
+      <div className="cs-timeline__tabs" role="tablist" aria-label={label}>
         {weeks.map((w, i) => (
           <button
             key={w.range}
