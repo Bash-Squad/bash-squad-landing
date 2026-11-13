@@ -17,10 +17,10 @@ import { Footer } from '../sections/Footer';
 const COMMANDS: HomeCommand[] = [
   { id: 'services', label: 'what we do', group: 'navigate', icon: '#', hint: '/services', keywords: 'services build software integration ai legacy rescue team' },
   { id: 'stack', label: 'own your stack', group: 'navigate', icon: '#', hint: '/stack', keywords: 'react next.js node typescript react native swift rust python postgres aws cloudflare convex neo4j n8n zapier self-hosted own your data tech stack tools languages frameworks build with' },
-  { id: 'work', label: 'our work', group: 'navigate', icon: '#', hint: '/work', keywords: 'portfolio projects proof wrangle banter land to listings github repos open source case studies' },
+  { id: 'work', label: 'our work', group: 'navigate', icon: '#', hint: '/work', keywords: 'portfolio projects proof wrangle banter land to listings bash squad hq github repos open source case studies' },
   ...CASE_STUDIES.map((c): HomeCommand => ({
     id: `case-${c.slug}`, label: `case study: ${c.name.toLowerCase()}`, group: 'navigate', icon: '#', hint: caseStudyPath(c.slug),
-    href: caseStudyPath(c.slug), keywords: `case study client build ${c.tags.join(' ')} ${c.client.toLowerCase()}`,
+    href: caseStudyPath(c.slug), keywords: `case study ${c.kind} ${c.tags.join(' ')} ${c.client.toLowerCase()}`,
   })),
   { id: 'help', label: 'who we help', group: 'navigate', icon: '#', hint: '/help', keywords: 'segments legacy hospital modernize engineering team website integration sync vibe' },
   { id: 'how', label: 'how it works', group: 'navigate', icon: '#', hint: '/how', keywords: 'process discovery scope build handoff' },

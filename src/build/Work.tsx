@@ -60,7 +60,7 @@ const PRODUCTS: Project[] = [
   },
 ];
 
-// Case studies lead, newest first, so the card and the write-up never drift.
+// Case studies lead, in registry order, so the card and the write-up never drift.
 export const PROJECTS: Project[] = [
   ...CASE_STUDIES.map((c): Project => ({
     name: c.name,
@@ -98,7 +98,9 @@ export function ProjectCard({ p }: { p: Project }) {
           : <Preview img={p.img} alt={`${p.name} preview`} />}
       <div style={{ padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 12, flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--t-h4)', color: 'var(--text-strong)', margin: 0 }}>{p.name}</h3>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--t-h4)', color: 'var(--text-strong)', margin: 0 }}>
+            {p.caseStudy ? <a href={p.caseStudy} className="bg-project-title">{p.name}</a> : p.name}
+          </h3>
           <Badge tone="acid" variant="outline">{p.kind}</Badge>
         </div>
         <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-body)', lineHeight: 1.55, margin: 0, flex: 1 }}>{p.desc}</p>
@@ -134,7 +136,8 @@ export function Work() {
         title="Things we've built."
         intro="Client builds, our own products, and open-source tools."
       />
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>
+      {/* Two columns at most, so four cards sit 2 x 2 with no orphan; one column below 620px. */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(max(300px, calc((100% - 20px) / 2)), 1fr))', gap: 20 }}>
         {PROJECTS.map((p) => <ProjectCard key={p.name} p={p} />)}
       </div>
       <LandToListingsTestimonial />

@@ -120,7 +120,10 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
 .cs-facts dd { margin: 0; color: var(--cs-ink); }
 
 .cs-art { grid-column: 3 / span 8; position: relative; overflow: hidden; background: var(--cs-paper); min-height: 0; }
-.cs-art__cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+/* a still cover is a framed screenshot set inside its tile, never edge to
+   edge: a dark product capture would otherwise read as part of this page */
+.cs-hero--still .cs-art { display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; padding: clamp(20px, 3.2vw, 52px); background: var(--cs-tile); }
+.cs-art__cover { display: block; width: auto; height: auto; max-width: 100%; max-height: 100%; border: 1px solid var(--fg-4); }
 .cs-art__statement {
   position: absolute;
   left: 0;
@@ -354,6 +357,8 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
 .cs-landed__facts dd { margin: 0; color: var(--cs-ink); }
 
 .cs-more { display: flex; flex-wrap: wrap; gap: 12px 28px; padding: 40px var(--cs-m) clamp(80px, 9vw, 140px); font-size: var(--cs-body); color: var(--cs-soft); }
+/* a page that ends on its last section, with no "more" row before the contact block */
+.cs-sec--last { padding-bottom: clamp(80px, 9vw, 140px); }
 
 /* ============================================================
    ENTRANCES: desktop scroll-driven reveals. Mobile stays fully visible;
@@ -412,7 +417,8 @@ p .cs-link { text-decoration-color: var(--cs-accent); }
   .cs-art__statement { position: static; width: auto; padding: 18px 16px; }
   .cs-art { display: flex; flex-direction: column; aspect-ratio: auto; background: var(--cs-ground); }
   .cs-art > :first-child { position: relative; aspect-ratio: 4 / 3; }
-  .cs-art__cover { position: relative; aspect-ratio: 4 / 3; }
+  .cs-hero--still .cs-art { padding: 14px; }
+  .cs-hero--still .cs-art__cover { position: static; aspect-ratio: auto; width: 100%; }
   .cs-rail-left { grid-column: 1 / -1; grid-row: 3; }
   .cs-rail-right { grid-column: 1 / -1; grid-row: 2; gap: 6px; }
   .cs-run { min-height: 76px; }

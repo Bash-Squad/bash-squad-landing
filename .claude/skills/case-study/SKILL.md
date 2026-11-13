@@ -57,8 +57,10 @@ regional outline.
 The hero's art tile defaults to the cover capture,
 `<Shot image={study.cover} className="cs-art__cover" priority />`, with
 `cs-hero--still` on the hero section so the board does not pin with nothing
-to build. Scroll-built art such as the plat is project-specific and needs
-the owner's approval first.
+to build. The capture sits inset in its tile with a light border, so a dark
+product UI is not mistaken for this site, and no statement is laid over it.
+Scroll-built art such as the plat is project-specific and needs the owner's
+approval first.
 
 Reuse `BuildCTA` and the default `SubpageFooter`; do not fork the contact
 form, its styles or the site's footer links for a case study.

@@ -91,6 +91,7 @@ src/
   work/                case studies: types.ts (metadata), content/*,
                        index.ts (registry), WorkIndex, Shot.tsx, motion.tsx
     land-to-listings/   Page.tsx (server composition), content.ts, Pipeline.tsx
+    bash-squad-hq/      Page.tsx (cover-capture hero), content.ts, Flow.tsx
     flair/             project art imported directly by its page
   components/          design system + shared SubpageChrome + SectionLink
                        (client section-scroll links/buttons)
@@ -132,7 +133,8 @@ capture scripts, privacy/source rules and desktop/mobile/reduced-motion checks.
    shared `Shot.tsx`/`motion.tsx`, and direct project-art imports. Land to
    Listings also owns its `Pipeline.tsx` and imports its `Plat` directly from
    `flair/land-to-listings/Plat.tsx`. Without project art, the hero shows the
-   cover capture and takes `cs-hero--still`, which drops the scroll pin.
+   cover capture framed inside its tile and takes `cs-hero--still`, which
+   drops the scroll pin.
 4. Map the slug to that page in `src/app/work/[slug]/page.tsx`; metadata
    registration alone does not create a page, and the build fails until the
    slug is mapped. Follow the guide's checks.

@@ -2,11 +2,13 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { CASE_STUDIES, getCaseStudy, caseStudyPath } from '../../../work';
 import LandToListingsPage from '../../../work/land-to-listings/Page';
+import BashSquadHqPage from '../../../work/bash-squad-hq/Page';
 import type { ComponentType } from 'react';
 import { SITE_OPEN_GRAPH, SITE_URL } from '../../../lib/site';
 
 const PAGES: Record<string, ComponentType> = {
   'land-to-listings': LandToListingsPage,
+  'bash-squad-hq': BashSquadHqPage,
 };
 
 // The registry feeds the sitemap, llms.txt and every work link, so a study
