@@ -1,7 +1,5 @@
 import React from 'react';
 import { SubpageHeader, SubpageFooter } from '../../components/SubpageChrome';
-import { SERVICES, servicePath } from '../../services';
-import { CASE_STUDIES, caseStudyPath } from '../index';
 import { LoopVideo, ScrollStory, Stats, Timeline } from '../motion';
 import { Shot } from '../Shot';
 import { BuildCTA } from '../../build/BuildCTA';
@@ -17,16 +15,11 @@ const JUMPS = [
 ];
 
 export default function BashSquadHqPage() {
-  const related = study.related
-    .map((slug) => SERVICES.find((s) => s.slug === slug))
-    .filter((s) => s !== undefined);
-  const others = CASE_STUDIES.filter((c) => c.slug !== study.slug);
-
   return (
     <React.Fragment>
       <SubpageHeader />
       <main className="cs-page">
-        {/* hero: one board of tiles around the cover capture; nothing to build, so it does not pin */}
+        {/* hero: one board of tiles around the framed cover capture; nothing to build, so it does not pin */}
         <section className="cs-hero cs-hero--still" aria-labelledby="cs-name">
           <div className="cs-board">
             <div className="cs-band">
@@ -44,9 +37,9 @@ export default function BashSquadHqPage() {
                   ))}
                 </dl>
               </div>
+              {/* the capture sits framed inside the tile: HQ's dark UI would otherwise read as this page */}
               <div className="cs-tile cs-art">
                 <Shot image={study.cover} className="cs-art__cover" priority />
-                <p className="cs-art__statement">{study.statement}</p>
               </div>
               <div className="cs-rail-right">
                 {study.features.map((f) => <p key={f} className="cs-tile cs-run">{f}</p>)}
@@ -58,11 +51,11 @@ export default function BashSquadHqPage() {
           </div>
         </section>
 
-        {/* the brief: a lead, then the four jobs the app does for us */}
+        {/* the brief: one short lead, then four things the app does for us */}
         <section id="brief" className="cs-sec cs-brief" aria-label="The brief">
-          <p className="cs-lead cs-brief__lead" data-enter>{study.answer}</p>
+          <p className="cs-lead cs-brief__lead" data-enter>{study.brief.lead}</p>
           <div className="cs-brief__cols">
-            {study.brief.audiences.map((a, i) => (
+            {study.brief.points.map((a, i) => (
               <p key={a.lead} className="cs-body" data-enter={String(i)}><strong>{a.lead}</strong> {a.body}</p>
             ))}
           </div>
@@ -97,7 +90,7 @@ export default function BashSquadHqPage() {
         </section>
 
         {/* in daily use: the real thing moving, and the plain facts */}
-        <section id="landed" className="cs-sec cs-landed">
+        <section id="landed" className="cs-sec cs-sec--last cs-landed">
           <div className="cs-head">
             <h2 className="cs-h" data-enter>{study.landed.title}</h2>
             <p className="cs-lead" data-enter="1">{study.landed.lead}</p>
@@ -117,11 +110,6 @@ export default function BashSquadHqPage() {
           </div>
         </section>
 
-        <nav className="cs-more" aria-label="More">
-          <a className="cs-link" href="/work">All our work</a>
-          {others.map((c) => <a key={c.slug} className="cs-link" href={caseStudyPath(c.slug)}>{c.name}</a>)}
-          {related.map((r) => <a key={r.slug} className="cs-link" href={servicePath(r.slug)}>{r.name}</a>)}
-        </nav>
         <BuildCTA source={`case study: ${study.slug}`} />
       </main>
       <SubpageFooter />

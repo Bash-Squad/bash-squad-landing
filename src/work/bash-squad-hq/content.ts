@@ -31,12 +31,15 @@ const study = {
     'Invoices built from tracked time and paid online',
     'A command line our coding agents use too',
   ],
+  // Shorter than metadata.answer on purpose: that one feeds JSON-LD and the
+  // 30 to 40 word answer rule; this is what a visitor reads first.
   brief: {
-    audiences: [
-      { lead: 'Whoever’s selling wants', body: 'to know which leads need a reply today. The pipeline puts overdue and due follow-ups first, and a daily email repeats them. Inquiries from our website’s contact form arrive as new leads on their own, so nothing waits in an inbox for someone to copy it over.' },
-      { lead: 'Whoever’s delivering wants', body: 'one board for every client’s work. Tasks carry short keys, sub-tasks, comments and files, and each project shows its milestones and how far along they are. A timeline across all clients shows what we owe each of them and when it’s due.' },
-      { lead: 'Whoever’s billing wants', body: 'invoices that match the hours worked. Time arrives from Toggl every hour, and a draft invoice gathers a client’s unbilled time. The email carries a PDF and a link to pay online, and the invoice marks itself paid once the payment settles.' },
-      { lead: 'Our coding agents want', body: 'the same picture we have. From a terminal or an editor, an agent can find the task for the repository it’s working in, post its progress as a comment, file follow-up work and draft a document. Every change it makes is labeled with where it came from.' },
+    lead: 'We run Bash Squad in one app we built ourselves. It holds every lead, project and invoice, and our coding agents work in it alongside us.',
+    points: [
+      { lead: 'Follow-ups come first.', body: 'The pipeline opens on the leads that need a reply today, and inquiries from our website land in it on their own.' },
+      { lead: 'One board for client work.', body: 'Every project’s tasks sit together, and a timeline shows what we owe each client and when.' },
+      { lead: 'Invoices start from tracked time.', body: 'The hours we log in Toggl flow into a draft invoice, which goes out with a link to pay online.' },
+      { lead: 'Agents work here too.', body: 'From a terminal, our coding agents pick up tasks and report back. Every change they make is marked with its source.' },
     ],
   },
   story: {
@@ -164,7 +167,6 @@ const study = {
       { label: 'Agent access', value: 'Command line, HTTP API, MCP server' },
     ],
   },
-  related: ['custom-software', 'integrations', 'ai-automation'],
 };
 
 export default study;
