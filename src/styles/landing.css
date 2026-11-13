@@ -17,6 +17,18 @@ body { background: var(--surface-page); }
   --project-transform: translateY(-3px);
   --project-shadow: var(--shadow-2);
 }
+/* A card's title links to its case study, when it has one: underlined on
+   hover and keyboard focus, like a plain link. */
+.bg-project-title {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 160ms ease;
+}
+.bg-project-title:hover,
+.bg-project-title:focus-visible { text-decoration-color: currentColor; }
 
 @media (max-width: 860px) {
   .bg-desktop-nav { display: none !important; }

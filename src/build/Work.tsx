@@ -98,7 +98,9 @@ export function ProjectCard({ p }: { p: Project }) {
           : <Preview img={p.img} alt={`${p.name} preview`} />}
       <div style={{ padding: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 12, flex: 1 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--t-h4)', color: 'var(--text-strong)', margin: 0 }}>{p.name}</h3>
+          <h3 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'var(--t-h4)', color: 'var(--text-strong)', margin: 0 }}>
+            {p.caseStudy ? <a href={p.caseStudy} className="bg-project-title">{p.name}</a> : p.name}
+          </h3>
           <Badge tone="acid" variant="outline">{p.kind}</Badge>
         </div>
         <p style={{ fontSize: 'var(--t-sm)', color: 'var(--text-body)', lineHeight: 1.55, margin: 0, flex: 1 }}>{p.desc}</p>
